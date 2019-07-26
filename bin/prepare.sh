@@ -18,7 +18,7 @@ if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]]; then
     php artisan key:generate
 fi
 
-if [[ "${TRAVIS_BUILD_STAGE_NAME}" != "Deploy" ]]; then
+if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Deploy" ]]; then
     echo ""
     echo ">> Build"
 
