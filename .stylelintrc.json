@@ -1,0 +1,12 @@
+{
+    "syntax": "scss",
+    "plugins": [
+        "stylelint-scss",
+        "stylelint-order"
+    ],
+    "extends": "stylelint-config-standard",
+    "rules": {
+        "at-rule-no-unknown": null,
+        "scss/at-rule-no-unknown": true
+    }
+}

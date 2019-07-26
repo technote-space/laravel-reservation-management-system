@@ -1,5 +1,22 @@
 * text=auto
-*.css linguist-vendored
-*.scss linguist-vendored
-*.js linguist-vendored
+*.php text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.sass text eol=lf
+*.scss text eol=lf
+*.css text eol=lf
+*.sh text eol=lf
+*.png binary
+*.jpg binary
+*.gif binary
+
+/bin export-ignore
+/tests export-ignore
+/.github export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.editorconfig export-ignore
+/.travis.yml export-ignore
+/phpunit.xml export-ignore
+/_config.yml export-ignore
 CHANGELOG.md export-ignore
