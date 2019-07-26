@@ -90,6 +90,7 @@
             "yarn prod"
         ],
         "test": [
+            "@setup",
             "@stage-lint",
             "@stage-test"
         ],
@@ -143,6 +144,10 @@
             "ncu -u",
             "yarn --audit install",
             "composer update"
+        ],
+        "gh-releases": [
+            "@build",
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && bash bin/deploy/gh-releases.sh"
         ]
     }
 }
