@@ -44,7 +44,9 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": []
+            "dont-discover": [
+                "laravel/dusk"
+            ]
         }
     },
     "autoload": {
@@ -80,16 +82,25 @@
         ],
         "setup": [
             "composer install",
-            "yarn --audit install"
+            "yarn install"
+        ],
+        "build": [
+            "composer install --no-dev",
+            "yarn install",
+            "yarn prod"
         ],
         "test": [
-            "@test-css",
-            "@test-js",
-            "@test-php"
+            "@stage-lint",
+            "@stage-test"
         ],
-        "test-php": [
+        "stage-lint": [
             "@phpcs",
             "@phpmd",
+            "@eslint",
+            "@stylelint"
+        ],
+        "stage-test": [
+            "@jest",
             "@phpunit",
             "@dusk"
         ],
@@ -105,29 +116,33 @@
         "dusk": [
             "php artisan dusk"
         ],
-        "test-js": [
-            "@js-lint",
-            "@js-test"
-        ],
-        "js-lint": [
+        "eslint": [
             "yarn lint"
         ],
-        "js-test": [
-            "yarn test"
+        "jest": [
+            "yarn cover"
         ],
-        "test-css": [
-            "@css-lint"
-        ],
-        "css-lint": [
+        "stylelint": [
             "yarn stylelint"
         ],
-        "coveralls": [
+        "coveralls-php": [
             "php-coveralls -v"
+        ],
+        "coveralls-js": [
+            "yarn coveralls"
+        ],
+        "migrate": [
+            "php artisan migrate --seed"
         ],
         "ide": [
             "php artisan ide-helper:generate",
             "php artisan ide-helper:models",
             "php artisan ide-helper:meta"
+        ],
+        "update-packages": [
+            "ncu -u",
+            "yarn --audit install",
+            "composer update"
         ]
     }
 }

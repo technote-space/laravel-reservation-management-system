@@ -13,7 +13,7 @@
         "test:update": "jest --updateSnapshot",
         "stylelint": "stylelint resources/sass/**/**/*.scss",
         "cover": "jest --coverage",
-        "coveralls": "cat ./coverage/lcov.info | coveralls"
+        "coveralls": "cat ./coverage/js/lcov.info | coveralls"
     },
     "devDependencies": {
         "@babel/core": "^7.5.5",

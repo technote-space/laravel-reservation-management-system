@@ -9,7 +9,7 @@ module.exports = {
         'js',
         'vue',
     ],
-    coverageDirectory: 'coverage',
+    coverageDirectory: '<rootDir>/coverage/js',
     snapshotSerializers: [
         '<rootDir>/node_modules/jest-serializer-vue',
     ],
