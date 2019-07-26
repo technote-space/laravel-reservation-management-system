@@ -1,0 +1,108 @@
+language: php
+
+sudo: false
+dist: trusty
+
+services:
+  - postgresql
+
+addons:
+  chrome: stable
+
+notifications:
+  email: false
+  slack:
+    secure: LYT5ZTWPmcOR1iUxPIxn4G4GdW9dw86IWEdQ0WHf4XaDp0LMUh4yQI7lz+hrDNrLMp/7BeX1O11s3EmQ6rhGJvsc/7gCqzpg1weHPjzEdjhUPa8NcQwniUH2iUISYFaMs43Uh/J8MG/wlC1UfVdBOs3owS4Urbg5PTW9oB8t3+bppLP4AfeMCghAsKSpj/lt55lbhXgD3cR7tDG5xNFDYNQgjXlr8qVyhpDx//c7pv0X+CmGPwsGobReq5R4AP7/RLLKDxL7DMd6DiCpEi9CnaAU1XvWC8yKF954YN+44mTAc/AjUnAen3rxwFRxH9wFOxnwjBYWxaZ1sXV/2bEAjDmO0YDJG/t5TDvw4traNhMneb1pkAAsxr/e+CUsRFQHOZqZhYv/ua/+4/rzR6pavbyHzCu78lekdMOM+ytqH0gxDR00ID9nEJPCuBy5AyMeZrdpx96vH2jK1MixwWtu+zWK+6eyzZ9LV9CTvtyXRIJwK6KzUIrWcxhApmz+PgIrwr8ecbq4adcGS4mYXPRfmzQcoY7ouhMdNX6NgJ+PSzAQAzAHje9HA26P2bmoy8gDcdssd73fk8jrGNo2J4pD1KHk1Hv0rk7fqNEdlRqJYPzj14i3tRGrhCPP3YGGVVVELpDThpKr7DOQLhdnjc5yMhRqvkyihoMXMPXCxP/3Ztg=
+
+branches:
+  only:
+    - master
+    - "/^v[0-9\\.]+/"
+
+cache:
+  yarn: true
+  directories:
+    - "${HOME}/.composer/cache"
+    - node_modules
+    - "${TRAVIS_BUILD_DIR}/.work/cache"
+
+stages:
+  - name: check
+    if: branch = master and tag IS blank and type IN (pull_request, api)
+  - name: test
+    if: branch = master and tag IS blank and type IN (pull_request, api)
+  - name: deploy
+    if: tag IS present
+
+before_script:
+  - bin/prepare.sh
+
+jobs:
+  fast_finish: true
+  include:
+    - stage: check
+      language: php
+      php: '7.2'
+      script: bin/check/phpcs.sh
+    - stage: check
+      language: php
+      php: '7.2'
+      script: bin/check/phpmd.sh
+    - stage: check
+      language: node_js
+      node_js: '11'
+      dist: trusty
+      script: bin/check/stylelint.sh
+    - stage: check
+      language: node_js
+      node_js: '11'
+      dist: trusty
+      script: bin/check/eslint.sh
+
+
+    - stage: test
+      language: php
+      php: '7.3'
+      script: bin/test/phpunit.sh
+    - stage: test
+      language: php
+      php: '7.3'
+      env: LARAVEL_DUSK=1
+      script: bin/test/dusk.sh
+    - stage: test
+      language: php
+      php: '7.2'
+      env: LARAVEL_DUSK=1
+      script: bin/test/dusk.sh
+    - stage: test
+      language: php
+      php: '7.1'
+      env: LARAVEL_DUSK=1
+      script: bin/test/dusk.sh
+    - stage: test
+      language: node_js
+      node_js: '11'
+      dist: trusty
+      script: bin/test/jest.sh
+
+
+    - stage: deploy
+      language: node_js
+      node_js: '11'
+      dist: trusty
+      script: skip
+      before_deploy:
+        - source bin/deploy/env.sh
+        - bash bin/deploy/gh-releases.sh
+      deploy:
+        provider: releases
+        skip_cleanup: true
+        name: ${RELEASE_TITLE}
+        tag_name: ${RELEASE_TAG}
+        file: ${RELEASE_FILE}
+        body: ${RELEASE_BODY}
+        api_key:
+          secure: nuzz0iq0mIfnlDmTeUkqwEFToa+AW7LIXUO9wLh1UpMz8tGuQ85RoQ/fjezz5k2nPcvfEJpND6h+S0FPtr7vzcFNFNjRYx3fNs7CFyFXRFLGxzKDRTXXmPy/zo//iA5OUP2YdlfgQve3EAo5O/Wz4gFGPZF+r3a/fKAacEm/UjoYi09B+w+8/E/4byGmEbvWAcjNejupr5ByidHMl5EQy1KbYZtXmDtMnzIpPNZSL24RoEfS3Qp723r51fV1v4sbqBwAMN0QEYtLLqK6M6cTVJ2hPSKuUNr6C18XBr1Lr/XliaYBWtoOaKrZZXzQIsQu2gKDJa0H0QwqcJFyo3doXQ2KEg3mzhzDo1AzB3ygqd+ESnjcxv1yyWy/t3JoX79LBDHhRSzaCm5KcJavg12UcNxksCB/Wre/pIqt+iuXfPZphMxgC6cBx1eBY67iNhYMpbUbddLlch8Bw7QfFFBY3qfTzVINfBvbsC9qDPygEnfkcvaUmv38CPIxPP5/ZW/vJjCbGxCNrjq9bjn5qmgts/Fw2D9c29RVzodD0rzzqFltN66cb9AfV101epB1jjtvI8rV7sXQTF0GWlFYSjmphHueB+IxAs0TIB6WyC0I5kxt+iN746wclWxiKPf9rR/G9yRnsFoyJ0Teh4JMWf6vDbhUYyf5h/V5SOI+DXr/he4=
+        overwrite: true
+        on:
+          tags: true
