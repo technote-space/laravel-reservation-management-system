@@ -3,6 +3,9 @@ language: php
 sudo: false
 dist: trusty
 
+git:
+  depth: 3
+
 services:
   - postgresql
 
@@ -35,7 +38,7 @@ stages:
     if: tag IS present
 
 before_script:
-  - bin/prepare.sh
+  - bash bin/prepare.sh
 
 jobs:
   fast_finish: true
@@ -43,47 +46,47 @@ jobs:
     - stage: check
       language: php
       php: '7.2'
-      script: bin/check/phpcs.sh
+      script: bash bin/check/phpcs.sh
     - stage: check
       language: php
       php: '7.2'
-      script: bin/check/phpmd.sh
+      script: bash bin/check/phpmd.sh
     - stage: check
       language: node_js
       node_js: '11'
       dist: trusty
-      script: bin/check/stylelint.sh
+      script: bash bin/check/stylelint.sh
     - stage: check
       language: node_js
       node_js: '11'
       dist: trusty
-      script: bin/check/eslint.sh
+      script: bash bin/check/eslint.sh
 
 
     - stage: test
       language: php
       php: '7.3'
-      script: bin/test/phpunit.sh
+      script: bash bin/test/phpunit.sh
     - stage: test
       language: php
       php: '7.3'
       env: LARAVEL_DUSK=1
-      script: bin/test/dusk.sh
+      script: bash bin/test/dusk.sh
     - stage: test
       language: php
       php: '7.2'
       env: LARAVEL_DUSK=1
-      script: bin/test/dusk.sh
+      script: bash bin/test/dusk.sh
     - stage: test
       language: php
       php: '7.1'
       env: LARAVEL_DUSK=1
-      script: bin/test/dusk.sh
+      script: bash bin/test/dusk.sh
     - stage: test
       language: node_js
       node_js: '11'
       dist: trusty
-      script: bin/test/jest.sh
+      script: bash bin/test/jest.sh
 
 
     - stage: deploy
