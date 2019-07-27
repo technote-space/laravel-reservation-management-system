@@ -90,7 +90,6 @@
             "yarn prod"
         ],
         "test": [
-            "@setup",
             "@stage-lint",
             "@stage-test"
         ],
@@ -109,7 +108,7 @@
             "phpcs --standard=./phpcs.xml"
         ],
         "phpmd": [
-            "phpmd ./app/,./config,./routes/,./tests/ text phpmd.xml"
+            "phpmd ./app/,./config,./database/factories,./database/seeds,./routes/,./tests/ text phpmd.xml"
         ],
         "phpunit": [
             "phpunit"
@@ -133,17 +132,21 @@
             "yarn coveralls"
         ],
         "migrate": [
-            "php artisan migrate --seed --ansi"
+            "php artisan migrate:refresh --ansi"
         ],
-        "migrate:refresh": [
-            "php artisan migrate:refresh --seed --ansi"
+        "seed": [
+            "php artisan config:clear --ansi",
+            "php artisan db:seed --ansi"
+        ],
+        "autoload": [
+            "composer dump-autoload"
         ],
         "ide": [
             "php artisan ide-helper:generate --ansi",
-            "php artisan ide-helper:model --write --ansi",
+            "php artisan ide-helper:models --write --ansi",
             "php artisan ide-helper:meta --ansi"
         ],
-        "update-packages": [
+        "packages": [
             "ncu -u",
             "yarn --audit install",
             "composer update"

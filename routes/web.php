@@ -16,7 +16,13 @@ use Illuminate\Routing\Router;
 Auth::routes(['verify' => true]);
 
 Route::group([
-    'middleware' => ['auth', 'verified'],
+    'middleware' => ['auth'],
 ], function (Router $router) {
+    $router->get('/home', 'HomeController@index')->name('home');
 
+    $router->group([
+        'middleware' => ['verified'],
+    ], function (Router $router) {
+
+    });
 });

@@ -25,7 +25,7 @@ abstract class DuskTestCase extends BaseTestCase
     /**
      * Create the RemoteWebDriver instance.
      *
-     * @return \Facebook\WebDriver\Remote\RemoteWebDriver
+     * @return RemoteWebDriver
      */
     protected function driver()
     {
@@ -38,7 +38,8 @@ abstract class DuskTestCase extends BaseTestCase
             ]
         );
 
-        return RemoteWebDriver::create('http://localhost:9515',
+        return RemoteWebDriver::create(
+            'http://localhost:9515',
             DesiredCapabilities::chrome()->setCapability(ChromeOptions::CAPABILITY, $options)
         );
     }
