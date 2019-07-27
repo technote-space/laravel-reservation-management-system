@@ -11,6 +11,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        DB::table('reservations')->delete();
+        DB::table('admins')->delete();
+        DB::table('guests')->delete();
+        DB::table('guest_details')->delete();
+        DB::table('rooms')->delete();
+
+        $this->call(AdminsTableSeeder::class);
+        $this->call(GuestsTableSeeder::class);
+        $this->call(RoomsTableSeeder::class);
+        $this->call(ReservationsTableSeeder::class);
     }
 }
