@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+use Illuminate\Routing\Router;
+
+Auth::routes(['verify' => true]);
+
+Route::group([
+    'middleware' => ['auth', 'verified'],
+], function (Router $router) {
+
 });
