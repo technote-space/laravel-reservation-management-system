@@ -25,20 +25,34 @@
 - 月毎の売り上げ金額の確認
 
 ## データ設計
-### 部屋
-- 最大人数
-- 一泊の金額
-### 利用者
-- 名前
+### 部屋 (rooms)
+- 部屋名 (name)
+- 最大人数 (number)
+- 一泊の金額 (price)
+### 利用者 (guests)
+### 利用者詳細 (guest_details)
+- 利用者ID (guest_id)
+- 名前 (name)
+- カナ名 (name_kana)
 - 住所
-- 電話番号
-- 利用人数
-### 予約
-- 利用者ID
-- 部屋ID
-- 利用開始日
-- 利用終了日(1泊の場合 = 利用開始日)
-- 利用人数
+  - 郵便番号 (zip_code)
+  - 住所 (address)
+- 電話番号 (phone)
+### 予約 (reservations)
+- 利用者ID (guest_id)
+- 部屋ID (room_id)
+- 利用開始日 (start_date)
+- 利用終了日(1泊の場合 = 利用開始日) (end_date)
+- 利用人数 (number)
+### 管理者 (admins)
+- 名前 (name)
+- メールアドレス (email)
+- メール認証完了日時 (email_verified_at)
+- パスワード (password)
+- パスワード再発行トークン (remember_token)
+### パスワードリセット (password_resets)
+- メールアドレス (email)
+- トークン (token)
 
 ## 構成
 ### 言語・フレームワーク
