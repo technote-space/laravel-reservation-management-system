@@ -77,8 +77,8 @@
             "@php artisan key:generate --ansi"
         ],
         "post-update-cmd": [
-            "php artisan ide-helper:generate",
-            "php artisan optimize"
+            "php artisan ide-helper:generate --ansi",
+            "php artisan optimize --ansi"
         ],
         "setup": [
             "composer install",
@@ -115,7 +115,7 @@
             "phpunit"
         ],
         "dusk": [
-            "php artisan dusk"
+            "php artisan dusk --ansi"
         ],
         "eslint": [
             "yarn lint"
@@ -133,12 +133,15 @@
             "yarn coveralls"
         ],
         "migrate": [
-            "php artisan migrate --seed"
+            "php artisan migrate --seed --ansi"
+        ],
+        "migrate:refresh": [
+            "php artisan migrate:refresh --seed --ansi"
         ],
         "ide": [
-            "php artisan ide-helper:generate",
-            "php artisan ide-helper:models",
-            "php artisan ide-helper:meta"
+            "php artisan ide-helper:generate --ansi",
+            "php artisan ide-helper:model --write --ansi",
+            "php artisan ide-helper:meta --ansi"
         ],
         "update-packages": [
             "ncu -u",
