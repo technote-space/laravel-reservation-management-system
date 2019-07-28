@@ -6,6 +6,10 @@ current=$(cd $(dirname $0);
 pwd)
 source ${current}/variables.sh
 
+echo ""
+echo ">> Install latest node."
+source ${current}/prepare/install-latest-node.sh
+
 if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Deploy" ]]; then
     echo ""
     echo ">> Build"
