@@ -19,3 +19,5 @@ composer.lock
 /public/css
 /public/js
 /release.zip
+/_ide_helper.php
+/.phpstorm.meta.php
