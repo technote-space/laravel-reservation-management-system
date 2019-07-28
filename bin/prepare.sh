@@ -27,17 +27,19 @@ else
     fi
 fi
 
-if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]]; then
+if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; then
     echo ""
     echo ">> Setup Database"
-    psql -c 'create database travis_ci_test;' -U postgres
+    mysql -e 'CREATE DATABASE travis_ci_test;'
+    mysql -e "CREATE USER 'travis'@'localhost';"
+    mysql -e "GRANT ALL ON travis_ci_test.* TO 'travis'@'localhost';"
     cp .env.travis .env
     php artisan key:generate
-fi
 
-if [[ -n "${LARAVEL_DUSK}" ]]; then
-    echo ""
-    echo ">> Prepare for Laravel Dusk"
-    google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
-    php artisan serve &
+    if [[ -n "${LARAVEL_DUSK}" ]]; then
+        echo ""
+        echo ">> Prepare for Laravel Dusk"
+        google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+        php artisan serve &
+    fi
 fi
