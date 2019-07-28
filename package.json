@@ -19,12 +19,17 @@
         "@babel/core": "^7.5.5",
         "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
         "@babel/preset-env": "^7.5.5",
+        "@fullcalendar/core": "^4.2.0",
+        "@fullcalendar/daygrid": "^4.2.0",
+        "@fullcalendar/vue": "^4.2.2",
+        "@mdi/font": "^3.8.95",
         "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
         "@vue/babel-plugin-transform-vue-jsx": "^1.0.0",
         "@vue/test-utils": "^1.0.0-beta.29",
         "axios": "^0.19",
         "babel-jest": "^24.8.0",
         "babel-loader": "^8.0.6",
+        "babel-polyfill": "^6.26.0",
         "bootstrap": "^4.3.1",
         "coveralls": "^3.0.5",
         "cross-env": "^5.2",
@@ -37,6 +42,7 @@
         "jquery": "^3.4",
         "laravel-mix": "^4.1.2",
         "lodash": "^4.17.15",
+        "material-design-icons-iconfont": "^5.0.1",
         "popper.js": "^1.15",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.22.7",
@@ -52,6 +58,7 @@
         "vue-router": "^3.0.7",
         "vue-server-renderer": "^2.6.10",
         "vue-template-compiler": "^2.6.10",
+        "vuetify": "^2.0.1",
         "vuex": "^3.1.1"
     }
 }

@@ -670,6 +670,24 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@fullcalendar/core@^4.2.0", "@fullcalendar/core@~4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-4.2.0.tgz#16716d6617137e54fceeb03c72f5124c92b86e58"
+  integrity sha512-4kd5OGHxjMtwI0gUHKwAYzmR0Z79Qf8y0ARx2Ruh20JdVy3Tznn6oKwdpkUbaXWrLXNDoXYRkBiFCIgC27VNCw==
+
+"@fullcalendar/daygrid@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-4.2.0.tgz#c49a9e27baf40b5a637a5d8fffa2670f19ed636b"
+  integrity sha512-9C61TowLTTZ657cErdylkdRYxXj5HO0NgogQgYX9X2wz7yvn6loiyGx6oq0o6OFf+e/Z4Ey06j7f/fqn/BPYEQ==
+
+"@fullcalendar/vue@^4.2.2":
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/vue/-/vue-4.2.2.tgz#ab26e730e407019946483c4d1f2ba9f0014094a2"
+  integrity sha512-LxHx7MZnz9DrVWHCNN7MHrd1oYk4ZNrQOp8V3XVVIZ9FWfyY2I6ti4zwQt5F9lZj8HETN3LqctHjZpv5SOXgJg==
+  dependencies:
+    "@fullcalendar/core" "~4.2.0"
+    fast-deep-equal "^2.0.1"
+
 "@jest/console@^24.7.1":
   version "24.7.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"
@@ -815,6 +833,11 @@
     "@types/istanbul-lib-coverage" "^2.0.0"
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
+
+"@mdi/font@^3.8.95":
+  version "3.8.95"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-3.8.95.tgz#772094ed7046b126457b1f3b8c82e26b209e71e8"
+  integrity sha512-KR6TBdVYV3p1ZOM+Ge45Kk3P8yHfSGt3YOryVlkEKdO3vMiPjRaaDcQsdogGxVl8FcXsAt/Gz8MoXObbOF1Pzg==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -1574,6 +1597,15 @@ babel-plugin-transform-strict-mode@^6.24.1:
   dependencies:
     babel-runtime "^6.22.0"
     babel-types "^6.24.1"
+
+babel-polyfill@^6.26.0:
+  version "6.26.0"
+  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.26.0.tgz#379937abc67d7895970adc621f284cd966cf2153"
+  integrity sha1-N5k3q8Z9eJWXCtxiHyhM2WbPIVM=
+  dependencies:
+    babel-runtime "^6.26.0"
+    core-js "^2.5.0"
+    regenerator-runtime "^0.10.5"
 
 babel-preset-jest@^24.6.0:
   version "24.6.0"
@@ -2460,7 +2492,7 @@ core-js-pure@3.1.4:
   resolved "https://registry.yarnpkg.com/core-js-pure/-/core-js-pure-3.1.4.tgz#5fa17dc77002a169a3566cc48dc774d2e13e3769"
   integrity sha512-uJ4Z7iPNwiu1foygbcZYJsJs1jiXrTTCvxfLDXNhI/I+NHbSIEyr548y4fcsCEyWY0XgfAG/qqaunJ1SThHenA==
 
-core-js@^2.4.0:
+core-js@^2.4.0, core-js@^2.5.0:
   version "2.6.9"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
   integrity sha512-HOpZf6eXmnl7la+cUdMnLvUxKNqLUzJvgIziQ0DiF3JwSImNphIqdGqzj6hIKyX04MmV0poclQ7+wjWvxQyR2A==
@@ -5898,6 +5930,11 @@ markdown-table@^1.1.0:
   resolved "https://registry.yarnpkg.com/markdown-table/-/markdown-table-1.1.3.tgz#9fcb69bcfdb8717bfd0398c6ec2d93036ef8de60"
   integrity sha512-1RUZVgQlpJSPWYbFSpmudq5nHY1doEIv89gBtF0s4gW1GF2XorxcA/70M5vq7rLv0a6mhOUccRsqkwhwLCIQ2Q==
 
+material-design-icons-iconfont@^5.0.1:
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/material-design-icons-iconfont/-/material-design-icons-iconfont-5.0.1.tgz#371875ed7fe9c8c520bc7123c3231feeab731c31"
+  integrity sha512-Xg6rIdGrfySTqiTZ6d+nQbcFepS6R4uKbJP0oAqyeZXJY/bX6mZDnOmmUJusqLXfhIwirs0c++a6JpqVa8RFvA==
+
 mathml-tag-names@^2.1.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/mathml-tag-names/-/mathml-tag-names-2.1.1.tgz#6dff66c99d55ecf739ca53c492e626f1d12a33cc"
@@ -7705,6 +7742,11 @@ regenerate@^1.2.1, regenerate@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
   integrity sha512-1G6jJVDWrt0rK99kBjvEtziZNCICAuvIPkSiUFIQxVP06RCVpq3dmDo2oi6ABpYaDYaTRr67BEhL8r1wgEZZKg==
+
+regenerator-runtime@^0.10.5:
+  version "0.10.5"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
+  integrity sha1-M2w+/BIgrc7dosn6tntaeVWjNlg=
 
 regenerator-runtime@^0.11.0:
   version "0.11.1"
@@ -9529,6 +9571,11 @@ vue@^2.6.10:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
+
+vuetify@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.0.1.tgz#27b2ea314f5eba7eff9993d4d97110d5563a4b57"
+  integrity sha512-UOBpJQdEwvoqH7zXEVo0YGLT5bKKXZxa8+MzBKaQK/Evbo5XjbEt5mxbO7f/9bCO5XqM825u4eNxcEUhV4sT1Q==
 
 vuex@^3.1.1:
   version "3.1.1"
