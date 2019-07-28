@@ -1,5 +1,8 @@
 # Reservation Management System
 
+[![Build Status](https://travis-ci.com/technote-space/laravel-reservation-management-system.svg?branch=master)](https://travis-ci.com/technote-space/laravel-reservation-management-system)
+[![Coverage Status](https://coveralls.io/repos/github/technote-space/laravel-reservation-management-system/badge.svg?branch=master)](https://coveralls.io/github/technote-space/laravel-reservation-management-system?branch=master)
+[![CodeFactor](https://www.codefactor.io/repository/github/technote-space/laravel-reservation-management-system/badge)](https://www.codefactor.io/repository/github/technote-space/laravel-reservation-management-system)
 [![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2%2B-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 
 [TechCommit](https://www.tech-commit.jp/)
