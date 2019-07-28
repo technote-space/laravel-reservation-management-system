@@ -6,9 +6,6 @@ dist: trusty
 git:
   depth: 3
 
-services:
-  - mysql
-
 addons:
   chrome: stable
 

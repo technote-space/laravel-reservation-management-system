@@ -5,6 +5,7 @@ namespace Tests\Unit\Models;
 
 use App\Models\Setting;
 use Tests\TestCase;
+use Tests\TestHelper;
 
 /**
  * Class RoomTest
@@ -13,35 +14,32 @@ use Tests\TestCase;
  */
 class SettingTest extends TestCase
 {
-    /** @var bool $migrated */
-    private static $migrated = false;
+    use TestHelper;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        if (! self::$migrated) {
-            self::$migrated = true;
-            factory(Setting::class)->create([
-                'key'   => 'test1',
-                'value' => 'test1',
-            ]);
-            factory(Setting::class)->create([
-                'key'   => 'test2',
-                'value' => '2',
-                'type'  => 'int',
-            ]);
-            factory(Setting::class)->create([
-                'key'   => 'test3',
-                'value' => '1',
-                'type'  => 'bool',
-            ]);
-            factory(Setting::class)->create([
-                'key'   => 'test4',
-                'value' => '0',
-                'type'  => 'bool',
-            ]);
-        }
+        $this->runMigrate();
+        factory(Setting::class)->create([
+            'key'   => 'test1',
+            'value' => 'test1',
+        ]);
+        factory(Setting::class)->create([
+            'key'   => 'test2',
+            'value' => '2',
+            'type'  => 'int',
+        ]);
+        factory(Setting::class)->create([
+            'key'   => 'test3',
+            'value' => '1',
+            'type'  => 'bool',
+        ]);
+        factory(Setting::class)->create([
+            'key'   => 'test4',
+            'value' => '0',
+            'type'  => 'bool',
+        ]);
     }
 
     /**

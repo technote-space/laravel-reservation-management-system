@@ -28,11 +28,6 @@ else
 fi
 
 if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; then
-    echo ""
-    echo ">> Setup Database"
-    mysql -e 'CREATE DATABASE travis_ci_test;'
-    mysql -e "CREATE USER 'travis'@'localhost';"
-    mysql -e "GRANT ALL ON travis_ci_test.* TO 'travis'@'localhost';"
     cp .env.travis .env
     php artisan key:generate
 
