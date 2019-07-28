@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -52,18 +53,12 @@ class Reservation extends Model
         'number'     => 'int',
     ];
 
-    /**
-     * @return BelongsTo
-     */
-    public function guest()
+    public function guest(): BelongsTo
     {
         return $this->belongsTo(Guest::class);
     }
 
-    /**
-     * @return BelongsTo
-     */
-    public function room()
+    public function room(): BelongsTo
     {
         return $this->belongsTo(Room::class);
     }

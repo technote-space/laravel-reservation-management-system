@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -47,10 +48,7 @@ class Room extends Model
         'price'  => 'int',
     ];
 
-    /**
-     * @return HasMany
-     */
-    public function reservations()
+    public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
     }

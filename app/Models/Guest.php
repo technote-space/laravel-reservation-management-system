@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -50,18 +51,12 @@ class Guest extends Model
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * @return HasOne
-     */
-    public function detail()
+    public function detail(): HasOne
     {
         return $this->hasOne(GuestDetail::class);
     }
 
-    /**
-     * @return HasMany
-     */
-    public function reservations()
+    public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
     }

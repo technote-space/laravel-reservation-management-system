@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -44,10 +45,7 @@ class GuestDetail extends Model
         'id',
     ];
 
-    /**
-     * @return BelongsTo
-     */
-    public function guest()
+    public function guest(): BelongsTo
     {
         return $this->belongsTo(Guest::class);
     }
