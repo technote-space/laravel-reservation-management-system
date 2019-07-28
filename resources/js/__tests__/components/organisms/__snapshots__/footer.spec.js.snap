@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer should 1`] = `
+<v-footer-stub
+  color="primary"
+  dark="true"
+  height="auto"
+  padless="true"
+  tag="div"
+  tile="true"
+>
+  <v-layout-stub
+    justify-center=""
+    tag="div"
+    wrap=""
+  >
+    <v-btn-stub
+      activeclass=""
+      class="mx-4 white--text"
+      href="https://github.com"
+      icon="true"
+      tag="button"
+      target="_blank"
+      type="button"
+    >
+      <v-icon-stub
+        size="24px"
+      >
+        
+                mdi-github-circle
+            
+      </v-icon-stub>
+    </v-btn-stub>
+    <v-btn-stub
+      activeclass=""
+      class="mx-4 white--text"
+      href="https://twitter.com"
+      icon="true"
+      tag="button"
+      target="_blank"
+      type="button"
+    >
+      <v-icon-stub
+        size="24px"
+      >
+        
+                mdi-twitter-circle
+            
+      </v-icon-stub>
+    </v-btn-stub>
+     
+    <v-flex-stub
+      lighten-2=""
+      py-4=""
+      secondary=""
+      tag="div"
+      text-center=""
+      white--text=""
+      xs12=""
+    >
+      
+            2019 — 
+      <strong>
+        テスト
+      </strong>
+    </v-flex-stub>
+  </v-layout-stub>
+</v-footer-stub>
+`;

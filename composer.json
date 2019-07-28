@@ -136,6 +136,9 @@
         "jest": [
             "yarn cover"
         ],
+        "jest:update": [
+            "yarn test:update"
+        ],
         "stylelint": [
             "yarn stylelint"
         ],

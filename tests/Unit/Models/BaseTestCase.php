@@ -12,6 +12,7 @@ use Illuminate\Support\Arr;
 /**
  * Class BaseTestCase
  * @package Tests\Unit\Models
+ * @SuppressWarnings(PMD.TooManyPublicMethods)
  */
 abstract class BaseTestCase extends \Tests\BaseTestCase
 {
@@ -54,7 +55,8 @@ abstract class BaseTestCase extends \Tests\BaseTestCase
         $this->assertEquals($count, static::$$name->$target->count());
         $this->assertInstanceOf($class, static::$$name->$target->get(0));
         for ($i = 0; $i < $count; $i++) {
-            $this->assertEquals((static::$$target)[$i]->id, static::$$name->$target->get($i)->id);
+            $model = (static::$$target)[$i];
+            $this->assertEquals($model->id, static::$$name->$target->get($i)->id);
         }
     }
 
@@ -95,7 +97,8 @@ abstract class BaseTestCase extends \Tests\BaseTestCase
         $this->assertEquals($count, static::$$name->$target->count());
         $this->assertInstanceOf($class, static::$$name->$target->get(0));
         for ($i = 0; $i < $count; $i++) {
-            $this->assertEquals((static::$$target)[$i]->id, static::$$name->$target->get($i)->id);
+            $model = (static::$$target)[$i];
+            $this->assertEquals($model->id, static::$$name->$target->get($i)->id);
         }
     }
 
@@ -150,7 +153,8 @@ abstract class BaseTestCase extends \Tests\BaseTestCase
             Arr::pluck($this->belongToManyDataProvider(), 1)
         );
 
-        foreach ($deleted as $item) {
+        collect($deleted)->each(function ($item) {
+            /** @var Eloquent $class */
             if (static::$$item instanceof Model) {
                 $class = get_class(static::$$item);
                 $this->assertEmpty($class::find(static::$$item->id));
@@ -160,18 +164,20 @@ abstract class BaseTestCase extends \Tests\BaseTestCase
                     $this->assertEmpty($class::find($i->id));
                 }
             }
-        }
-        foreach ($morphs as $item) {
+        });
+
+        collect($morphs)->each(function ($item) {
             /** @var Eloquent $class */
             $class = $item[0];
-            $i     = $item[1];
-            $this->assertEmpty($class::find($i));
-        }
+            $this->assertEmpty($class::find($item[1]));
+        });
+
         foreach (Arr::pluck($this->belongToManyDataProvider(), 2) as $item) {
             /** @var Eloquent $item */
             $this->assertEmpty($item::where($key, $pid)->exists());
         }
-        foreach ($exists as $item) {
+
+        collect($exists)->each(function ($item) {
             if (static::$$item instanceof Model) {
                 /** @var Eloquent $class */
                 $class = get_class(static::$$item);
@@ -183,6 +189,6 @@ abstract class BaseTestCase extends \Tests\BaseTestCase
                     $this->assertNotEmpty($class::find($i->id));
                 }
             }
-        }
+        });
     }
 }
