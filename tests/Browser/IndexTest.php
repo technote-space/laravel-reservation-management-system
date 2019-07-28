@@ -1,23 +1,24 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Browser;
 
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Throwable;
 
-class ExampleTest extends DuskTestCase
+class IndexTest extends DuskTestCase
 {
     /**
      * @throws Throwable
      */
-    public function testBasicExample()
+    public function testIndex()
     {
         $this->browse(
             function (Browser $browser) {
                 $browser->visit('/')
-                        ->assertSee('Laravel');
+                        ->screenshot('index')
+                        ->assertSee('Reservation');
             }
         );
     }
