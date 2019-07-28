@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Guest;
 use App\Models\GuestDetail;
 
-class GuestsTableSeeder extends Seeder
+class GuestTableSeeder extends Seeder
 {
     use Seeds\Traits\SeederHelper;
 

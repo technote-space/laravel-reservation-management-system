@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Models\Room;
 
-class RoomsTableSeeder extends Seeder
+class RoomTableSeeder extends Seeder
 {
     use Seeds\Traits\SeederHelper;
 

@@ -16,10 +16,12 @@ class DatabaseSeeder extends Seeder
         DB::table('guests')->delete();
         DB::table('guest_details')->delete();
         DB::table('rooms')->delete();
+        DB::table('settings')->delete();
 
-        $this->call(AdminsTableSeeder::class);
-        $this->call(GuestsTableSeeder::class);
-        $this->call(RoomsTableSeeder::class);
-        $this->call(ReservationsTableSeeder::class);
+        $this->call(AdminTableSeeder::class);
+        $this->call(GuestTableSeeder::class);
+        $this->call(RoomTableSeeder::class);
+        $this->call(ReservationTableSeeder::class);
+        $this->call(SettingTableSeeder::class);
     }
 }

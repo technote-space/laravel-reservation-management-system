@@ -6,7 +6,7 @@ use App\Models\Guest;
 use App\Models\Room;
 use Illuminate\Support\Collection;
 
-class ReservationsTableSeeder extends Seeder
+class ReservationTableSeeder extends Seeder
 {
     use Seeds\Traits\SeederHelper;
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 
-class AdminsTableSeeder extends Seeder
+class AdminTableSeeder extends Seeder
 {
     use Seeds\Traits\SeederHelper;
 
