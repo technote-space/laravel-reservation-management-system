@@ -46,53 +46,64 @@ jobs:
     - stage: check
       language: php
       php: '7.2'
+      env: NO_NPM=1
       script: bash bin/check/phpcs.sh
     - stage: check
       language: php
       php: '7.2'
+      env: NO_NPM=1
       script: bash bin/check/phpmd.sh
     - stage: check
       language: node_js
       node_js: '11'
       dist: trusty
+      env: NO_COMPOSER=1
       script: bash bin/check/stylelint.sh
     - stage: check
       language: node_js
       node_js: '11'
       dist: trusty
+      env: NO_COMPOSER=1
       script: bash bin/check/eslint.sh
 
 
     - stage: test
       language: php
       php: '7.3'
+      env: NO_NPM=1
       script: bash bin/test/phpunit.sh
     - stage: test
       language: php
       php: '7.3'
-      env: LARAVEL_DUSK=1
+      env:
+        - LARAVEL_DUSK=1
+        - NO_NPM=1
       script: bash bin/test/dusk.sh
     - stage: test
       language: php
       php: '7.2'
-      env: LARAVEL_DUSK=1
+      env:
+        - LARAVEL_DUSK=1
+        - NO_NPM=1
       script: bash bin/test/dusk.sh
     - stage: test
       language: php
       php: '7.1'
-      env: LARAVEL_DUSK=1
+      env:
+        - LARAVEL_DUSK=1
+        - NO_NPM=1
       script: bash bin/test/dusk.sh
     - stage: test
       language: node_js
       node_js: '11'
       dist: trusty
+      env: NO_COMPOSER=1
       script: bash bin/test/jest.sh
 
 
     - stage: deploy
-      language: node_js
-      node_js: '11'
-      dist: trusty
+      language: php
+      php: '7.2'
       script: skip
       before_deploy:
         - source bin/deploy/env.sh

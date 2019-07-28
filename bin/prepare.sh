@@ -6,9 +6,11 @@ current=$(cd $(dirname $0);
 pwd)
 source ${current}/variables.sh
 
-echo ""
-echo ">> Install latest node."
-source ${current}/prepare/install-latest-node.sh
+if [[ -z "${NO_NPM}" ]]; then
+    echo ""
+    echo ">> Install latest node."
+    source ${current}/prepare/install-latest-node.sh
+fi
 
 if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Deploy" ]]; then
     echo ""
@@ -17,7 +19,12 @@ if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Deploy" ]]; then
 else
     echo ""
     echo ">> Setup"
-    composer setup
+    if [[ -z "${NO_COMPOSER}" ]]; then
+        composer install
+    fi
+    if [[ -z "${NO_NPM}" ]]; then
+        yarn install
+    fi
 fi
 
 if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]]; then
