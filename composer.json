@@ -78,7 +78,7 @@
             "@php artisan key:generate --ansi"
         ],
         "post-update-cmd": [
-            "php artisan ide-helper:generate --ansi",
+            "if [[ -n $(php artisan list --raw | grep 'ide-helper:generate') ]]; then composer ide; fi",
             "php artisan optimize --ansi"
         ],
         "setup": [
