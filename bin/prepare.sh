@@ -20,7 +20,7 @@ else
     echo ""
     echo ">> Setup"
     if [[ -z "${NO_COMPOSER}" ]]; then
-        composer install
+        composer install --no-interaction --prefer-dist --no-suggest
     fi
     if [[ -z "${NO_NPM}" ]]; then
         yarn install
@@ -28,6 +28,7 @@ else
 fi
 
 if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; then
+    rm -f .env
     cp .env.travis .env
     php artisan key:generate
 

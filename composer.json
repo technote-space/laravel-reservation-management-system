@@ -82,11 +82,11 @@
             "php artisan optimize --ansi"
         ],
         "setup": [
-            "composer install",
+            "composer install --no-interaction --prefer-dist --no-suggest",
             "yarn install"
         ],
         "build": [
-            "composer install --no-dev",
+            "composer install --no-dev --no-interaction --prefer-dist --no-suggest",
             "yarn install",
             "yarn prod"
         ],
@@ -128,7 +128,7 @@
             "phpunit"
         ],
         "dusk": [
-            "php artisan dusk"
+            "php artisan dusk --env=testing"
         ],
         "eslint": [
             "yarn lint"

@@ -8,6 +8,11 @@ git:
 
 addons:
   chrome: stable
+  apt:
+    sources:
+      - travis-ci/sqlite3
+    packages:
+      - sqlite3
 
 notifications:
   email: false
