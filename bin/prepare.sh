@@ -31,12 +31,13 @@ if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; th
     rm -f .env
     cp .env.travis .env
     ls -la .env
-    php artisan config:cache
     php artisan key:generate
+    php artisan config:cache
 
     if [[ -n "${LARAVEL_DUSK}" ]]; then
         echo ""
         echo ">> Prepare for Laravel Dusk"
+        composer chrome
         google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
         php artisan serve &
     fi

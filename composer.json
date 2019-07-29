@@ -196,6 +196,9 @@
         "routes": [
             "php artisan route:clear --ansi",
             "php artisan route:list --ansi"
+        ],
+        "chrome": [
+            "php artisan dusk:chrome-driver 74 --env=testing"
         ]
     }
 }
