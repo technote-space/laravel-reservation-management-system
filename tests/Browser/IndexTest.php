@@ -17,8 +17,9 @@ class IndexTest extends DuskTestCase
         $this->browse(
             function (Browser $browser) {
                 $browser->visit('/')
-                        ->screenshot('index')
-                        ->assertSee('Reservation');
+                        ->waitForText('Reservation')
+                        ->assertSee('Reservation')
+                        ->screenshot('index');
             }
         );
     }
