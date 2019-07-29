@@ -86,8 +86,13 @@
             "yarn install"
         ],
         "build": [
-            "composer install --no-dev --no-interaction --prefer-dist --no-suggest",
-            "yarn install",
+            "@build:php",
+            "@build:js"
+        ],
+        "build:php": [
+            "composer install --no-dev --no-interaction --prefer-dist --no-suggest"
+        ],
+        "build:js": [
             "yarn prod"
         ],
         "test": [

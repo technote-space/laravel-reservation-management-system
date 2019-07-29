@@ -38,6 +38,7 @@ if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; th
         echo ""
         echo ">> Prepare for Laravel Dusk"
         composer chrome
+        composer build:js
         google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
         php artisan serve &
     fi

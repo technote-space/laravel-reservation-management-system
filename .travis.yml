@@ -77,23 +77,17 @@ jobs:
     - stage: test
       language: php
       php: '7.3'
-      env:
-        - LARAVEL_DUSK=1
-        - NO_NPM=1
+      env: LARAVEL_DUSK=1
       script: bash bin/test/dusk.sh
     - stage: test
       language: php
       php: '7.2'
-      env:
-        - LARAVEL_DUSK=1
-        - NO_NPM=1
+      env: LARAVEL_DUSK=1
       script: bash bin/test/dusk.sh
     - stage: test
       language: php
       php: '7.1'
-      env:
-        - LARAVEL_DUSK=1
-        - NO_NPM=1
+      env: LARAVEL_DUSK=1
       script: bash bin/test/dusk.sh
     - stage: test
       language: node_js
