@@ -30,6 +30,8 @@ fi
 if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; then
     rm -f .env
     cp .env.travis .env
+    ls -la .env
+    php artisan config:cache
     php artisan key:generate
 
     if [[ -n "${LARAVEL_DUSK}" ]]; then
