@@ -5,7 +5,8 @@
     ],
     "env": {
         "browser": true,
-        "jest": true
+        "jest": true,
+        "node": true
     },
     "rules": {
         "semi": [
@@ -31,6 +32,10 @@
         "comma-dangle": [
             "error",
             "always-multiline"
+        ],
+        "yoda": [
+            "error",
+            "always"
         ]
     },
     "overrides": [

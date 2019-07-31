@@ -18,6 +18,7 @@ yarn-error.log
 composer.lock
 /public/css
 /public/js
+/public/mix-manifest.json
 /release.zip
 /_ide_helper.php
 /.phpstorm.meta.php
