@@ -34,7 +34,9 @@ done
 targets=()
 targets+=( ".env.sample" )
 targets+=( "artisan" )
+targets+=( "composer.json" )
 targets+=( "LICENSE" )
+targets+=( "package.json" )
 targets+=( "README.md" )
 targets+=( "server.php" )
 for target in "${targets[@]}"
