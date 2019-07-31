@@ -36,11 +36,31 @@ class Guest extends Model
         'id',
     ];
 
+    /**
+     * @var array
+     */
+    protected $hidden = [
+        'reservations',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $with = [
+        'detail',
+    ];
+
+    /**
+     * @return HasOne
+     */
     public function detail(): HasOne
     {
         return $this->hasOne(GuestDetail::class);
     }
 
+    /**
+     * @return HasMany
+     */
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);

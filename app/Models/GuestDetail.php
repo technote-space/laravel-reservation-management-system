@@ -52,6 +52,9 @@ class GuestDetail extends Model
         'guest_id' => 'int',
     ];
 
+    /**
+     * @return BelongsTo
+     */
     public function guest(): BelongsTo
     {
         return $this->belongsTo(Guest::class);

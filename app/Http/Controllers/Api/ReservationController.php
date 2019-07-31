@@ -26,7 +26,7 @@ class ReservationController extends CrudController
     protected function getListEagerLoadingTargets(): array
     {
         return [
-            'guest.detail',
+            'guest',
             'room',
         ];
     }
@@ -37,7 +37,7 @@ class ReservationController extends CrudController
     protected function getDetailEagerLoadingTargets(): array
     {
         return [
-            'guest.detail',
+            'guest',
             'room',
         ];
     }

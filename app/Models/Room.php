@@ -62,6 +62,23 @@ class Room extends Model
         'is_reserved',
     ];
 
+    /**
+     * @var array
+     */
+    protected $hidden = [
+        'reservations',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $with = [
+        'reservations',
+    ];
+
+    /**
+     * @return HasMany
+     */
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
@@ -70,7 +87,7 @@ class Room extends Model
     /**
      * @return HasOne
      */
-    public function latestReservation()
+    public function latestReservation(): HasOne
     {
         return $this->hasOne(Reservation::class)->latest('start_date')->limit(1);
     }
@@ -78,9 +95,9 @@ class Room extends Model
     /**
      * @return HasMany
      */
-    public function recentReservations()
+    public function recentReservations(): HasMany
     {
-        return $this->reservations()->where('start_date', '<=', Carbon::now()->format('Y-m-d'))->latest('start_date')->limit(5);
+        return $this->reservations()->where('start_date', '<=', now()->format('Y-m-d'))->latest('start_date')->limit(5);
     }
 
     /**

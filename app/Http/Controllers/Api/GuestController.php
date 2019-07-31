@@ -21,26 +21,6 @@ class GuestController extends CrudController
     }
 
     /**
-     * @return array
-     */
-    protected function getListEagerLoadingTargets(): array
-    {
-        return [
-            'detail',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDetailEagerLoadingTargets(): array
-    {
-        return [
-            'detail',
-        ];
-    }
-
-    /**
      * @return JsonResponse
      */
     public function index()

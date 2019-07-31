@@ -72,14 +72,22 @@ class Reservation extends Model
         'is_future',
     ];
 
-    /** @var int $now */
+    /**
+     * @var int $now
+     */
     private static $now;
 
+    /**
+     * @return BelongsTo
+     */
     public function guest(): BelongsTo
     {
         return $this->belongsTo(Guest::class);
     }
 
+    /**
+     * @return BelongsTo
+     */
     public function room(): BelongsTo
     {
         return $this->belongsTo(Room::class);
