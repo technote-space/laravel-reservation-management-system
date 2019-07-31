@@ -34,11 +34,16 @@ if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; th
     php artisan key:generate
     php artisan config:cache
 
+    if [[ -z "${NO_NPM}" ]]; then
+        echo ""
+        echo ">> Build JS"
+        composer build:js
+    fi
+
     if [[ -n "${LARAVEL_DUSK}" ]]; then
         echo ""
         echo ">> Prepare for Laravel Dusk"
-        composer chrome
-        composer build:js
+        bash ${current}/prepare/install-chrome.sh
         google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
         php artisan serve &
     fi

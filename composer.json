@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.2",
         "ext-mbstring": "*",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
@@ -234,7 +234,7 @@
             "php artisan route:list --ansi"
         ],
         "chrome": [
-            "php artisan dusk:chrome-driver 74 --env=testing"
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/prepare/install-chrome.sh"
         ]
     }
 }

@@ -73,7 +73,6 @@ jobs:
     - stage: test
       language: php
       php: '7.3'
-      env: NO_NPM=1
       script: bash bin/test/phpunit.sh
     - stage: test
       language: php
@@ -83,11 +82,6 @@ jobs:
     - stage: test
       language: php
       php: '7.2'
-      env: LARAVEL_DUSK=1
-      script: bash bin/test/dusk.sh
-    - stage: test
-      language: php
-      php: '7.1'
       env: LARAVEL_DUSK=1
       script: bash bin/test/dusk.sh
     - stage: test
