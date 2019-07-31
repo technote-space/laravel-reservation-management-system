@@ -29,7 +29,7 @@ class ReservationTest extends BaseTestCase
     /** @var Room $room */
     protected static $room;
 
-    protected static function seeder()
+    protected static function seeder(): void
     {
         self::$guest       = factory(Guest::class)->create();
         self::$room        = factory(Room::class)->create();

@@ -15,7 +15,7 @@ abstract class BaseTestCase extends TestCase
         static::seeder();
     }
 
-    protected static function seeder()
+    protected static function seeder(): void
     {
     }
 }

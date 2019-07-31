@@ -11,7 +11,7 @@ use Artisan;
  */
 abstract class BaseTestCase extends \Tests\BaseTestCase
 {
-    protected static function seeder()
+    protected static function seeder(): void
     {
         Artisan::call('db:seed');
     }

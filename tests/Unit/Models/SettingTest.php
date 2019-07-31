@@ -10,7 +10,8 @@ use Tests\TestHelper;
 /**
  * Class RoomTest
  * @package Tests\Unit\Models
- * @group Models
+ * @group Unit
+ * @group Unit.Models
  */
 class SettingTest extends TestCase
 {

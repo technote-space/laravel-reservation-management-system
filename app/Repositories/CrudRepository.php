@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use Eloquent;
 use Exception;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -50,11 +51,13 @@ class CrudRepository
     }
 
     /**
-     * @return Eloquent[]|Collection|Model[]
+     * @param  int|null  $perPage
+     *
+     * @return LengthAwarePaginator
      */
-    public function all()
+    public function all(?int $perPage = null)
     {
-        return $this->with($this->listEagerLoading)->get();
+        return $this->with($this->listEagerLoading)->paginate($perPage);
     }
 
     /**

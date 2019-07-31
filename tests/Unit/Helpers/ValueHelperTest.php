@@ -18,7 +18,7 @@ class ValueHelperTest extends TestCase
     /** @var ValueHelperImplemented $helper */
     private static $helper;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 

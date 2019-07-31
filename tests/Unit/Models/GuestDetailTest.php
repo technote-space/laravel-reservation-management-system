@@ -24,7 +24,7 @@ class GuestDetailTest extends BaseTestCase
     /** @var Guest $guest */
     protected static $guest;
 
-    protected static function seeder()
+    protected static function seeder(): void
     {
         self::$guest  = factory(Guest::class)->create();
         self::$detail = factory(GuestDetail::class)->create([

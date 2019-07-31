@@ -1,14 +1,17 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Api\Auth;
 
 use App\Models\Admin;
+use Tests\Feature\BaseTestCase;
 
 /**
  * Class UserApiTest
- * @package Tests\Feature
+ * @package Tests\Feature\Api\Auth
  * @group Feature
+ * @group Feature.Api
+ * @group Feature.Api.Auth
  */
 class UserApiTest extends BaseTestCase
 {

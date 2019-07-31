@@ -1,15 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Api\Crud;
 
 use App\Models\Admin;
 use App\Models\Room;
+use Tests\Feature\BaseTestCase;
 
 /**
  * Class RoomApiTest
- * @package Tests\Feature
+ * @package Tests\Feature\Api\Crud
  * @group Feature
+ * @group Feature.Api
+ * @group Feature.Api.Crud
  */
 class RoomApiTest extends BaseTestCase
 {
@@ -22,20 +25,26 @@ class RoomApiTest extends BaseTestCase
         $this->admin = factory(Admin::class)->create();
     }
 
-    protected static function seeder()
+    protected static function seeder(): void
     {
     }
 
     public function testIndex()
     {
-        factory(Room::class, 5)->create();
+        factory(Room::class, 25)->create();
         $response = $this->actingAs($this->admin)->json(
             'GET',
             route('rooms.index')
         );
 
         $response->assertStatus(200)
-                 ->assertJsonCount(5);
+                 ->assertJsonStructure([
+                     'data',
+                     'path',
+                     'to',
+                     'total',
+                 ])
+                 ->assertJsonCount(15, 'data');
     }
 
     public function testShow()

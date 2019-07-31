@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Tests\Feature\Api\Crud;
 
 use App\Models\Admin;
 use App\Models\Guest;
@@ -9,12 +9,14 @@ use App\Models\GuestDetail;
 use Illuminate\Support\Collection;
 use Faker\Factory;
 use Faker\Generator;
-use Illuminate\Support\Facades\Config;
+use Tests\Feature\BaseTestCase;
 
 /**
  * Class GuestApiTest
- * @package Tests\Feature
+ * @package Tests\Feature\Api\Crud
  * @group Feature
+ * @group Feature.Api
+ * @group Feature.Api.Crud
  */
 class GuestApiTest extends BaseTestCase
 {
@@ -27,13 +29,13 @@ class GuestApiTest extends BaseTestCase
         $this->admin = factory(Admin::class)->create();
     }
 
-    protected static function seeder()
+    protected static function seeder(): void
     {
     }
 
     public function testIndex()
     {
-        Collection::times(5, function () {
+        Collection::times(25, function () {
             $guest = factory(Guest::class)->create();
             factory(GuestDetail::class)->create([
                 'guest_id' => $guest->id,
@@ -45,7 +47,13 @@ class GuestApiTest extends BaseTestCase
         );
 
         $response->assertStatus(200)
-                 ->assertJsonCount(5);
+                 ->assertJsonStructure([
+                     'data',
+                     'path',
+                     'to',
+                     'total',
+                 ])
+                 ->assertJsonCount(15, 'data');
     }
 
     public function testShow()
@@ -72,7 +80,7 @@ class GuestApiTest extends BaseTestCase
         $this->assertFalse(GuestDetail::where('name', 'abc')->exists());
 
         /** @var Generator $faker */
-        $faker    = Factory::create(Config::get('app.faker_locale'));
+        $faker    = Factory::create(config('app.faker_locale'));
         $response = $this->actingAs($this->admin)->json(
             'POST',
             route('guests.store'),
