@@ -88,6 +88,7 @@ abstract class CrudRequest extends FormRequest
      *
      * @return Model
      * @throws Throwable
+     * @SuppressWarnings(PHPMD.MissingImport)
      */
     private function getInstance(string $target)
     {
@@ -119,9 +120,9 @@ abstract class CrudRequest extends FormRequest
      */
     public function rules(): array
     {
-//        logger(print_r(collect($this->getTargets())->flatMap(function ($target) {
-//            return $this->getTableRules($target);
-//        })->toArray(), true));
+        //        logger(print_r(collect($this->getTargets())->flatMap(function ($target) {
+        //            return $this->getTableRules($target);
+        //        })->toArray(), true));
 
         return collect($this->getTargets())->flatMap(function ($target) {
             return $this->getTableRules($target);
