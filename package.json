@@ -44,7 +44,7 @@
         "laravel-mix": "^4.1.2",
         "lodash": "^4.17.15",
         "material-design-icons-iconfont": "^5.0.1",
-        "popper.js": "^1.15",
+        "nuxt": "^2.8.1",
         "resolve-url-loader": "^3.1.0",
         "sass": "^1.22.7",
         "sass-loader": "^7.1.0",
@@ -53,13 +53,17 @@
         "stylelint-config-standard": "^18.3.0",
         "stylelint-order": "^3.0.1",
         "stylelint-scss": "^3.9.2",
+        "vee-validate": "^2.2.13",
         "vue": "^2.6.10",
         "vue-jest": "^3.0.4",
         "vue-loader": "^15.7.1",
+        "vue-meta": "^2.2.0",
         "vue-router": "^3.0.7",
         "vue-server-renderer": "^2.6.10",
         "vue-template-compiler": "^2.6.10",
+        "vue-toasted": "^1.1.27",
         "vuetify": "^2.0.1",
-        "vuex": "^3.1.1"
+        "vuex": "^3.1.1",
+        "webpack-cli": "^3.3.6"
     }
 }
