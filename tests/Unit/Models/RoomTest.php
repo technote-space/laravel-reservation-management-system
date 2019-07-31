@@ -60,7 +60,7 @@ class RoomTest extends BaseTestCase
             'guest_id'   => $guest->id,
             'room_id'    => $room->id,
             'start_date' => date('Y-m-d'),
-            'end_date'   => Carbon::now()->addDays(2)->format('Y-m-d'),
+            'end_date'   => now()->addDays(2)->format('Y-m-d'),
             'number'     => 1,
         ]);
         $this->runSeed([

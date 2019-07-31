@@ -2,8 +2,6 @@
 
 namespace Seeds\Traits;
 
-use \Illuminate\Support\Facades\Config;
-
 trait SeederHelper
 {
     /**
@@ -14,7 +12,7 @@ trait SeederHelper
      */
     private function getConfigValue($key, $default = null)
     {
-        return Config::get("seeder.{$key}", $default);
+        return config("seeder.{$key}", $default);
     }
 
     /**

@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Throwable;
 
@@ -120,9 +119,9 @@ abstract class CrudRequest extends FormRequest
      */
     public function rules(): array
     {
-        //        Log::debug(print_r(collect($this->getTargets())->flatMap(function ($target) {
-        //            return $this->getTableRules($target);
-        //        })->toArray(), true));
+//        logger(print_r(collect($this->getTargets())->flatMap(function ($target) {
+//            return $this->getTableRules($target);
+//        })->toArray(), true));
 
         return collect($this->getTargets())->flatMap(function ($target) {
             return $this->getTableRules($target);
@@ -377,7 +376,7 @@ abstract class CrudRequest extends FormRequest
      */
     public function attributes()
     {
-        //        Log::debug(print_r(collect($this->getTargets())->flatMap(function ($target) {
+        //        logger(print_r(collect($this->getTargets())->flatMap(function ($target) {
         //            return $this->getTableAttributes($target);
         //        })->toArray(), true));
 
