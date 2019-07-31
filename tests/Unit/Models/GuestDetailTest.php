@@ -9,7 +9,8 @@ use App\Models\GuestDetail;
 /**
  * Class GuestDetailTest
  * @package Tests\Unit\Models
- * @group Models
+ * @group Unit
+ * @group Unit.Models
  */
 class GuestDetailTest extends BaseTestCase
 {

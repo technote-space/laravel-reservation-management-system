@@ -13,7 +13,8 @@ use Illuminate\Support\Carbon;
 /**
  * Class RoomTest
  * @package Tests\Unit\Models
- * @group Models
+ * @group Unit
+ * @group Unit.Models
  */
 class RoomTest extends BaseTestCase
 {

@@ -11,7 +11,8 @@ use App\Models\Setting;
 /**
  * Class ReservationTest
  * @package Tests\Unit\Models
- * @group Models
+ * @group Unit
+ * @group Unit.Models
  */
 class ReservationTest extends BaseTestCase
 {

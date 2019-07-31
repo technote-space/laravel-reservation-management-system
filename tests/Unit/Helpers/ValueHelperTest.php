@@ -10,7 +10,8 @@ use Tests\Unit\Helpers\Implement\ValueHelperImplemented;
 /**
  * Class ValueHelperTest
  * @package Tests\Unit\Models
- * @group Helpers
+ * @group Unit
+ * @group Unit.Helpers
  * @SuppressWarnings(PMD.TooManyPublicMethods)
  */
 class ValueHelperTest extends TestCase

@@ -26,6 +26,8 @@
         "barryvdh/laravel-debugbar": "^3.2",
         "barryvdh/laravel-ide-helper": "^2.6",
         "beyondcode/laravel-dump-server": "^1.0",
+        "beyondcode/laravel-query-detector": "^1.0",
+        "codedungeon/phpunit-result-printer": "^0.26.2",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
         "doctrine/dbal": "^2.9",
         "filp/whoops": "^2.0",
@@ -81,6 +83,7 @@
         "post-update-cmd": [
             "if [[ -n $(php artisan list --raw | grep 'ide-helper:generate') ]]; then composer ide; fi",
             "php artisan optimize --ansi",
+            "php artisan cache:clear --ansi",
             "php artisan config:clear --ansi",
             "php artisan route:clear --ansi"
         ],
@@ -135,6 +138,30 @@
         ],
         "phpunit": [
             "phpunit"
+        ],
+        "phpunit:no": [
+            "phpunit --no-coverage --stop-on-failure --colors=always"
+        ],
+        "phpunit:feature": [
+            "@phpunit:no --group=Feature"
+        ],
+        "phpunit:api": [
+            "@phpunit:no --group=Feature.Api"
+        ],
+        "phpunit:crud": [
+            "@phpunit:no --group=Feature.Api.Crud"
+        ],
+        "phpunit:auth": [
+            "@phpunit:no --group=Feature.Api.Auth"
+        ],
+        "phpunit:unit": [
+            "@phpunit:no --group=Unit"
+        ],
+        "phpunit:models": [
+            "@phpunit:no --group=Unit.Models"
+        ],
+        "phpunit:helpers": [
+            "@phpunit:no --group=Unit.Helpers"
         ],
         "dusk": [
             "php artisan dusk --env=testing"

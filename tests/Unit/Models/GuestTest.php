@@ -11,7 +11,8 @@ use App\Models\Room;
 /**
  * Class GuestTest
  * @package Tests\Unit\Models
- * @group Models
+ * @group Unit
+ * @group Unit.Models
  */
 class GuestTest extends BaseTestCase
 {
