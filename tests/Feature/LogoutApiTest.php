@@ -27,5 +27,6 @@ class LogoutApiTest extends BaseTestCase
 
         $response->assertStatus(200);
         $this->assertGuest();
+        $this->assertEquals('""', $response->content());
     }
 }

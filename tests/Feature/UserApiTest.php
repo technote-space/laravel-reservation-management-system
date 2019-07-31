@@ -6,11 +6,11 @@ namespace Tests\Feature;
 use App\Models\Admin;
 
 /**
- * Class LoginApiTest
+ * Class UserApiTest
  * @package Tests\Feature
  * @group Feature
  */
-class LoginApiTest extends BaseTestCase
+class UserApiTest extends BaseTestCase
 {
     /** @var Admin $admin */
     private $admin;
@@ -21,12 +21,9 @@ class LoginApiTest extends BaseTestCase
         $this->admin = factory(Admin::class)->create();
     }
 
-    public function testLogin()
+    public function testLoggedIn()
     {
-        $response = $this->json('POST', route('login'), [
-            'email'    => $this->admin->email,
-            'password' => 'test1234',
-        ]);
+        $response = $this->actingAs($this->admin)->json('GET', route('user'));
 
         $response->assertStatus(200)
                  ->assertJson([
@@ -34,5 +31,13 @@ class LoginApiTest extends BaseTestCase
                      'email' => $this->admin->email,
                  ]);
         $this->assertAuthenticatedAs($this->admin);
+    }
+
+    public function testNotLoggedIn()
+    {
+        $response = $this->json('GET', route('user'));
+
+        $response->assertStatus(200);
+        $this->assertEquals('', $response->content());
     }
 }

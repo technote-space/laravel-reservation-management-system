@@ -1,6 +1,17 @@
 <?php
 
-Route::post('/register', 'Auth\RegisterController@register')->name('register');
-Route::post('/login', 'Auth\LoginController@login')->name('login');
-Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-Route::get('/email/verify/{id}', 'Auth\VerificationController@verify')->name('verification.verify');
+use Illuminate\Routing\Router;
+
+Route::post('login', 'Auth\LoginController@login')->name('login');
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::get('user', 'IndexController@user')->name('user');
+
+Route::group([
+    'middleware' => ['auth'],
+], function (Router $router) {
+    $router->apiResources([
+        'guests'       => 'Api\GuestController',
+        'rooms'        => 'Api\RoomController',
+        'reservations' => 'Api\ReservationController',
+    ]);
+});
