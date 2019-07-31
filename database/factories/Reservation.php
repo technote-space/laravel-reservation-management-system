@@ -9,7 +9,7 @@ $factory->define(Reservation::class, function (Faker $faker) {
 
     return [
         'start_date' => $start,
-        'end_date'   => $faker->dateTimeBetween($start, $start.'  +4 days'),
+        'end_date'   => $faker->dateTimeBetween($start, $start.'  +4 days')->format('Y-m-d'),
         'number'     => $faker->numberBetween(1, 2),
     ];
 });

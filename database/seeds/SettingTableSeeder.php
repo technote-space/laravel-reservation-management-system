@@ -18,5 +18,15 @@ class SettingTableSeeder extends Seeder
             'value' => Config::get("reservation.max_day"),
             'type'  => 'int',
         ]);
+        factory(Setting::class)->create([
+            'key'   => 'check_in',
+            'value' => Config::get("reservation.check_in"),
+            'type'  => 'time',
+        ]);
+        factory(Setting::class)->create([
+            'key'   => 'check_out',
+            'value' => Config::get("reservation.check_out"),
+            'type'  => 'time',
+        ]);
     }
 }

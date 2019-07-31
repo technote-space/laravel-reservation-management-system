@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\DatabaseNotification;
 use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Carbon;
 
@@ -37,7 +36,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Admin whereUpdatedAt($value)
  * @mixin Eloquent
  */
-class Admin extends Authenticatable implements MustVerifyEmail
+class Admin extends Authenticatable
 {
     use Notifiable;
 
@@ -46,5 +45,20 @@ class Admin extends Authenticatable implements MustVerifyEmail
      */
     protected $guarded = [
         'id',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
     ];
 }

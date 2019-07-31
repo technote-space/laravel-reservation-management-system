@@ -8,7 +8,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
+use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
 
 /**
  * App\Models\Room
@@ -30,9 +32,14 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Room wherePrice($value)
  * @method static Builder|Room whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read mixed $is_reserved
+ * @property-read Reservation $latestReservation
+ * @property-read Collection|Reservation[] $recentReservations
  */
 class Room extends Model
 {
+    use HasEagerLimit;
+
     /**
      * @var array
      */
@@ -48,8 +55,45 @@ class Room extends Model
         'price'  => 'int',
     ];
 
+    /**
+     * @var array
+     */
+    protected $appends = [
+        'is_reserved',
+    ];
+
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function latestReservation()
+    {
+        return $this->hasOne(Reservation::class)->latest('start_date')->limit(1);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function recentReservations()
+    {
+        return $this->reservations()->where('start_date', '<=', Carbon::now()->format('Y-m-d'))->latest('start_date')->limit(5);
+    }
+
+    /**
+     * @return bool
+     * @SuppressWarnings(PHPMD.BooleanGetMethodName)
+     */
+    public function getIsReservedAttribute(): bool
+    {
+        return ! $this->reservations->every(
+            function ($row) {
+                /** @var Reservation $row */
+                return ! $row->is_present;
+            }
+        );
     }
 }

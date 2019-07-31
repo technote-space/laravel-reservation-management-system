@@ -15,7 +15,7 @@ class CreateRoomsTable extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable(false)->comment('部屋名');
+            $table->string('name', 128)->nullable(false)->comment('部屋名');
             $table->unsignedInteger('number')->nullable(false)->comment('最大人数');
             $table->unsignedInteger('price')->nullable(false)->comment('一泊の金額');
             $table->timestamps();

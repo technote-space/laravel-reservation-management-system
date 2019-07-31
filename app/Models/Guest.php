@@ -36,21 +36,6 @@ class Guest extends Model
         'id',
     ];
 
-    /**
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
-
     public function detail(): HasOne
     {
         return $this->hasOne(GuestDetail::class);

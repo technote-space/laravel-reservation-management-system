@@ -9,7 +9,7 @@ $factory->define(Admin::class, function (Faker $faker) {
     return [
         'name'           => $faker->name,
         'email'          => $faker->unique()->safeEmail,
-        'password'       => Hash::make('test'),
+        'password'       => Hash::make('test1234'),
         'remember_token' => Str::random(10),
     ];
 });

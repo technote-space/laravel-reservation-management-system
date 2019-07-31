@@ -8,8 +8,8 @@ $factory->define(GuestDetail::class, function (Faker $faker) {
     return [
         'name'      => $faker->name,
         'name_kana' => $faker->kanaName,
-        'zip_code'  => $faker->postcode,
+        'zip_code'  => substr_replace($faker->postcode, '-', 3, 0),
         'address'   => preg_replace('#\A\d+\s+#', '', $faker->address),
-        'phone'     => $faker->phoneNumber,
+        'phone'     => '0'.$faker->numberBetween(10, 99).'-'.$faker->numberBetween(10, 9999).'-'.$faker->numberBetween(100, 9999),
     ];
 });

@@ -12,13 +12,13 @@ trait TestHelper
     protected function getTables()
     {
         return [
-            'admins',
-            'guests',
-            'guest_details',
             'password_resets',
-            'reservations',
-            'rooms',
             'settings',
+            'admins',
+            'reservations',
+            'guest_details',
+            'guests',
+            'rooms',
         ];
     }
 
@@ -40,8 +40,8 @@ trait TestHelper
         Artisan::call('migrate');
     }
 
-    protected function runSeed()
+    protected function runSeed(array $params = [])
     {
-        Artisan::call('db:seed');
+        Artisan::call('db:seed', $params);
     }
 }

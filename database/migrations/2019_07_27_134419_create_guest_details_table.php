@@ -16,11 +16,11 @@ class CreateGuestDetailsTable extends Migration
         Schema::create('guest_details', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('guest_id')->nullable(false)->unique()->comment('利用者ID');
-            $table->string('name')->nullable(false)->comment('名');
-            $table->string('name_kana')->nullable(false)->comment('カナ名');
-            $table->string('zip_code')->nullable(false)->comment('郵便番号');
-            $table->string('address')->nullable(false)->comment('住所');
-            $table->string('phone')->nullable(false)->comment('電話番号');
+            $table->string('name', 128)->nullable(false)->comment('名');
+            $table->string('name_kana', 128)->nullable(false)->comment('カナ名');
+            $table->string('zip_code', 16)->nullable(false)->comment('郵便番号');
+            $table->string('address', 128)->nullable(false)->comment('住所');
+            $table->string('phone', 16)->nullable(false)->comment('電話番号');
             $table->timestamps();
 
             $table->foreign('guest_id')->references('id')->on('guests')->onUpdate('cascade')->onDelete('cascade');
