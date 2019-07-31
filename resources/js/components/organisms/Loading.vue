@@ -51,5 +51,6 @@
         border-radius: 6px;
         width: auto;
         color: whitesmoke;
+        overflow: hidden;
     }
 </style>

@@ -7,18 +7,9 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
-
     export default {
-        created () {
-            this.offDrawer();
-            this.offToolbar();
-        },
-        methods: {
-            ...mapActions({
-                offDrawer: 'common/offDrawer',
-                offToolbar: 'common/onToolbar',
-            }),
+        metaInfo: {
+            title: 'Not Found',
         },
     };
 </script>

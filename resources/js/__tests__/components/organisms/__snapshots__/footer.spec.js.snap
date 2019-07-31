@@ -2,6 +2,7 @@
 
 exports[`Footer should 1`] = `
 <v-footer-stub
+  absolute="true"
   color="primary"
   dark="true"
   height="auto"

@@ -7,18 +7,9 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
-
     export default {
-        created () {
-            this.onDrawer();
-            this.onToolbar();
-        },
-        methods: {
-            ...mapActions({
-                onDrawer: 'common/onDrawer',
-                onToolbar: 'common/onToolbar',
-            }),
+        metaInfo: {
+            title: 'Dashboard',
         },
     };
 </script>

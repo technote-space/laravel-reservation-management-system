@@ -3,6 +3,7 @@
         dark
         color="primary"
         padless
+        absolute
     >
         <v-layout
             justify-center

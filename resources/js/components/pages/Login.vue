@@ -1,24 +1,27 @@
 <template>
     <v-container fluid>
         <v-layout justify-center>
-            Login
+            <v-card
+                raised
+                class="pa-6"
+            >
+                <v-card-text>
+                    <LoginForm />
+                </v-card-text>
+            </v-card>
         </v-layout>
     </v-container>
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import LoginForm from '../organisms/LoginForm';
 
     export default {
-        created () {
-            this.offDrawer();
-            this.offToolbar();
+        metaInfo: {
+            title: 'Login',
         },
-        methods: {
-            ...mapActions({
-                offDrawer: 'common/offDrawer',
-                offToolbar: 'common/offToolbar',
-            }),
+        components: {
+            LoginForm,
         },
     };
 </script>
