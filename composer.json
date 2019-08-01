@@ -137,10 +137,10 @@
             "phpmd ./app/,./config,./database/factories,./database/seeds,./routes/,./tests/ text phpmd.xml"
         ],
         "phpunit": [
-            "phpunit"
+            "phpunit --stop-on-failure --colors=always"
         ],
         "phpunit:no": [
-            "phpunit --no-coverage --stop-on-failure --colors=always"
+            "@phpunit --no-coverage"
         ],
         "phpunit:feature": [
             "@phpunit:no --group=Feature"
