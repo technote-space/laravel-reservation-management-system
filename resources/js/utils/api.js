@@ -1,13 +1,13 @@
 import Vue from 'vue';
 
 /**
- * @param method
- * @param url
- * @param options
- * @param options.data
- * @param options.succeeded
- * @param options.failed
- * @param options.always
+ * @param {string} method method
+ * @param {string} url url
+ * @param {object} options options
+ * @param {?object} options.data data
+ * @param {?function} options.succeeded succeeded
+ * @param {?function} options.failed failed
+ * @param {?function} options.always always
  */
 export const apiAccess = async (method, url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => {
     try {
@@ -28,22 +28,22 @@ export const apiAccess = async (method, url, options = { data: undefined, succee
 };
 
 /**
- * @param url
- * @param options
- * @param options.data
- * @param options.succeeded
- * @param options.failed
- * @param options.always
+ * @param {string} url url
+ * @param {object} options options
+ * @param {?object} options.data data
+ * @param {?function} options.succeeded succeeded
+ * @param {?function} options.failed failed
+ * @param {?function} options.always always
  */
 export const apiGet = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('get', url, options);
 
 /**
- * @param url
- * @param options
- * @param options.data
- * @param options.succeeded
- * @param options.failed
- * @param options.always
+ * @param {string} url url
+ * @param {object} options options
+ * @param {?object} options.data data
+ * @param {?function} options.succeeded succeeded
+ * @param {?function} options.failed failed
+ * @param {?function} options.always always
  */
 export const apiPost = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('post', url, options);
 
