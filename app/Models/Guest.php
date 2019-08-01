@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Helpers\Traits\TimeHelper;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,9 +27,14 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Guest whereId($value)
  * @method static Builder|Guest whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read Reservation $latestReservation
+ * @property-read Reservation $latestUsage
+ * @property-read Collection|Reservation[] $recentUsages
  */
 class Guest extends Model
 {
+    use TimeHelper;
+
     /**
      * @var array
      */
@@ -48,6 +54,7 @@ class Guest extends Model
      */
     protected $with = [
         'detail',
+        'reservations',
     ];
 
     /**
@@ -64,5 +71,29 @@ class Guest extends Model
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function latestReservation(): HasOne
+    {
+        return $this->hasOne(Reservation::class)->latest('start_date')->limit(1);
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function latestUsage(): HasOne
+    {
+        return $this->hasOne(Reservation::class)->where('start_date', '<=', $this->getCheckInThresholdDay()->format('Y-m-d'))->latest('start_date')->limit(1);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function recentUsages(): HasMany
+    {
+        return $this->reservations()->where('start_date', '<=', $this->getCheckInThresholdDay()->format('Y-m-d'))->latest('start_date')->limit(5);
     }
 }

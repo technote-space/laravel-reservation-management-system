@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Helpers\Traits\TimeHelper;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -35,15 +36,17 @@ use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
  * @method static Builder|Reservation whereStartDate($value)
  * @method static Builder|Reservation whereUpdatedAt($value)
  * @mixin Eloquent
- * @property-read string $end_datetime
  * @property-read bool $is_future
  * @property-read bool $is_past
  * @property-read bool $is_present
- * @property-read string $start_datetime
+ * @property-read Carbon $start_datetime
+ * @property-read Carbon $end_datetime
+ * @property-read string $end_date_str
+ * @property-read string $start_date_str
  */
 class Reservation extends Model
 {
-    use HasEagerLimit;
+    use HasEagerLimit, TimeHelper;
 
     /**
      * @var array
@@ -56,26 +59,25 @@ class Reservation extends Model
      * @var array
      */
     protected $casts = [
-        'guest_id' => 'int',
-        'room_id'  => 'int',
-        'number'   => 'int',
+        'guest_id'   => 'int',
+        'room_id'    => 'int',
+        'start_date' => 'date',
+        'end_date'   => 'date',
+        'number'     => 'int',
     ];
 
     /**
      * @var array
      */
     protected $appends = [
+        'start_date_str',
+        'end_date_str',
         'start_datetime',
         'end_datetime',
         'is_past',
         'is_present',
         'is_future',
     ];
-
-    /**
-     * @var int $now
-     */
-    private static $now;
 
     /**
      * @return BelongsTo
@@ -96,17 +98,33 @@ class Reservation extends Model
     /**
      * @return string
      */
-    public function getStartDatetimeAttribute(): string
+    public function getStartDateStrAttribute(): string
     {
-        return $this->start_date.' '.Setting::getSetting('check_in');
+        return $this->start_date->format('Y-m-d');
     }
 
     /**
      * @return string
      */
-    public function getEndDatetimeAttribute(): string
+    public function getEndDateStrAttribute(): string
     {
-        return Carbon::parse($this->end_date.' '.Setting::getSetting('check_out'))->addDay()->format('Y-m-d H:i');
+        return $this->end_date->format('Y-m-d');
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getStartDatetimeAttribute(): Carbon
+    {
+        return $this->getCheckInDatetime($this->start_date->format('Y-m-d'));
+    }
+
+    /**
+     * @return Carbon
+     */
+    public function getEndDatetimeAttribute(): Carbon
+    {
+        return $this->getCheckOutDatetime($this->end_date->format('Y-m-d'))->addDay();
     }
 
     /**
@@ -115,7 +133,7 @@ class Reservation extends Model
      */
     public function getIsPastAttribute(): bool
     {
-        return strtotime($this->end_datetime) < $this->now();
+        return $this->end_datetime->timestamp < $this->now();
     }
 
     /**
@@ -124,7 +142,7 @@ class Reservation extends Model
      */
     public function getIsPresentAttribute(): bool
     {
-        return strtotime($this->start_datetime) <= $this->now() && strtotime($this->end_datetime) >= $this->now();
+        return $this->start_datetime->timestamp <= $this->now() && $this->end_datetime->timestamp >= $this->now();
     }
 
     /**
@@ -133,26 +151,6 @@ class Reservation extends Model
      */
     public function getIsFutureAttribute(): bool
     {
-        return strtotime($this->start_datetime) > $this->now();
-    }
-
-    /**
-     * @return int
-     */
-    protected function now(): int
-    {
-        if (! isset(static::$now)) {
-            static::$now = time();
-        }
-
-        return static::$now;
-    }
-
-    /**
-     * @param  int|null  $now
-     */
-    public static function setNow(?int $now)
-    {
-        static::$now = $now;
+        return $this->start_datetime->timestamp > $this->now();
     }
 }

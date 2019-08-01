@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Helpers\Traits\TimeHelper;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -34,11 +35,12 @@ use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
  * @mixin Eloquent
  * @property-read mixed $is_reserved
  * @property-read Reservation $latestReservation
- * @property-read Collection|Reservation[] $recentReservations
+ * @property-read Collection|Reservation[] $recentUsages
+ * @property-read Reservation $latestUsage
  */
 class Room extends Model
 {
-    use HasEagerLimit;
+    use HasEagerLimit, TimeHelper;
 
     /**
      * @var array
@@ -93,11 +95,19 @@ class Room extends Model
     }
 
     /**
+     * @return HasOne
+     */
+    public function latestUsage(): HasOne
+    {
+        return $this->hasOne(Reservation::class)->where('start_date', '<=', $this->getCheckInThresholdDay()->format('Y-m-d'))->latest('start_date')->limit(1);
+    }
+
+    /**
      * @return HasMany
      */
-    public function recentReservations(): HasMany
+    public function recentUsages(): HasMany
     {
-        return $this->reservations()->where('start_date', '<=', now()->format('Y-m-d'))->latest('start_date')->limit(5);
+        return $this->reservations()->where('start_date', '<=', $this->getCheckInThresholdDay()->format('Y-m-d'))->latest('start_date')->limit(5);
     }
 
     /**

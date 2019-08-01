@@ -21,6 +21,18 @@ class RoomController extends CrudController
     }
 
     /**
+     * @return array
+     */
+    protected function getDetailEagerLoadingTargets(): array
+    {
+        return [
+            'latestReservation',
+            'latestUsage',
+            'recentUsages',
+        ];
+    }
+
+    /**
      * @return JsonResponse
      */
     public function index()

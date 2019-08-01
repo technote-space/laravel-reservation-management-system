@@ -5,7 +5,6 @@ namespace Tests\Feature\Api\Crud;
 
 use App\Models\Admin;
 use App\Models\Room;
-use Tests\Feature\BaseTestCase;
 
 /**
  * Class RoomApiTest
@@ -23,10 +22,6 @@ class RoomApiTest extends BaseTestCase
     {
         parent::setUp();
         $this->admin = factory(Admin::class)->create();
-    }
-
-    protected static function seeder(): void
-    {
     }
 
     public function testIndex()
@@ -62,6 +57,11 @@ class RoomApiTest extends BaseTestCase
                      'name'   => $room->name,
                      'number' => $room->number,
                      'price'  => $room->price,
+                 ])
+                 ->assertJsonStructure([
+                     'latest_reservation',
+                     'latest_usage',
+                     'recent_usages',
                  ]);
     }
 

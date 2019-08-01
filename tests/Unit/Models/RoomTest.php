@@ -96,26 +96,35 @@ class RoomTest extends BaseTestCase
         $this->assertEquals(self::$room->latestReservation->id, Reservation::latest('start_date')->first()->id);
     }
 
-    public function testGetRecentReservations()
+    public function testGetRecentUsages()
     {
+        Room::setNow(strtotime(date('Y-m-d 15:00:00')));
+        $this->runSeed([
+            '--class' => 'SettingTableSeeder',
+        ]);
+        Setting::clearCache();
         Reservation::all()->each(function ($row) {
             /** @var Model $row */
             $row->delete();
         });
-        self::$reservations = factory(Reservation::class, 10)->create([
+        factory(Reservation::class, 10)->create([
             'guest_id'   => self::$guest->id,
             'room_id'    => self::$room->id,
             'start_date' => Carbon::tomorrow()->format('Y-m-d'),
         ]);
         $this->assertEquals(10, Room::find(self::$room->id)->reservations->count());
-        $this->assertEquals(0, Room::find(self::$room->id)->recentReservations->count());
+        $this->assertEquals(0, Room::find(self::$room->id)->recentUsages->count());
+        $this->assertEmpty(Room::find(self::$room->id)->latestUsage);
 
-        self::$reservations = factory(Reservation::class, 10)->create([
+        factory(Reservation::class, 10)->create([
             'guest_id'   => self::$guest->id,
             'room_id'    => self::$room->id,
             'start_date' => Carbon::yesterday()->format('Y-m-d'),
         ]);
         $this->assertEquals(20, Room::find(self::$room->id)->reservations->count());
-        $this->assertEquals(5, Room::find(self::$room->id)->recentReservations->count());
+        $this->assertEquals(5, Room::find(self::$room->id)->recentUsages->count());
+        $this->assertNotEmpty(Room::find(self::$room->id)->latestUsage);
+
+        Room::setNow(null);
     }
 }

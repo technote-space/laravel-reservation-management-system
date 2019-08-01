@@ -9,7 +9,6 @@ use App\Models\GuestDetail;
 use Illuminate\Support\Collection;
 use Faker\Factory;
 use Faker\Generator;
-use Tests\Feature\BaseTestCase;
 
 /**
  * Class GuestApiTest
@@ -27,10 +26,6 @@ class GuestApiTest extends BaseTestCase
     {
         parent::setUp();
         $this->admin = factory(Admin::class)->create();
-    }
-
-    protected static function seeder(): void
-    {
     }
 
     public function testIndex()
@@ -72,6 +67,11 @@ class GuestApiTest extends BaseTestCase
         $response->assertStatus(200)
                  ->assertJsonFragment([
                      'name' => $guest->detail->name,
+                 ])
+                 ->assertJsonStructure([
+                     'latest_reservation',
+                     'latest_usage',
+                     'recent_usages',
                  ]);
     }
 

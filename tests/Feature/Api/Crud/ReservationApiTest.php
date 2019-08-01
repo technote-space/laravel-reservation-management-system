@@ -11,7 +11,6 @@ use App\Models\Room;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Support\Collection;
-use Tests\Feature\BaseTestCase;
 
 /**
  * Class ReservationApiTest
@@ -29,10 +28,6 @@ class ReservationApiTest extends BaseTestCase
     {
         parent::setUp();
         $this->admin = factory(Admin::class)->create();
-    }
-
-    protected static function seeder(): void
-    {
     }
 
     public function testIndex()
@@ -83,11 +78,15 @@ class ReservationApiTest extends BaseTestCase
 
         $response->assertStatus(200)
                  ->assertJsonFragment([
-                     'guest_id'   => $reservation->guest_id,
-                     'room_id'    => $reservation->room_id,
-                     'number'     => $reservation->number,
-                     'start_date' => $reservation->start_date,
-                     'end_date'   => $reservation->end_date,
+                     'guest_id'       => $reservation->guest_id,
+                     'room_id'        => $reservation->room_id,
+                     'number'         => $reservation->number,
+                     'start_date_str' => $reservation->start_date_str,
+                     'end_date_str'   => $reservation->end_date_str,
+                 ])
+                 ->assertJsonStructure([
+                     'guest',
+                     'room',
                  ]);
     }
 
@@ -120,11 +119,11 @@ class ReservationApiTest extends BaseTestCase
 
         $response->assertStatus(200)
                  ->assertJsonFragment([
-                     'guest_id'   => $guest->id,
-                     'room_id'    => $room->id,
-                     'number'     => 2,
-                     'start_date' => $start,
-                     'end_date'   => $end,
+                     'guest_id'       => $guest->id,
+                     'room_id'        => $room->id,
+                     'number'         => 2,
+                     'start_date_str' => $start,
+                     'end_date_str'   => $end,
                  ]);
         $this->assertTrue(Reservation::where('number', 2)->exists());
     }

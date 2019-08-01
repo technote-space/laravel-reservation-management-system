@@ -7,6 +7,9 @@ use App\Models\Guest;
 use App\Models\GuestDetail;
 use App\Models\Reservation;
 use App\Models\Room;
+use App\Models\Setting;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 /**
  * Class GuestTest
@@ -37,7 +40,7 @@ class GuestTest extends BaseTestCase
             'guest_id' => self::$guest->id,
         ]);
         $room               = factory(Room::class)->create();
-        self::$reservations = factory(Reservation::class, 2)->create([
+        self::$reservations = factory(Reservation::class, 5)->create([
             'guest_id' => self::$guest->id,
             'room_id'  => $room->id,
         ]);
@@ -53,7 +56,45 @@ class GuestTest extends BaseTestCase
     public function hasManyDataProvider(): array
     {
         return [
-            [Reservation::class, 'reservations'],
+            [Reservation::class, 'reservations', 5],
         ];
+    }
+
+    public function testGetLatestReservation()
+    {
+        $this->assertGreaterThanOrEqual(5, Reservation::count());
+        $this->assertEquals(self::$guest->latestReservation->id, Reservation::latest('start_date')->first()->id);
+    }
+
+    public function testGetRecentUsages()
+    {
+        Guest::setNow(strtotime(date('Y-m-d 15:00:00')));
+        $this->runSeed([
+            '--class' => 'SettingTableSeeder',
+        ]);
+        Setting::clearCache();
+        Reservation::all()->each(function ($row) {
+            /** @var Model $row */
+            $row->delete();
+        });
+        factory(Reservation::class, 10)->create([
+            'guest_id'   => self::$guest->id,
+            'room_id'    => self::$guest->id,
+            'start_date' => Carbon::tomorrow()->format('Y-m-d'),
+        ]);
+        $this->assertEquals(10, Guest::find(self::$guest->id)->reservations->count());
+        $this->assertEquals(0, Guest::find(self::$guest->id)->recentUsages->count());
+        $this->assertEmpty(Guest::find(self::$guest->id)->latestUsage);
+
+        factory(Reservation::class, 10)->create([
+            'guest_id'   => self::$guest->id,
+            'room_id'    => self::$guest->id,
+            'start_date' => Carbon::yesterday()->format('Y-m-d'),
+        ]);
+        $this->assertEquals(20, Guest::find(self::$guest->id)->reservations->count());
+        $this->assertEquals(5, Guest::find(self::$guest->id)->recentUsages->count());
+        $this->assertNotEmpty(Guest::find(self::$guest->id)->latestUsage);
+
+        Guest::setNow(null);
     }
 }
