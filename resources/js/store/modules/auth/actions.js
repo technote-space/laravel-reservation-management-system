@@ -11,7 +11,7 @@ import { apiAccess } from '../../../utils/api';
  * @param options.method
  */
 const access = async (context, name, data = undefined, options = { method: 'post' }) => {
-    context.dispatch('loading/onLoading', name, { root: true });
+    context.dispatch('loading/onLoading', 'auth/' + name, { root: true });
     const method = options.method || 'post';
     delete options.method;
     await apiAccess(method, name, Object.assign({
@@ -28,7 +28,7 @@ const access = async (context, name, data = undefined, options = { method: 'post
             await checkAuth(context, { to: router.currentRoute, next: location => location ? router.push(location) : null });
         },
         always: () => {
-            context.dispatch('loading/offLoading', name, { root: true });
+            context.dispatch('loading/offLoading', 'auth/' + name, { root: true });
         },
     }, options));
 };
@@ -74,8 +74,8 @@ export const initialized = context => context.commit(SET_INIT);
  * @param next
  */
 export const checkAuth = async (context, { to, next }) => {
-    if (!await isInitialized(context.state)) {
-        await initialized(context);
+    if (!isInitialized(context.state)) {
+        initialized(context);
         await user(context);
     }
     if (to.meta) {
