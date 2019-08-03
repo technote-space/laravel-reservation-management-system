@@ -22,6 +22,7 @@ const mutations = {
             update.list.page = response.data.current_page;
             update.list.total = response.data.total;
             update.list.totalPage = response.data.last_page;
+            update.list.perPage = response.data.per_page;
             update.list.data = response.data.data;
         } else {
             update.detail.id = id;

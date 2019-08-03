@@ -1,4 +1,5 @@
 import { STATE_MODE_TARGET, STATE_MODE_CURRENT } from './constant';
+import headers from './headers';
 
 const state = {
     [ STATE_MODE_TARGET ]: {
@@ -16,6 +17,7 @@ const state = {
             page: null,
             total: null,
             totalPage: null,
+            perPage: null,
             data: [],
         },
         detail: {
@@ -23,6 +25,7 @@ const state = {
             caches: {},
         },
     },
+    headers,
 };
 
 export default state;

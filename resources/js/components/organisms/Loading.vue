@@ -1,33 +1,20 @@
 <template>
-    <v-layout
-        row
-        justify-center
+    <v-overlay
+        :value="isActiveOverlay"
+        class="text-center"
     >
-        <v-dialog
-            :value="isActiveOverlay"
-            persistent
-            content
-            content-class="centered-dialog"
+        <v-progress-circular
+            indeterminate
+            size="64"
+            :color="progressColor"
+        ></v-progress-circular>
+        <div
+            v-if="message != null"
+            class="mt-3 font-weight-bold title"
         >
-            <v-container fill-height>
-                <v-layout
-                    column
-                    justify-center
-                    align-center
-                >
-                    <v-progress-circular
-                        indeterminate
-                        :size="70"
-                        :width="7"
-                        :color="progressColor"
-                    />
-                    <h1 v-if="message != null">
-                        {{ message }}
-                    </h1>
-                </v-layout>
-            </v-container>
-        </v-dialog>
-    </v-layout>
+            {{ message }}
+        </div>
+    </v-overlay>
 </template>
 
 <script>
@@ -43,14 +30,3 @@
         },
     };
 </script>
-
-<style>
-    .v-dialog.centered-dialog {
-        background: #282c2dad;
-        box-shadow: none;
-        border-radius: 6px;
-        width: auto;
-        color: whitesmoke;
-        overflow: hidden;
-    }
-</style>

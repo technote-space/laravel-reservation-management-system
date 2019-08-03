@@ -2,7 +2,7 @@ const state = {
     processes: [],
     overlayProcesses: [],
     message: null,
-    progressColor: 'secondary',
+    progressColor: undefined,
 };
 
 export default state;

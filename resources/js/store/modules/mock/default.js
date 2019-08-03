@@ -31,6 +31,7 @@ if ('local' === process.env.NODE_ENV) {
         guest_id: guest_id - 0,
         room_id: Object.keys(state.items.rooms)[ faker.random.number({ min: 0, max: Object.keys(state.items.rooms).length - 1 }) ] - 0,
     }))).map(item => ({ [ item.id ]: item })));
+    console.info(state);
 }
 
 export default state;
