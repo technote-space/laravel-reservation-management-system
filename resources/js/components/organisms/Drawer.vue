@@ -22,12 +22,14 @@
                     <v-list-item-title>{{ userName }}</v-list-item-title>
                 </v-list-item-content>
             </v-list-item>
+
             <v-divider />
 
             <v-list-item
                 v-for="item in sidebarItems"
                 :key="item.title"
                 :to="item.to"
+                active-class="amber--text"
             >
                 <v-list-item-icon>
                     <v-icon>{{ item.icon }}</v-icon>

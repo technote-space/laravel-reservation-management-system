@@ -1,6 +1,6 @@
 <template>
-    <v-container fluid>
-        <v-layout justify-center>
+    <v-container fluid fill-height>
+        <v-layout wrap justify-center>
             <v-card
                 raised
                 class="pa-6"

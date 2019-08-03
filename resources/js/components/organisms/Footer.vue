@@ -1,5 +1,6 @@
 <template>
     <v-footer
+        app
         dark
         color="primary"
         padless

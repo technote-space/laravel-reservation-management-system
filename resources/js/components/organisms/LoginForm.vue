@@ -57,11 +57,6 @@
                 return this.passwordVisibility ? 'text' : 'password';
             },
         },
-        created () {
-            if (this.isAuthenticated) {
-
-            }
-        },
         methods: {
             async login () {
                 this.$validator.validateAll().then(async result => {

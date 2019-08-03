@@ -1,7 +1,10 @@
 <template>
     <v-app>
         <Toolbar />
-        <v-content>
+        <v-content
+            app
+            class="mb-5"
+        >
             <Drawer />
             <RouterView />
         </v-content>
