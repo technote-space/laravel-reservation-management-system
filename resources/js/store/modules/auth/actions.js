@@ -1,7 +1,6 @@
-import router from '../../../router';
 import { SET_INIT, SET_USER, SET_BACK_TO } from './constant';
 import { isInitialized, isAuthenticated, getBackTo } from './getters';
-import { apiAccess } from '../../../utils/api';
+import { apiAccess, refreshRoute } from '../../../utils/api';
 
 /**
  * @param context
@@ -10,11 +9,11 @@ import { apiAccess } from '../../../utils/api';
  * @param options
  * @param options.method
  */
-const access = async (context, name, data = undefined, options = { method: 'post' }) => {
+const access = (context, name, data = undefined, options = { method: 'post' }) => {
     context.dispatch('loading/onLoading', 'auth/' + name, { root: true });
     const method = options.method || 'post';
     delete options.method;
-    await apiAccess(method, name, Object.assign({
+    apiAccess(method, name, Object.assign({
         data,
         succeeded: async response => {
             const userData = response.data || null;
@@ -24,8 +23,8 @@ const access = async (context, name, data = undefined, options = { method: 'post
                 }
                 return;
             }
-            context.commit(SET_USER, userData);
-            await checkAuth(context, { to: router.currentRoute, next: location => location ? router.push(location) : null });
+            setUser(context, userData);
+            await refreshRoute();
         },
         always: () => {
             context.dispatch('loading/offLoading', 'auth/' + name, { root: true });
@@ -35,24 +34,31 @@ const access = async (context, name, data = undefined, options = { method: 'post
 
 /**
  * @param context
+ * @param userData
+ * @returns {*}
+ */
+export const setUser = (context, userData) => context.commit(SET_USER, userData);
+
+/**
+ * @param context
  * @param data
  */
-export const login = async (context, data) => {
-    await access(context, 'login', data);
+export const login = (context, data) => {
+    access(context, 'login', data);
 };
 
 /**
  * @param context
  */
-export const logout = async context => {
-    await access(context, 'logout');
+export const logout = context => {
+    access(context, 'logout');
 };
 
 /**
  * @param context
  */
-export const user = async context => {
-    await access(context, 'user', undefined, { method: 'get' });
+export const user = context => {
+    access(context, 'user', undefined, { method: 'get' });
 };
 
 /**

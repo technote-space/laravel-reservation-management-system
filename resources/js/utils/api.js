@@ -1,65 +1,106 @@
-import Vue from 'vue';
+import store from '../store';
+import router from '../router';
+import adapter from './adapter';
+import { addErrorToasted, addInfoToasted } from './toasted';
 
 /**
  * @param {string} method method
  * @param {string} url url
  * @param {object} options options
- * @param {?object} options.data data
- * @param {?function} options.succeeded succeeded
- * @param {?function} options.failed failed
- * @param {?function} options.always always
+ * @param {object?} options.data data
+ * @param {function?} options.succeeded succeeded
+ * @param {function?} options.failed failed
+ * @param {function?} options.always always
  */
-export const apiAccess = async (method, url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => {
-    try {
-        const response = await window.axios[ method.toLocaleString() ]('/api/' + url, options.data);
-        if ('function' === typeof options.succeeded) {
-            options.succeeded(response);
-        }
-    } catch (error) {
+export const apiAccess = (method, url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => {
+    const failed = async error => {
         if ('function' === typeof options.failed) {
-            options.failed(error);
+            await options.failed(error);
         } else {
-            processError(error);
+            await processError(error);
         }
-    }
-    if ('function' === typeof options.always) {
-        options.always();
-    }
+    };
+
+    adapter(method, url, options.data).then(async response => {
+        if (!response.data) {
+            await options.succeeded({ data: null });
+        } else if ('object' !== typeof response.data) {
+            await failed('type of response is not json.');
+        } else if ('function' === typeof options.succeeded) {
+            await options.succeeded(response);
+        }
+    }).catch(async error => {
+        await failed(error);
+    }).finally(async () => {
+        if ('function' === typeof options.always) {
+            await options.always();
+        }
+    });
 };
 
 /**
  * @param {string} url url
  * @param {object} options options
- * @param {?object} options.data data
- * @param {?function} options.succeeded succeeded
- * @param {?function} options.failed failed
- * @param {?function} options.always always
+ * @param {object?} options.data data
+ * @param {function?} options.succeeded succeeded
+ * @param {function?} options.failed failed
+ * @param {function?} options.always always
  */
 export const apiGet = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('get', url, options);
 
 /**
  * @param {string} url url
  * @param {object} options options
- * @param {?object} options.data data
- * @param {?function} options.succeeded succeeded
- * @param {?function} options.failed failed
- * @param {?function} options.always always
+ * @param {object?} options.data data
+ * @param {function?} options.succeeded succeeded
+ * @param {function?} options.failed failed
+ * @param {function?} options.always always
  */
 export const apiPost = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('post', url, options);
 
 /**
+ * @param {string} url url
+ * @param {object} options options
+ * @param {object?} options.data data
+ * @param {function?} options.succeeded succeeded
+ * @param {function?} options.failed failed
+ * @param {function?} options.always always
+ */
+export const apiPatch = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('patch', url, options);
+
+/**
+ * @param {string} url url
+ * @param {object} options options
+ * @param {object?} options.data data
+ * @param {function?} options.succeeded succeeded
+ * @param {function?} options.failed failed
+ * @param {function?} options.always always
+ */
+export const apiDelete = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('delete', url, options);
+
+/**
+ * @returns {Promise<any>}
+ */
+export const refreshRoute = async () => await store.dispatch('auth/checkAuth', {
+    to: router.currentRoute,
+    next: location => location ? router.push(location) : null,
+}, { root: true });
+
+/**
  * @param error
  */
-export const processError = error => {
-    if (error.response && error.response.data && error.response.data.errors) {
-        Object.keys(error.response.data.errors).map(key => error.response.data.errors[ key ].map(message => key + ': ' + message)).flat().flat().forEach(message => {
-            Vue.toasted.show(message, {
-                type: 'error',
-            });
-        });
+export const processError = async error => {
+    if ('string' === typeof error) {
+        addErrorToasted(error);
+    } else if (error.response && 401 === error.response.status) {
+        addInfoToasted('セッションがタイムアウトしました。再度ログインしてください。');
+        await store.dispatch('auth/setUser', null);
+        await refreshRoute();
+    } else if (error.response && 419 === error.response.status) {
+        location.reload();
+    } else if (error.response && error.response.data && error.response.data.errors) {
+        Object.keys(error.response.data.errors).map(key => error.response.data.errors[ key ].map(message => key + ': ' + message)).flat().flat().forEach(message => addErrorToasted(message));
     } else {
-        Vue.toasted.show(error.message, {
-            type: 'error',
-        });
+        addErrorToasted(error.message);
     }
 };
