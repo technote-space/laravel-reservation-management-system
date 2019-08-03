@@ -58,6 +58,11 @@ class Guest extends Model
     ];
 
     /**
+     * @var int
+     */
+    protected $perPage = 10;
+
+    /**
      * @return HasOne
      */
     public function detail(): HasOne

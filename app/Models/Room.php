@@ -79,6 +79,11 @@ class Room extends Model
     ];
 
     /**
+     * @var int
+     */
+    protected $perPage = 10;
+
+    /**
      * @return HasMany
      */
     public function reservations(): HasMany

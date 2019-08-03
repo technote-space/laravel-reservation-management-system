@@ -80,6 +80,11 @@ class Reservation extends Model
     ];
 
     /**
+     * @var int
+     */
+    protected $perPage = 10;
+
+    /**
      * @return BelongsTo
      */
     public function guest(): BelongsTo
