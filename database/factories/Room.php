@@ -7,7 +7,7 @@ use App\Models\Room;
 $factory->define(Room::class, function (Faker $faker) {
     return [
         'name'   => $faker->name,
-        'number' => $faker->numberBetween(1, 5),
+        'number' => $faker->numberBetween(2, 5),
         'price'  => $faker->numberBetween(10000, 50000),
     ];
 });
