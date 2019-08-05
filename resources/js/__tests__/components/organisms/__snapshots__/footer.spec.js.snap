@@ -1,70 +1,79 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Footer should 1`] = `
-<v-footer-stub
-  absolute="true"
-  color="primary"
-  dark="true"
-  height="auto"
-  padless="true"
-  tag="div"
-  tile="true"
+exports[`Footer should render footer 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
 >
-  <v-layout-stub
-    justify-center=""
-    tag="div"
-    wrap=""
+  <div
+    class="v-application--wrap"
   >
-    <v-btn-stub
-      activeclass=""
-      class="mx-4 white--text"
-      href="https://github.com"
-      icon="true"
-      tag="button"
-      target="_blank"
-      type="button"
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 0px 0px 0px 0px;"
     >
-      <v-icon-stub
-        size="24px"
+      <div
+        class="v-content__wrap"
       >
-        
-                mdi-github-circle
-            
-      </v-icon-stub>
-    </v-btn-stub>
-    <v-btn-stub
-      activeclass=""
-      class="mx-4 white--text"
-      href="https://twitter.com"
-      icon="true"
-      tag="button"
-      target="_blank"
-      type="button"
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+    <footer
+      class="v-footer v-sheet v-sheet--tile theme--dark v-footer--absolute v-footer--padless primary"
+      style="left: 0px; right: 0px; bottom: 0px;"
     >
-      <v-icon-stub
-        size="24px"
+      <div
+        class="layout justify-center wrap"
       >
-        
-                mdi-twitter-circle
-            
-      </v-icon-stub>
-    </v-btn-stub>
-     
-    <v-flex-stub
-      lighten-2=""
-      py-4=""
-      secondary=""
-      tag="div"
-      text-center=""
-      white--text=""
-      xs12=""
-    >
-      
+        <a
+          class="mx-4 white--text v-btn v-btn--fab v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default"
+          href="https://github.com"
+          target="_blank"
+        >
+          <span
+            class="v-btn__content"
+          >
+            <i
+              aria-hidden="true"
+              class="v-icon notranslate mdi mdi-github-circle theme--dark"
+              style="font-size: 24px;"
+            />
+          </span>
+        </a>
+        <a
+          class="mx-4 white--text v-btn v-btn--fab v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default"
+          href="https://twitter.com"
+          target="_blank"
+        >
+          <span
+            class="v-btn__content"
+          >
+            <i
+              aria-hidden="true"
+              class="v-icon notranslate mdi mdi-twitter-circle theme--dark"
+              style="font-size: 24px;"
+            />
+          </span>
+        </a>
+         
+        <div
+          class="flex secondary lighten-2 py-4 text-center white--text xs12"
+        >
+          
             2019 — 
-      <strong>
-        テスト
-      </strong>
-    </v-flex-stub>
-  </v-layout-stub>
-</v-footer-stub>
+          <strong>
+            テスト
+          </strong>
+        </div>
+      </div>
+    </footer>
+  </div>
+</div>
 `;

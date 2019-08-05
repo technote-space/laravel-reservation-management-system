@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Tests\Feature\Api\Auth;
 
 use App\Models\Admin;
-use Tests\Feature\BaseTestCase;
 
 /**
  * Class LoginApiTest

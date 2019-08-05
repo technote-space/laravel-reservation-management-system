@@ -1,0 +1,207 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Toolbar should not render toolbar if not active: not active 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <!---->
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 0px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;
+
+exports[`Toolbar should not render toolbar toggle if not active drawer: drawer not active 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <header
+      class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--fixed primary"
+      style="margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;"
+    >
+      <div
+        class="v-toolbar__content"
+        style="height: 64px;"
+      >
+        <!---->
+         
+        <div
+          class="v-toolbar__title mr-5 align-center"
+        >
+          <span
+            class="router-link-exact-active router-link-active"
+          >
+            <span
+              class="title"
+            >
+              テスト
+            </span>
+          </span>
+        </div>
+      </div>
+    </header>
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 64px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;
+
+exports[`Toolbar should not render toolbar toggle if not authenticated: not authenticated 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <header
+      class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--fixed primary"
+      style="margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;"
+    >
+      <div
+        class="v-toolbar__content"
+        style="height: 64px;"
+      >
+        <!---->
+         
+        <div
+          class="v-toolbar__title mr-5 align-center"
+        >
+          <span
+            class="router-link-exact-active router-link-active"
+          >
+            <span
+              class="title"
+            >
+              テスト
+            </span>
+          </span>
+        </div>
+      </div>
+    </header>
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 64px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;
+
+exports[`Toolbar should render toolbar: active 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <header
+      class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--fixed primary"
+      style="margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;"
+    >
+      <div
+        class="v-toolbar__content"
+        style="height: 64px;"
+      >
+        <button
+          class="v-app-bar__nav-icon v-btn v-btn--fab v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default"
+          type="button"
+        >
+          <span
+            class="v-btn__content"
+          >
+            <i
+              aria-hidden="true"
+              class="v-icon notranslate material-icons theme--dark"
+            >
+              $vuetify.icons.menu
+            </i>
+          </span>
+        </button>
+         
+        <div
+          class="v-toolbar__title mr-5 align-center"
+        >
+          <span
+            class="router-link-exact-active router-link-active"
+          >
+            <span
+              class="title"
+            >
+              テスト
+            </span>
+          </span>
+        </div>
+      </div>
+    </header>
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 64px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;

@@ -9,7 +9,7 @@ use App\Models\Setting;
  * Class BaseTestCase
  * @package Tests\Feature
  */
-abstract class BaseTestCase extends \Tests\Feature\BaseTestCase
+abstract class BaseTestCase extends \Tests\BaseTestCase
 {
     public function setUp(): void
     {
@@ -18,9 +18,5 @@ abstract class BaseTestCase extends \Tests\Feature\BaseTestCase
             '--class' => 'SettingTableSeeder',
         ]);
         Setting::clearCache();
-    }
-
-    protected static function seeder(): void
-    {
     }
 }

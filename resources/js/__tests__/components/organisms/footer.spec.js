@@ -1,32 +1,27 @@
-import { shallowMount, createLocalVue } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import Vuex from 'vuex';
-import Vuetify from 'vuetify';
 import Footer from '../../../components/organisms/Footer';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
-localVue.use(Vuetify);
+import app from '../app';
+import setupLocalVue from '../setupLocalVue';
 
 describe('Footer', () => {
-    let getters;
-    let store;
-
-    beforeEach(() => {
-        getters = {
-            getTitle: () => 'テスト',
-            'common/getIcons': () => [
-                { icon: 'mdi-github-circle', url: 'https://github.com' },
-                { icon: 'mdi-twitter-circle', url: 'https://twitter.com' },
-            ],
-        };
-        store = new Vuex.Store({
-            getters,
-        });
-    });
-
-    it('should', () => {
-        const wrapper = shallowMount(Footer, { store, localVue });
+    it('should render footer', () => {
+        const wrapper = mount(app(Footer, 'bottom'), setupLocalVue({
+            store: new Vuex.Store({
+                getters: {
+                    getTitle: () => 'テスト',
+                    getSns: () => [
+                        { icon: 'mdi-github-circle', url: 'https://github.com' },
+                        { icon: 'mdi-twitter-circle', url: 'https://twitter.com' },
+                    ],
+                },
+            }),
+        }));
         expect(wrapper.element).toMatchSnapshot();
+
         expect(wrapper.isVueInstance()).toBeTruthy();
+        expect(wrapper.findAll('.v-icon')).toHaveLength(2);
+        expect(wrapper.find('strong').text()).toBe('テスト');
+        expect(wrapper.find('div.flex').text()).toContain(new Date().getFullYear());
     });
 });

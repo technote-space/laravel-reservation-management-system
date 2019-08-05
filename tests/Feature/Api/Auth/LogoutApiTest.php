@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Tests\Feature\Api\Auth;
 
 use App\Models\Admin;
-use Tests\Feature\BaseTestCase;
 
 /**
  * Class LogoutApiTest
@@ -30,6 +29,6 @@ class LogoutApiTest extends BaseTestCase
 
         $response->assertStatus(200);
         $this->assertGuest();
-        $this->assertEquals('""', $response->content());
+        $this->assertEquals('false', $response->content());
     }
 }

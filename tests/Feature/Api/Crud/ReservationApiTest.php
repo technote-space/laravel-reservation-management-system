@@ -55,7 +55,7 @@ class ReservationApiTest extends BaseTestCase
                      'to',
                      'total',
                  ])
-                 ->assertJsonCount(15, 'data');
+                 ->assertJsonCount(10, 'data');
     }
 
     public function testShow()
