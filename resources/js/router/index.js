@@ -12,9 +12,9 @@ const router = new Router({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
-    store.dispatch('common/closeDrawer');
-    store.dispatch('auth/checkAuth', { to, next });
+router.beforeEach(async (to, from, next) => {
+    await store.dispatch('common/closeDrawer');
+    await store.dispatch('auth/checkAuth', { to, next });
 });
 
 export default router;

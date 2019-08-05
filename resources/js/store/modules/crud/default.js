@@ -1,5 +1,4 @@
 import { STATE_MODE_TARGET, STATE_MODE_CURRENT } from './constant';
-import headers from './headers';
 
 const state = {
     [ STATE_MODE_TARGET ]: {
@@ -25,7 +24,7 @@ const state = {
             caches: {},
         },
     },
-    headers,
+    isRequiredRefresh: false,
 };
 
 export default state;

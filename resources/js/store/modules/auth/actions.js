@@ -1,6 +1,6 @@
 import { SET_INIT, SET_USER, SET_BACK_TO } from './constant';
-import { isInitialized, isAuthenticated, getBackTo } from './getters';
 import { apiAccess, refreshRoute } from '../../../utils/api';
+import store from '../../../store';
 
 /**
  * @param context
@@ -9,11 +9,11 @@ import { apiAccess, refreshRoute } from '../../../utils/api';
  * @param options
  * @param options.method
  */
-const access = (context, name, data = undefined, options = { method: 'post' }) => {
+const access = async (context, name, data = undefined, options = { method: 'post' }) => {
     context.dispatch('loading/onLoading', 'auth/' + name, { root: true });
     const method = options.method || 'post';
     delete options.method;
-    apiAccess(method, name, Object.assign({
+    await apiAccess(method, name, Object.assign({
         data,
         succeeded: async response => {
             const userData = response.data || null;
@@ -43,22 +43,22 @@ export const setUser = (context, userData) => context.commit(SET_USER, userData)
  * @param context
  * @param data
  */
-export const login = (context, data) => {
-    access(context, 'login', data);
+export const login = async (context, data) => {
+    await access(context, 'login', data);
 };
 
 /**
  * @param context
  */
-export const logout = context => {
-    access(context, 'logout');
+export const logout = async context => {
+    await access(context, 'logout');
 };
 
 /**
  * @param context
  */
-export const user = context => {
-    access(context, 'user', undefined, { method: 'get' });
+export const user = async context => {
+    await access(context, 'user', undefined, { method: 'get' });
 };
 
 /**
@@ -80,20 +80,20 @@ export const initialized = context => context.commit(SET_INIT);
  * @param next
  */
 export const checkAuth = async (context, { to, next }) => {
-    if (!isInitialized(context.state)) {
+    if (!store.getters[ 'auth/isInitialized' ]) {
         initialized(context);
         await user(context);
     }
     if (to.meta) {
         if (true === to.meta.auth || undefined === to.meta.auth) {
-            if (!isAuthenticated(context.state)) {
+            if (!store.getters[ 'auth/isAuthenticated' ]) {
                 setBackTo(context, to.fullPath);
                 next({ path: '/login' });
                 return;
             }
         } else if (false === to.meta.auth) {
-            if (isAuthenticated(context.state)) {
-                const backTo = getBackTo(context.state);
+            if (store.getters[ 'auth/isAuthenticated' ]) {
+                const backTo = store.getters[ 'auth/getBackTo' ];
                 if (backTo) {
                     setBackTo(context, null);
                     if (/^\//.test(backTo)) {

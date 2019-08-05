@@ -7,9 +7,9 @@
             indeterminate
             size="64"
             :color="progressColor"
-        ></v-progress-circular>
+        />
         <div
-            v-if="message != null"
+            v-if="message"
             class="mt-3 font-weight-bold title"
         >
             {{ message }}

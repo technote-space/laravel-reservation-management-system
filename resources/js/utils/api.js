@@ -1,7 +1,7 @@
 import store from '../store';
 import router from '../router';
 import adapter from './adapter';
-import { addErrorToasted, addInfoToasted } from './toasted';
+import { addErrorToasted } from './toasted';
 
 /**
  * @param {string} method method
@@ -12,7 +12,7 @@ import { addErrorToasted, addInfoToasted } from './toasted';
  * @param {function?} options.failed failed
  * @param {function?} options.always always
  */
-export const apiAccess = (method, url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => {
+export const apiAccess = async (method, url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => {
     const failed = async error => {
         if ('function' === typeof options.failed) {
             await options.failed(error);
@@ -21,7 +21,10 @@ export const apiAccess = (method, url, options = { data: undefined, succeeded: u
         }
     };
 
-    adapter(method, url, options.data).then(async response => {
+    const { response, error } = await adapter(method, url, options.data);
+    if (error) {
+        await failed(error);
+    } else {
         if (!response.data) {
             await options.succeeded({ data: null });
         } else if ('object' !== typeof response.data) {
@@ -29,13 +32,11 @@ export const apiAccess = (method, url, options = { data: undefined, succeeded: u
         } else if ('function' === typeof options.succeeded) {
             await options.succeeded(response);
         }
-    }).catch(async error => {
-        await failed(error);
-    }).finally(async () => {
-        if ('function' === typeof options.always) {
-            await options.always();
-        }
-    });
+    }
+
+    if ('function' === typeof options.always) {
+        await options.always();
+    }
 };
 
 /**
@@ -92,12 +93,18 @@ export const refreshRoute = async () => await store.dispatch('auth/checkAuth', {
 export const processError = async error => {
     if ('string' === typeof error) {
         addErrorToasted(error);
-    } else if (error.response && 401 === error.response.status) {
-        addInfoToasted('セッションがタイムアウトしました。再度ログインしてください。');
-        await store.dispatch('auth/setUser', null);
-        await refreshRoute();
-    } else if (error.response && 419 === error.response.status) {
-        location.reload();
+        //    } else if (error.response && 401 === error.response.status) {
+        //        addInfoToasted('セッションがタイムアウトしました。再度ログインしてください。');
+        //        await store.dispatch('auth/setUser', null);
+        //        await refreshRoute();
+        //    } else if (error.response && 419 === error.response.status) {
+    } else if (error.response && (401 === error.response.status || 419 === error.response.status)) {
+        const backTo = store.getters[ 'auth/getBackTo' ];
+        if (backTo) {
+            location.href = backTo;
+        } else {
+            location.reload();
+        }
     } else if (error.response && error.response.data && error.response.data.errors) {
         Object.keys(error.response.data.errors).map(key => error.response.data.errors[ key ].map(message => key + ': ' + message)).flat().flat().forEach(message => addErrorToasted(message));
     } else {

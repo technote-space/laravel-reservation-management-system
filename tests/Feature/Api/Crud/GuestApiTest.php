@@ -149,7 +149,10 @@ class GuestApiTest extends BaseTestCase
             ])
         );
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+                 ->assertJsonFragment([
+                     'result' => 1,
+                 ]);
         $this->assertFalse(GuestDetail::where('name', 'fgh')->exists());
     }
 }

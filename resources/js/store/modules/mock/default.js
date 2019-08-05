@@ -6,7 +6,7 @@ import roomFactory from './factories/room';
 import reservationFactory from './factories/reservation';
 
 const state = {};
-if ('local' === process.env.NODE_ENV) {
+if ('local' === process.env.NODE_ENV || 'test' === process.env.NODE_ENV) {
     state.items = {};
     state.factories = {
         admins: adminFactory,

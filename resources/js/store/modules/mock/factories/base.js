@@ -1,3 +1,5 @@
+import { pick } from 'lodash';
+
 const moment = require('moment');
 const ids = {};
 const getId = model => {
@@ -7,11 +9,17 @@ const getId = model => {
     return ids[ model ]++;
 };
 
-const generate = (model, generator, overwrite) => (Object.assign({
-    id: getId(model),
-    created_at: moment().format('YYYY-MM-DD hh:mm:ss'),
-    updated_at: moment().format('YYYY-MM-DD hh:mm:ss'),
-}, generator(), overwrite));
+const generate = (model, generator, overwrite) => {
+    const modelId = 'id' in overwrite ? overwrite[ 'id' ] : getId(model);
+    const defaultValue = generator(modelId);
+    const keys = Object.keys(defaultValue).concat(['created_at']);
+    return Object.assign({
+        id: modelId,
+        created_at: moment().format('YYYY-MM-DD hh:mm:ss'),
+    }, defaultValue, pick(overwrite, keys), {
+        updated_at: moment().format('YYYY-MM-DD hh:mm:ss'),
+    });
+};
 
 export default (model, generator) => (count = undefined) => ({
     create: (overwrite = {}) => {

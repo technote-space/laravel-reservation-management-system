@@ -1,17 +1,14 @@
+import 'babel-polyfill';
 require('./bootstrap');
 require('./plugins/validate');
 require('./plugins/toasted');
-require('moment-timezone');
-import 'babel-polyfill';
+require('./plugins/moment');
+
 import Vue from 'vue';
 import router from './router';
 import store from './store';
-import App from './components/App';
-import moment from 'moment';
-
-moment.tz.setDefault('Asia/Tokyo');
-
 import vuetify from './plugins/vuetify';
+import App from './components/App';
 
 new Vue({
     el: '#app',

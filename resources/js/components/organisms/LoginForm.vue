@@ -15,7 +15,6 @@
             :error-messages="errors.collect('password')"
             :append-icon="passwordIcon"
             :type="passwordType"
-            name="input-10-1"
             label="Password"
             data-vv-name="password"
             data-vv-validate-on="blur"
@@ -34,8 +33,6 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
-
     export default {
         data () {
             return {
@@ -47,9 +44,6 @@
             };
         },
         computed: {
-            ...mapGetters({
-                isAuthenticated: 'auth/isAuthenticated',
-            }),
             passwordIcon: function () {
                 return this.passwordVisibility ? 'visibility' : 'visibility_off';
             },

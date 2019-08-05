@@ -1,6 +1,6 @@
 <template>
     <v-app-bar
-        :value="isActiveToolbar"
+        v-if="isActiveToolbar"
         app
         dark
         color="primary"

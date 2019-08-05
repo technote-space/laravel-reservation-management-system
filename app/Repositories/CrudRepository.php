@@ -73,10 +73,10 @@ class CrudRepository
     /**
      * @param  mixed  $primaryId
      *
-     * @return int
+     * @return array
      */
     public function delete($primaryId)
     {
-        return $this->model::destroy((int) $primaryId);
+        return ['result' => $this->model::destroy((int) $primaryId)];
     }
 }

@@ -34,7 +34,7 @@ export default async (method, url, data = undefined) => {
                     model,
                     id,
                 }, { root: true });
-                return 1;
+                return { result: 1 };
             }
         } else {
             if ('get' === method) {

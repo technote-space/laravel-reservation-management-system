@@ -2,7 +2,6 @@
     <v-navigation-drawer
         v-if="isAuthenticated"
         :value="isOpenDrawer"
-        :clipped="$vuetify.breakpoint.mdAndUp"
         color="secondary"
         fixed
         temporary
@@ -26,7 +25,7 @@
             <v-divider />
 
             <v-list-item
-                v-for="item in sidebarItems"
+                v-for="item in menu"
                 :key="item.title"
                 :to="item.to"
                 active-class="amber--text"
@@ -58,7 +57,7 @@
     export default {
         computed: {
             ...mapGetters({
-                sidebarItems: 'common/getSidebarItems',
+                menu: 'getMenu',
                 isOpenDrawer: 'common/isOpenDrawer',
                 isAuthenticated: 'auth/isAuthenticated',
                 userName: 'auth/getUserName',

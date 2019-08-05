@@ -16,6 +16,40 @@
                 disable-sort
                 class="elevation-1 pa-5 mb-3"
             >
+                <template v-slot:top>
+                    <v-toolbar
+                        flat
+                        color="white"
+                    >
+                        <v-toolbar-title>
+                            <v-list-item-icon>
+                                <v-icon>{{ icon }}</v-icon>
+                            </v-list-item-icon>
+                            {{ title }}
+                        </v-toolbar-title>
+                        <v-divider
+                            class="mx-4"
+                            inset
+                            vertical
+                        />
+                        <v-spacer />
+                    </v-toolbar>
+                </template>
+                <template v-slot:item.action="{ item }">
+                    <v-icon
+                        small
+                        class="mr-2"
+                        @click="editItem(item)"
+                    >
+                        edit
+                    </v-icon>
+                    <v-icon
+                        small
+                        @click="deleteItem(item)"
+                    >
+                        delete
+                    </v-icon>
+                </template>
                 <template v-slot:footer>
                     <div class="text-center">
                         <v-pagination
@@ -34,22 +68,19 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
-    import ListContent from '../organisms/ListContent';
-    import { getModelDetailRouter } from '../../store/modules/crud/utils';
 
     export default {
         props: {
-            targetModel: String,
-        },
-        components: {
-            ListContent,
-        },
-        created () {
-            this.setModel(this.targetModel);
-            this.setPage(1);
+            targetModel: {
+                type: String,
+                required: true,
+            },
         },
         computed: {
             ...mapGetters({
+                getModelName: 'getModelName',
+                getModelIcon: 'getModelIcon',
+                model: 'crud/getTargetModel',
                 headers: 'crud/getListHeaders',
                 items: 'crud/getListItems',
                 perPage: 'crud/getPerPage',
@@ -57,16 +88,46 @@
                 page: 'crud/getPage',
             }),
             isValidPagination: function () {
-                return this.totalPage > 1;
+                return 1 < this.totalPage;
+            },
+            title: function () {
+                return this.getModelName(this.model);
+            },
+            icon: function () {
+                return this.getModelIcon(this.model);
+            },
+        },
+        watch: {
+            targetModel: {
+                handler: 'setup',
+                immediate: true,
             },
         },
         methods: {
             ...mapActions({
                 setModel: 'crud/setModel',
                 setPage: 'crud/setPage',
+                create: 'crud/create',
+                edit: 'crud/edit',
+                destroy: 'crud/destroy',
             }),
-            showDetail: function (item) {
-                this.$router.push(getModelDetailRouter(this.targetModel, item.id));
+            setup () {
+                this.setModel(this.targetModel);
+                this.setPage(1);
+            },
+            editItem (item) {
+
+            },
+            deleteItem (item) {
+                if (confirm('Are you sure you want to delete this item?')) {
+                    this.destroy({ model: this.model, id: item.id });
+                }
+            },
+            close () {
+
+            },
+            save () {
+
             },
         },
     };

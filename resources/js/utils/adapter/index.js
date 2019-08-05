@@ -6,4 +6,4 @@ export default (method, url, data = undefined) => {
     } else {
         return window.axios[ method.toLocaleString() ]('/api/' + url, data);
     }
-}
+};

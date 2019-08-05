@@ -6,10 +6,11 @@ const mutations = {
         const item = state.factories[ model ]().create(data);
         state.items[ model ][ item.id ] = item;
     },
-    [ UPDATE ] (state, { model, id, key, value }) {
+    [ UPDATE ] (state, { model, id, data }) {
         if (id in state.items[ model ]) {
+            data.id = id;
             state.items[ model ] = Object.assign({}, state.items[ model ]);
-            state.items[ model ][ id ][ key ] = value;
+            state.items[ model ][ id ] = state.factories[ model ]().create(data);
         }
     },
     [ DELETE ] (state, { model, id }) {
