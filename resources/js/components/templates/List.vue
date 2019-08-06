@@ -70,6 +70,9 @@
     import { mapGetters, mapActions } from 'vuex';
 
     export default {
+        metaInfo () {
+            return this.metaInfo;
+        },
         props: {
             targetModel: {
                 type: String,
@@ -78,8 +81,8 @@
         },
         computed: {
             ...mapGetters({
-                getModelName: 'getModelName',
                 getModelIcon: 'getModelIcon',
+                getMetaInfo: 'getMetaInfo',
                 model: 'crud/getTargetModel',
                 headers: 'crud/getListHeaders',
                 items: 'crud/getListItems',
@@ -90,8 +93,11 @@
             isValidPagination: function () {
                 return 1 < this.totalPage;
             },
+            metaInfo: function () {
+                return this.getMetaInfo(this.model);
+            },
             title: function () {
-                return this.getModelName(this.model);
+                return this.metaInfo.title;
             },
             icon: function () {
                 return this.getModelIcon(this.model);
