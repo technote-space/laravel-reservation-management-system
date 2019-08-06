@@ -69,6 +69,7 @@
                 logout: 'auth/logout',
             }),
             async logout () {
+                this.setDrawerOpen(false);
                 await this.$store.dispatch('auth/logout');
             },
         },
