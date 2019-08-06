@@ -35,7 +35,6 @@ describe('LoginForm', () => {
 
         wrapper.find('.v-input__icon--append i').trigger('click');
         await flushPromises();
-        expect(wrapper.element).toMatchSnapshot();
         expect(wrapper.findAll('input[type="text"]')).toHaveLength(2);
         wrapper.find('.v-input__icon--append i').trigger('click');
 
