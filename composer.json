@@ -90,7 +90,7 @@
         ],
         "setup": [
             "composer install --no-interaction --prefer-dist --no-suggest",
-            "yarn install"
+            "@build:js"
         ],
         "build": [
             "@build:php",
