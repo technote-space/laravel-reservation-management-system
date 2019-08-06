@@ -3,9 +3,7 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Artisan;
 use DB;
-use Illuminate\Support\Facades\Config;
 
 trait TestHelper
 {
@@ -37,11 +35,11 @@ trait TestHelper
 
     protected function runMigrate()
     {
-        Artisan::call('migrate');
+        $this->artisan('migrate:refresh');
     }
 
     protected function runSeed(array $params = [])
     {
-        Artisan::call('db:seed', $params);
+        $this->artisan('db:seed', $params);
     }
 }
