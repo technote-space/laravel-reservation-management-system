@@ -49,8 +49,8 @@ class IndexTest extends DuskTestCase
                         ->type('form input[type="password"]', 'pass')
                         ->click('.v-input__icon--append i')
                         ->press('LOGIN')
-                        ->assertSee('The email field must be a valid email')
-                        ->assertSee('The password field must be at least 8 characters')
+                        ->assertSee('The E-Mail field must be a valid email')
+                        ->assertSee('The Password field must be at least 8 characters')
                         ->screenshot('index/validation');
             }
         );
