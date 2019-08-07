@@ -64,7 +64,7 @@ class RoomTest extends BaseTestCase
             'end_date'   => now()->addDays(2)->format('Y-m-d'),
             'number'     => 1,
         ]);
-        $this->runSeed([
+        static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
         Setting::clearCache();
@@ -99,7 +99,7 @@ class RoomTest extends BaseTestCase
     public function testGetRecentUsages()
     {
         Room::setNow(strtotime(date('Y-m-d 15:00:00')));
-        $this->runSeed([
+        static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
         Setting::clearCache();

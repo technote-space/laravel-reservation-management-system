@@ -3,11 +3,12 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use DB;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 trait TestHelper
 {
-    protected function getTables()
+    protected static function getTables()
     {
         return [
             'password_resets',
@@ -20,26 +21,26 @@ trait TestHelper
         ];
     }
 
-    protected function dropTables()
+    protected static function dropTables()
     {
-        collect($this->getTables())->each(function ($table) {
+        collect(static::getTables())->each(function ($table) {
             DB::statement('DROP TABLE IF EXISTS `'.$table.'`');
         });
     }
 
-    protected function truncateTables()
+    protected static function truncateTables()
     {
-        $this->dropTables();
-        $this->runMigrate();
+        static::dropTables();
+        static::runMigrate();
     }
 
-    protected function runMigrate()
+    protected static function runMigrate()
     {
-        $this->artisan('migrate:refresh');
+        Artisan::call('migrate:refresh');
     }
 
-    protected function runSeed(array $params = [])
+    protected static function runSeed(array $params = [])
     {
-        $this->artisan('db:seed', $params);
+        Artisan::call('db:seed', $params);
     }
 }

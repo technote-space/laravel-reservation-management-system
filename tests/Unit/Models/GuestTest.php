@@ -69,7 +69,7 @@ class GuestTest extends BaseTestCase
     public function testGetRecentUsages()
     {
         Guest::setNow(strtotime(date('Y-m-d 15:00:00')));
-        $this->runSeed([
+        static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
         Setting::clearCache();

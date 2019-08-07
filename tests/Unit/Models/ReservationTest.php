@@ -56,7 +56,7 @@ class ReservationTest extends BaseTestCase
             'start_date' => date('Y-m-d'),
             'end_date'   => date('Y-m-d'),
         ]);
-        $this->runSeed([
+        static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
         Setting::clearCache();

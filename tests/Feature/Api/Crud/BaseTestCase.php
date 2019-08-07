@@ -14,7 +14,7 @@ abstract class BaseTestCase extends \Tests\BaseTestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->runSeed([
+        static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
         Setting::clearCache();
