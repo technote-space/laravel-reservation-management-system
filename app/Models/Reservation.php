@@ -35,7 +35,6 @@ use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
  * @method static Builder|Reservation whereRoomId($value)
  * @method static Builder|Reservation whereStartDate($value)
  * @method static Builder|Reservation whereUpdatedAt($value)
- * @mixin Eloquent
  * @property-read bool $is_future
  * @property-read bool $is_past
  * @property-read bool $is_present

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Requests;
 
@@ -120,10 +121,6 @@ abstract class CrudRequest extends FormRequest
      */
     public function rules(): array
     {
-        //        logger(print_r(collect($this->getTargets())->flatMap(function ($target) {
-        //            return $this->getTableRules($target);
-        //        })->toArray(), true));
-
         return collect($this->getTargets())->flatMap(function ($target) {
             return $this->getTableRules($target);
         })->toArray();
@@ -377,10 +374,6 @@ abstract class CrudRequest extends FormRequest
      */
     public function attributes()
     {
-        //        logger(print_r(collect($this->getTargets())->flatMap(function ($target) {
-        //            return $this->getTableAttributes($target);
-        //        })->toArray(), true));
-
         return collect($this->getTargets())->flatMap(function ($target) {
             return $this->getTableAttributes($target);
         })->toArray();

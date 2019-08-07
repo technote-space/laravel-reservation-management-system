@@ -70,6 +70,14 @@ trait TimeHelper
     }
 
     /**
+     * @return Carbon
+     */
+    protected function getCheckInThresholdDay()
+    {
+        return $this->isBeforeCheckIn() ? $this->yesterday() : $this->today();
+    }
+
+    /**
      * @return int
      */
     protected function now(): int
@@ -86,7 +94,7 @@ trait TimeHelper
      */
     protected function today()
     {
-        return Carbon::createFromTimestamp($this->now());
+        return Carbon::createFromTimestamp($this->now())->setTime(0, 0);
     }
 
     /**
@@ -95,14 +103,6 @@ trait TimeHelper
     protected function yesterday()
     {
         return $this->today()->subDay();
-    }
-
-    /**
-     * @return Carbon
-     */
-    protected function getCheckInThresholdDay()
-    {
-        return $this->isBeforeCheckIn() ? $this->yesterday() : $this->today();
     }
 
     /**

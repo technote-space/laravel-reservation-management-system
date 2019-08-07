@@ -26,7 +26,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Guest whereCreatedAt($value)
  * @method static Builder|Guest whereId($value)
  * @method static Builder|Guest whereUpdatedAt($value)
- * @mixin Eloquent
  * @property-read Reservation $latestReservation
  * @property-read Reservation $latestUsage
  * @property-read Collection|Reservation[] $recentUsages

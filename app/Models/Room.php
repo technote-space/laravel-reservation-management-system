@@ -32,7 +32,6 @@ use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
  * @method static Builder|Room whereNumber($value)
  * @method static Builder|Room wherePrice($value)
  * @method static Builder|Room whereUpdatedAt($value)
- * @mixin Eloquent
  * @property-read mixed $is_reserved
  * @property-read Reservation $latestReservation
  * @property-read Collection|Reservation[] $recentUsages

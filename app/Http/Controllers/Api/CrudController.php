@@ -31,7 +31,9 @@ abstract class CrudController extends Controller
      */
     protected function getListEagerLoadingTargets(): array
     {
+        // @codeCoverageIgnoreStart
         return [];
+        // @codeCoverageIgnoreEnd
     }
 
     /**
@@ -39,6 +41,8 @@ abstract class CrudController extends Controller
      */
     protected function getDetailEagerLoadingTargets(): array
     {
+        // @codeCoverageIgnoreStart
         return [];
+        // @codeCoverageIgnoreEnd
     }
 }
