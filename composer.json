@@ -165,7 +165,7 @@
             "@phpunit:no --group=Unit.Helpers"
         ],
         "dusk": [
-            "php artisan dusk --env=testing"
+            "php artisan dusk --env=dusk"
         ],
         "eslint": [
             "yarn lint"
