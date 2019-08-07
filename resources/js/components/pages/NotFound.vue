@@ -7,15 +7,17 @@
             wrap
             justify-center
         >
-            Not Found
+            {{ $t('pages.not_found') }}
         </v-layout>
     </v-container>
 </template>
 
 <script>
     export default {
-        metaInfo: {
-            title: 'Not Found',
+        metaInfo () {
+            return {
+                title: this.$t('pages.not_found'),
+            };
         },
     };
 </script>

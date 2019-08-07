@@ -81,10 +81,11 @@
         },
         computed: {
             ...mapGetters({
+                getModelName: 'getModelName',
                 getModelIcon: 'getModelIcon',
                 getMetaInfo: 'getMetaInfo',
                 model: 'crud/getTargetModel',
-                headers: 'crud/getListHeaders',
+                getListHeaders: 'crud/getListHeaders',
                 items: 'crud/getListItems',
                 perPage: 'crud/getPerPage',
                 totalPage: 'crud/getTotalPage',
@@ -94,13 +95,22 @@
                 return 1 < this.totalPage;
             },
             metaInfo: function () {
-                return this.getMetaInfo(this.model);
+                return Object.assign({}, {
+                    title: this.$t(this.getModelName(this.model)),
+                }, this.getMetaInfo(this.model));
             },
             title: function () {
                 return this.metaInfo.title;
             },
             icon: function () {
                 return this.getModelIcon(this.model);
+            },
+            headers: function () {
+                return this.getListHeaders.map(item => {
+                    return Object.assign({}, item, {
+                        text: this.$t(item.text),
+                    });
+                });
             },
         },
         watch: {
@@ -125,7 +135,7 @@
 
             },
             deleteItem (item) {
-                if (confirm('Are you sure you want to delete this item?')) {
+                if (confirm(this.$t('messages.delete_item'))) {
                     this.destroy({ model: this.model, id: item.id });
                 }
             },

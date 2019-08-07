@@ -1,4 +1,4 @@
-const faker = require('faker/locale/ja');
+import faker from '../faker';
 import base from './base';
 
 const format = date => date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);

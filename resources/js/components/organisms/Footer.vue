@@ -30,7 +30,7 @@
                 white--text
                 xs12
             >
-                {{ year }} — <strong>{{ title }}</strong>
+                {{ year }} — <strong>{{ $t('title') }}</strong>
             </v-flex>
         </v-layout>
     </v-footer>
@@ -42,7 +42,6 @@
     export default {
         computed: {
             ...mapGetters({
-                title: 'getTitle',
                 sns: 'getSns',
             }),
             year () {

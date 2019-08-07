@@ -1,4 +1,4 @@
-const faker = require('faker/locale/ja');
+import faker from './faker';
 import adminFactory from './factories/admin';
 import guestFactory from './factories/guest';
 import guestDetailFactory from './factories/guest-detail';

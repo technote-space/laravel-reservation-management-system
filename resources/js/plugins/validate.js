@@ -1,6 +1,12 @@
 import Vue from 'vue';
-import VeeValidate, { Validator } from 'vee-validate';
-import ja from 'vee-validate/dist/locale/ja';
+import VeeValidate from 'vee-validate';
+import { LANG_LIST } from '../configs/lang';
+import i18n from './i18n';
 
-Validator.localize('ja', ja);
-Vue.use(VeeValidate);
+Vue.use(VeeValidate, {
+    i18n,
+    i18nRootKey: 'validations',
+    dictionary: Object.assign(...LANG_LIST.map(lang => ({
+        [ lang ]: require('vee-validate/dist/locale/' + lang),
+    }))),
+});

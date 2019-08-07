@@ -38,7 +38,7 @@ const getHeaders = (state, mode) => {
     if (!model) {
         return [];
     }
-    return getModelHeaders(model).concat([{ text: 'Actions', value: 'action' }]);
+    return getModelHeaders(model).concat([{ text: 'column.actions', value: 'action' }]);
 };
 
 export const isRequiredFetchList = state => isRequiredRefresh(state) || !isSameModel(state) || !isSamePage(state);

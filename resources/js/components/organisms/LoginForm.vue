@@ -4,7 +4,7 @@
             v-model="loginForm.email"
             v-validate="'required|email'"
             :error-messages="errors.collect('email')"
-            label="E-mail"
+            :label="$t('validations.attributes.email')"
             data-vv-name="email"
             data-vv-validate-on="blur"
             required
@@ -15,10 +15,10 @@
             :error-messages="errors.collect('password')"
             :append-icon="passwordIcon"
             :type="passwordType"
-            label="Password"
+            :label="$t('validations.attributes.password')"
             data-vv-name="password"
             data-vv-validate-on="blur"
-            hint="8文字以上"
+            :hint="$t('messages.password_hint', {min: 8})"
             counter
             required
             @click:append="passwordVisibility = !passwordVisibility"
@@ -27,7 +27,7 @@
             class="mt-4"
             type="submit"
         >
-            Login
+            {{ $t('pages.login') }}
         </v-btn>
     </v-form>
 </template>

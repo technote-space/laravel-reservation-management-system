@@ -14,7 +14,7 @@
                 to="/"
                 tag="span"
             >
-                <span class="title">{{ title }}</span>
+                <span class="title">{{ $t('title') }}</span>
             </router-link>
         </v-toolbar-title>
     </v-app-bar>
@@ -26,7 +26,6 @@
     export default {
         computed: {
             ...mapGetters({
-                title: 'getTitle',
                 isActiveToolbar: 'common/isActiveToolbar',
                 isActiveDrawer: 'common/isActiveDrawer',
                 isAuthenticated: 'auth/isAuthenticated',

@@ -7,15 +7,17 @@
             wrap
             justify-center
         >
-            Dashboard
+            {{ $t('pages.dashboard') }}
         </v-layout>
     </v-container>
 </template>
 
 <script>
     export default {
-        metaInfo: {
-            title: 'Dashboard',
+        metaInfo () {
+            return {
+                title: this.$t('pages.dashboard'),
+            };
         },
     };
 </script>

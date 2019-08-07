@@ -12,7 +12,7 @@
             v-if="message"
             class="mt-3 font-weight-bold title"
         >
-            {{ message }}
+            {{ $t(`loading.${message}`) }}
         </div>
     </v-overlay>
 </template>

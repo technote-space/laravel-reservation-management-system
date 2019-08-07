@@ -1,4 +1,4 @@
-const faker = require('faker/locale/ja');
+import faker from '../faker';
 import base from './base';
 
 export default base('admin', () => ({

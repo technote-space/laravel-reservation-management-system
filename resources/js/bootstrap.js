@@ -15,7 +15,3 @@ window.axios.interceptors.response.use(response => {
         error,
     });
 });
-
-window.siteParams = {
-    title: document.head.querySelector('title').innerText,
-};

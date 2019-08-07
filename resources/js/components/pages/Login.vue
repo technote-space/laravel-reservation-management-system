@@ -23,8 +23,10 @@
     import LoginForm from '../organisms/LoginForm';
 
     export default {
-        metaInfo: {
-            title: 'Login',
+        metaInfo () {
+            return {
+                title: this.$t('pages.login'),
+            };
         },
         components: {
             LoginForm,
