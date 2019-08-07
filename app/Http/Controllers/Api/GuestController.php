@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Guest\CreateRequest;
+use App\Http\Requests\Guest\SearchRequest;
 use App\Http\Requests\Guest\UpdateRequest;
 use App\Models\Guest;
 use Eloquent;
@@ -33,11 +34,13 @@ class GuestController extends CrudController
     }
 
     /**
+     * @param  SearchRequest  $request
+     *
      * @return JsonResponse
      */
-    public function index()
+    public function index(SearchRequest $request)
     {
-        return response()->json($this->repository->all());
+        return response()->json($this->repository->all($request->getConditions()));
     }
 
     /**

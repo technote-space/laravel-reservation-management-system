@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Helpers\Traits\TimeHelper;
+use App\Models\Traits\Searchable;
+use App\Models\Contracts\Searchable as SearchableContract;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -29,10 +31,12 @@ use Illuminate\Support\Carbon;
  * @property-read Reservation $latestReservation
  * @property-read Reservation $latestUsage
  * @property-read Collection|Reservation[] $recentUsages
+ * @mixin Eloquent
+ * @mixin Builder
  */
-class Guest extends Model
+class Guest extends Model implements SearchableContract
 {
-    use TimeHelper;
+    use TimeHelper, Searchable;
 
     /**
      * @var array
@@ -60,6 +64,48 @@ class Guest extends Model
      * @var int
      */
     protected $perPage = 10;
+
+    /**
+     * @param  Builder  $query
+     * @param  array  $conditions
+     */
+    protected function setConditions(Builder $query, array $conditions)
+    {
+        if (! empty($conditions['s'])) {
+            collect($conditions['s'])->each(function ($search) use ($query) {
+                $query->where(function (Builder $builder) use ($search) {
+                    $builder->where('guest_details.name', 'like', "%{$search}%")
+                            ->orWhere('guest_details.name_kana', 'like', "%{$search}%")
+                            ->orWhere('guest_details.zip_code', 'like', "%{$search}%")
+                            ->orWhere('guest_details.address', 'like', "%{$search}%")
+                            ->orWhere('guest_details.phone', 'like', "%{$search}%");
+                });
+            });
+        }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getJoinData(): array
+    {
+        return [
+            'guest_details' => [
+                'first'  => 'guest_details.guest_id',
+                'second' => 'guests.id',
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getOrderBy(): array
+    {
+        return [
+            'guests.id' => 'desc',
+        ];
+    }
 
     /**
      * @return HasOne

@@ -141,4 +141,57 @@ class RoomApiTest extends BaseTestCase
         $response->assertStatus(200);
         $this->assertFalse(Room::where('name', 'fgh')->where('number', 6)->where('price', 456)->exists());
     }
+
+    public function testSearch()
+    {
+        factory(Room::class)->create([
+            'name' => 'test1',
+        ]);
+        factory(Room::class)->create([
+            'name' => 'test2',
+        ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('rooms.index')
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(2, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('rooms.index', [
+                's' => '',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(2, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('rooms.index', [
+                's' => 'test',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(2, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('rooms.index', [
+                's' => 'test1',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(1, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('rooms.index', [
+                's' => 'test1 abc',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(0, 'data');
+    }
 }

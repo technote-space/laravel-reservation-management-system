@@ -185,4 +185,86 @@ class ReservationApiTest extends BaseTestCase
         $response->assertStatus(200);
         $this->assertFalse(Reservation::where('number', 20)->exists());
     }
+
+    public function testSearch()
+    {
+        factory(Reservation::class)->create([
+            'guest_id' => factory(GuestDetail::class)->create([
+                'guest_id'  => factory(Guest::class)->create()->id,
+                'name'      => 'test1',
+                'name_kana' => 'test1',
+                'zip_code'  => '123-4567',
+                'address'   => 'テスト住所1',
+                'phone'     => '012-3456-7890',
+            ])->guest_id,
+            'room_id'  => factory(Room::class)->create([
+                'name' => 'room1',
+            ]),
+        ]);
+        factory(Reservation::class)->create([
+            'guest_id' => factory(GuestDetail::class)->create([
+                'guest_id'  => factory(Guest::class)->create()->id,
+                'name'      => 'test2',
+                'name_kana' => 'test2',
+                'zip_code'  => '321-7654',
+                'address'   => 'テスト住所2',
+                'phone'     => '098-7654-3210',
+            ])->guest_id,
+            'room_id'  => factory(Room::class)->create([
+                'name' => 'room2',
+            ]),
+        ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index')
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(2, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                's' => "\n",
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(2, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                's' => 'test',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(2, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                's' => 'test1',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(1, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                's' => 'test1 room1',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(1, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                's' => 'test1 room1 room2',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(0, 'data');
+    }
 }

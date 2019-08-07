@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Helpers\Traits\TimeHelper;
+use App\Models\Traits\Searchable;
+use App\Models\Contracts\Searchable as SearchableContract;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -42,10 +44,12 @@ use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
  * @property-read Carbon $end_datetime
  * @property-read string $end_date_str
  * @property-read string $start_date_str
+ * @mixin Eloquent
+ * @mixin Builder
  */
-class Reservation extends Model
+class Reservation extends Model implements SearchableContract
 {
-    use HasEagerLimit, TimeHelper;
+    use HasEagerLimit, TimeHelper, Searchable;
 
     /**
      * @var array
@@ -82,6 +86,56 @@ class Reservation extends Model
      * @var int
      */
     protected $perPage = 10;
+
+    /**
+     * @param  Builder  $query
+     * @param  array  $conditions
+     */
+    protected function setConditions(Builder $query, array $conditions)
+    {
+        if (! empty($conditions['s'])) {
+            collect($conditions['s'])->each(function ($search) use ($query) {
+                $query->where(function (Builder $builder) use ($search) {
+                    $builder->where('guest_details.name', 'like', "%{$search}%")
+                            ->orWhere('guest_details.name_kana', 'like', "%{$search}%")
+                            ->orWhere('guest_details.address', 'like', "%{$search}%")
+                            ->orWhere('rooms.name', 'like', "%{$search}%");
+                });
+            });
+        }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getJoinData(): array
+    {
+        return [
+            'rooms'         => [
+                'first'  => 'rooms.id',
+                'second' => 'reservations.room_id',
+            ],
+            'guests'        => [
+                'first'  => 'guests.id',
+                'second' => 'reservations.guest_id',
+            ],
+            'guest_details' => [
+                'first'  => 'guest_details.guest_id',
+                'second' => 'guests.id',
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getOrderBy(): array
+    {
+        return [
+            'reservations.start_date' => 'desc',
+            'reservations.id'         => 'desc',
+        ];
+    }
 
     /**
      * @return BelongsTo

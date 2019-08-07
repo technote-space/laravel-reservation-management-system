@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Helpers\Traits\TimeHelper;
+use App\Models\Traits\Searchable;
+use App\Models\Contracts\Searchable as SearchableContract;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
@@ -36,10 +38,12 @@ use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
  * @property-read Reservation $latestReservation
  * @property-read Collection|Reservation[] $recentUsages
  * @property-read Reservation $latestUsage
+ * @mixin Eloquent
+ * @mixin Builder
  */
-class Room extends Model
+class Room extends Model implements SearchableContract
 {
-    use HasEagerLimit, TimeHelper;
+    use HasEagerLimit, TimeHelper, Searchable;
 
     /**
      * @var array
@@ -81,6 +85,29 @@ class Room extends Model
      * @var int
      */
     protected $perPage = 10;
+
+    /**
+     * @param  Builder  $query
+     * @param  array  $conditions
+     */
+    protected function setConditions(Builder $query, array $conditions)
+    {
+        if (! empty($conditions['s'])) {
+            collect($conditions['s'])->each(function ($search) use ($query) {
+                $query->where('rooms.name', 'like', "%{$search}%");
+            });
+        }
+    }
+
+    /**
+     * @return array
+     */
+    protected function getOrderBy(): array
+    {
+        return [
+            'rooms.id' => 'asc',
+        ];
+    }
 
     /**
      * @return HasMany

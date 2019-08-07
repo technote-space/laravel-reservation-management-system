@@ -155,4 +155,76 @@ class GuestApiTest extends BaseTestCase
                  ]);
         $this->assertFalse(GuestDetail::where('name', 'fgh')->exists());
     }
+
+    public function testSearch()
+    {
+        factory(GuestDetail::class)->create([
+            'guest_id'  => factory(Guest::class)->create()->id,
+            'name'      => 'test1',
+            'name_kana' => 'test1',
+            'zip_code'  => '123-4567',
+            'address'   => 'テスト住所1',
+            'phone'     => '012-3456-7890',
+        ]);
+        factory(GuestDetail::class)->create([
+            'guest_id'  => factory(Guest::class)->create()->id,
+            'name'      => 'test2',
+            'name_kana' => 'test2',
+            'zip_code'  => '321-7654',
+            'address'   => 'テスト住所2',
+            'phone'     => '098-7654-3210',
+        ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('guests.index')
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(2, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('guests.index', [
+                's' => '　',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(2, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('guests.index', [
+                's' => 'test',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(2, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('guests.index', [
+                's' => 'test1',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(1, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('guests.index', [
+                's' => 'test1 3456',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(1, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('guests.index', [
+                's' => 'test1 3456 7654',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(0, 'data');
+    }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Reservation\CreateRequest;
+use App\Http\Requests\Reservation\SearchRequest;
 use App\Http\Requests\Reservation\UpdateRequest;
 use App\Models\Reservation;
 use Eloquent;
@@ -43,11 +44,13 @@ class ReservationController extends CrudController
     }
 
     /**
+     * @param  SearchRequest  $request
+     *
      * @return JsonResponse
      */
-    public function index()
+    public function index(SearchRequest $request)
     {
-        return response()->json($this->repository->all());
+        return response()->json($this->repository->all($request->getConditions()));
     }
 
     /**
