@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import store from '../../../store';
 import models from './models';
 import pagination from './pagination';
+import { arrayToObject } from '../../misc';
 
 export default async (method, url, data = undefined) => {
     const split = url.split('?');
@@ -38,7 +39,10 @@ export default async (method, url, data = undefined) => {
             }
         } else {
             if ('get' === method) {
-                const page = split.length > 1 ? get(Object.assign(...split[ 1 ].split('&').map(item => item.split('=')).map(item => ({ [ item[ 0 ] ]: item[ 1 ] }))), 'page', 1) : 1;
+                const page = split.length > 1 ? get(arrayToObject(split[ 1 ].split('&'), {
+                    getItem: item => item.split('=')[ 1 ],
+                    getKey: ({ item }) => item.split('=')[ 0 ],
+                }), 'page', 1) : 1;
                 return pagination(model, page - 0);
             } else if ('post' === method) {
                 await store.dispatch('mock/create', {

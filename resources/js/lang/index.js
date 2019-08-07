@@ -1,14 +1,11 @@
 import { FALLBACK_LANG, LANG_LIST } from '../configs/lang';
 import locale from './detector';
+import { arrayToObject } from '../utils/misc';
 
 const options = {
     locale,
-    messages: Object.assign(...LANG_LIST.map(lang => ({
-        [ lang ]: require('./messages/' + lang).default,
-    }))),
-    dateTimeFormats: Object.assign(...LANG_LIST.map(lang => ({
-        [ lang ]: require('./date/' + lang).default,
-    }))),
+    messages: arrayToObject(LANG_LIST, { getItem: key => require('./messages/' + key).default }),
+    dateTimeFormats: arrayToObject(LANG_LIST, { getItem: key => require('./date/' + key).default }),
 };
 
 if (FALLBACK_LANG !== locale) {

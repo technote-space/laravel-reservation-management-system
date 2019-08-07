@@ -1,4 +1,5 @@
 import { pick } from 'lodash';
+import { arrayToObject } from '../../../../utils/misc';
 
 const moment = require('moment');
 const ids = {};
@@ -26,6 +27,9 @@ export default (model, generator) => (count = undefined) => ({
         if (undefined === count) {
             return generate(model, generator, overwrite);
         }
-        return Object.assign(...[...Array(count)].map(() => generate(model, generator, overwrite)).map(item => ({ [ item.id ]: item })));
+        return arrayToObject([...Array(count)], {
+            getItem: () => generate(model, generator, overwrite),
+            getKey: ({ value }) => value.id,
+        });
     },
 });
