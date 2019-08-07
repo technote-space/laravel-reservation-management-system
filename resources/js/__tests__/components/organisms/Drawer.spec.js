@@ -83,8 +83,8 @@ describe('Drawer', () => {
         expect(wrapper.findAll('.v-navigation-drawer.v-navigation-drawer--close')).toHaveLength(0);
         expect(wrapper.findAll('.v-list-item__title')).toHaveLength(4);
         expect(wrapper.findAll('.v-list-item__title').at(0).text()).toBe('テスト');
-        expect(wrapper.findAll('.v-list-item__title').at(1).text()).toBe('test1');
-        expect(wrapper.findAll('.v-list-item__title').at(2).text()).toBe('test2');
+        expect(wrapper.findAll('.v-list-item__title').at(1).text()).toBe('Test1');
+        expect(wrapper.findAll('.v-list-item__title').at(2).text()).toBe('Test2');
         expect(wrapper.findAll('.v-list-item__title').at(3).text()).toBe('Logout');
 
         wrapper.find('#test-contents').trigger('click');

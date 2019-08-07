@@ -110,7 +110,7 @@ exports[`Drawer should not render drawer if not opened: not opened 1`] = `
                   <div
                     class="v-list-item__title"
                   >
-                    test1
+                    Test1
                   </div>
                 </div>
               </a>
@@ -134,7 +134,7 @@ exports[`Drawer should not render drawer if not opened: not opened 1`] = `
                   <div
                     class="v-list-item__title"
                   >
-                    test2
+                    Test2
                   </div>
                 </div>
               </a>
@@ -260,7 +260,7 @@ exports[`Drawer should render drawer: opened 1`] = `
                   <div
                     class="v-list-item__title"
                   >
-                    test1
+                    Test1
                   </div>
                 </div>
               </a>
@@ -284,7 +284,7 @@ exports[`Drawer should render drawer: opened 1`] = `
                   <div
                     class="v-list-item__title"
                   >
-                    test2
+                    Test2
                   </div>
                 </div>
               </a>

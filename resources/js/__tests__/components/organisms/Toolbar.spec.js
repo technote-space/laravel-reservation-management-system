@@ -9,7 +9,6 @@ describe('Toolbar', () => {
         const wrapper = mount(app(Toolbar, 'top'), setupLocalVue({
             store: new Vuex.Store({
                 getters: {
-                    getTitle: () => 'テスト',
                     'common/isActiveToolbar': () => false,
                     'common/isActiveDrawer': () => false,
                     'auth/isAuthenticated': () => false,
@@ -29,7 +28,6 @@ describe('Toolbar', () => {
         const wrapper = mount(app(Toolbar, 'top'), setupLocalVue({
             store: new Vuex.Store({
                 getters: {
-                    getTitle: () => 'テスト',
                     'common/isActiveToolbar': () => true,
                     'common/isActiveDrawer': () => false,
                     'auth/isAuthenticated': () => true,
@@ -43,7 +41,7 @@ describe('Toolbar', () => {
 
         expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-toolbar__content')).toHaveLength(1);
-        expect(wrapper.find('.title').text()).toBe('テスト');
+        expect(wrapper.find('.title').text()).toBe('Reservation System');
         expect(wrapper.findAll('.v-app-bar__nav-icon')).toHaveLength(0);
     });
 
@@ -51,7 +49,6 @@ describe('Toolbar', () => {
         const wrapper = mount(app(Toolbar, 'top'), setupLocalVue({
             store: new Vuex.Store({
                 getters: {
-                    getTitle: () => 'テスト',
                     'common/isActiveToolbar': () => true,
                     'common/isActiveDrawer': () => true,
                     'auth/isAuthenticated': () => false,
@@ -65,7 +62,7 @@ describe('Toolbar', () => {
 
         expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-toolbar__content')).toHaveLength(1);
-        expect(wrapper.find('.title').text()).toBe('テスト');
+        expect(wrapper.find('.title').text()).toBe('Reservation System');
         expect(wrapper.findAll('.v-app-bar__nav-icon')).toHaveLength(0);
     });
 
@@ -74,7 +71,6 @@ describe('Toolbar', () => {
         const wrapper = mount(app(Toolbar, 'top'), setupLocalVue({
             store: new Vuex.Store({
                 getters: {
-                    getTitle: () => 'テスト',
                     'common/isActiveToolbar': () => true,
                     'common/isActiveDrawer': () => true,
                     'auth/isAuthenticated': () => true,
@@ -88,7 +84,7 @@ describe('Toolbar', () => {
 
         expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-toolbar__content')).toHaveLength(1);
-        expect(wrapper.find('.title').text()).toBe('テスト');
+        expect(wrapper.find('.title').text()).toBe('Reservation System');
         expect(wrapper.findAll('.v-app-bar__nav-icon')).toHaveLength(1);
 
         wrapper.find('.v-app-bar__nav-icon').trigger('click');

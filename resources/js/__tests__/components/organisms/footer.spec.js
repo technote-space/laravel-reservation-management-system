@@ -9,7 +9,6 @@ describe('Footer', () => {
         const wrapper = mount(app(Footer, 'bottom'), setupLocalVue({
             store: new Vuex.Store({
                 getters: {
-                    getTitle: () => 'テスト',
                     getSns: () => [
                         { icon: 'mdi-github-circle', url: 'https://github.com' },
                         { icon: 'mdi-twitter-circle', url: 'https://twitter.com' },
@@ -21,7 +20,7 @@ describe('Footer', () => {
 
         expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-icon')).toHaveLength(2);
-        expect(wrapper.find('strong').text()).toBe('テスト');
+        expect(wrapper.find('strong').text()).toBe('Reservation System');
         expect(wrapper.find('div.flex').text()).toContain(new Date().getFullYear());
     });
 });

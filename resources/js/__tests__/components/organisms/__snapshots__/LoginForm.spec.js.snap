@@ -36,15 +36,15 @@ exports[`LoginForm should render login form 1`] = `
                 >
                   <label
                     class="v-label theme--light"
-                    for="input-10"
+                    for="input-11"
                     style="left: 0px; position: absolute;"
                   >
-                    E-mail
+                    E-Mail
                   </label>
                   <input
                     data-vv-name="email"
                     data-vv-validate-on="blur"
-                    id="input-10"
+                    id="input-11"
                     required="required"
                     type="text"
                   />
@@ -80,7 +80,7 @@ exports[`LoginForm should render login form 1`] = `
                 >
                   <label
                     class="v-label theme--light"
-                    for="input-13"
+                    for="input-14"
                     style="left: 0px; position: absolute;"
                   >
                     Password
@@ -88,7 +88,7 @@ exports[`LoginForm should render login form 1`] = `
                   <input
                     data-vv-name="password"
                     data-vv-validate-on="blur"
-                    id="input-13"
+                    id="input-14"
                     required="required"
                     type="password"
                   />
@@ -190,15 +190,15 @@ exports[`LoginForm should render login form 2`] = `
                 >
                   <label
                     class="v-label v-label--active theme--light error--text"
-                    for="input-10"
+                    for="input-11"
                     style="left: 0px; position: absolute;"
                   >
-                    E-mail
+                    E-Mail
                   </label>
                   <input
                     data-vv-name="email"
                     data-vv-validate-on="blur"
-                    id="input-10"
+                    id="input-11"
                     required="required"
                     type="text"
                   />
@@ -240,7 +240,7 @@ exports[`LoginForm should render login form 2`] = `
                 >
                   <label
                     class="v-label v-label--active theme--light error--text"
-                    for="input-13"
+                    for="input-14"
                     style="left: 0px; position: absolute;"
                   >
                     Password
@@ -248,7 +248,7 @@ exports[`LoginForm should render login form 2`] = `
                   <input
                     data-vv-name="password"
                     data-vv-validate-on="blur"
-                    id="input-13"
+                    id="input-14"
                     required="required"
                     type="password"
                   />
@@ -356,15 +356,15 @@ exports[`LoginForm should render login form 3`] = `
                 >
                   <label
                     class="v-label v-label--active theme--light"
-                    for="input-10"
+                    for="input-11"
                     style="left: 0px; position: absolute;"
                   >
-                    E-mail
+                    E-Mail
                   </label>
                   <input
                     data-vv-name="email"
                     data-vv-validate-on="blur"
-                    id="input-10"
+                    id="input-11"
                     required="required"
                     type="text"
                   />
@@ -400,7 +400,7 @@ exports[`LoginForm should render login form 3`] = `
                 >
                   <label
                     class="v-label v-label--active theme--light"
-                    for="input-13"
+                    for="input-14"
                     style="left: 0px; position: absolute;"
                   >
                     Password
@@ -408,7 +408,7 @@ exports[`LoginForm should render login form 3`] = `
                   <input
                     data-vv-name="password"
                     data-vv-validate-on="blur"
-                    id="input-13"
+                    id="input-14"
                     required="required"
                     type="password"
                   />

@@ -69,7 +69,7 @@ exports[`Footer should render footer 1`] = `
           
             2019 — 
           <strong>
-            テスト
+            Reservation System
           </strong>
         </div>
       </div>

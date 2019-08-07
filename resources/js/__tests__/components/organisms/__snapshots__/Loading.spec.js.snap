@@ -106,7 +106,7 @@ exports[`Loading should render loading message: message 1`] = `
           class="mt-3 font-weight-bold title"
         >
           
-        test message
+        Test Message
     
         </div>
       </div>

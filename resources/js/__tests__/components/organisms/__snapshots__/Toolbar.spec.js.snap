@@ -58,7 +58,7 @@ exports[`Toolbar should not render toolbar toggle if not active drawer: drawer n
             <span
               class="title"
             >
-              テスト
+              Reservation System
             </span>
           </span>
         </div>
@@ -112,7 +112,7 @@ exports[`Toolbar should not render toolbar toggle if not authenticated: not auth
             <span
               class="title"
             >
-              テスト
+              Reservation System
             </span>
           </span>
         </div>
@@ -180,7 +180,7 @@ exports[`Toolbar should render toolbar: active 1`] = `
             <span
               class="title"
             >
-              テスト
+              Reservation System
             </span>
           </span>
         </div>
