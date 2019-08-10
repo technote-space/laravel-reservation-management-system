@@ -11,4 +11,6 @@ const getModel = model => get(getModels(), model);
 export const getModelName = () => model => getModel(model).name;
 export const getModelIcon = () => model => getModel(model).icon;
 export const getModelHeaders = () => model => getModel(model).headers;
-export const getMetaInfo = () => model => getModel(model).metaInfo;
+export const getModelMetaInfo = () => model => getModel(model).metaInfo;
+export const getModelForms = () => model => getModel(model).forms;
+export const getTimezone = () => siteParams.timezone;

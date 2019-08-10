@@ -1,4 +1,4 @@
 import locale from '../../../lang/detector';
+import faker from '../../../lang/faker';
 
-const faker = require('faker/locale/' + locale);
-export default faker;
+export default faker[ locale ];

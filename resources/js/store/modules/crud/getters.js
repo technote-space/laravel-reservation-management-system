@@ -38,7 +38,7 @@ const getHeaders = (state, mode) => {
     if (!model) {
         return [];
     }
-    return getModelHeaders(model).concat([{ text: 'column.actions', value: 'action' }]);
+    return getModelHeaders(model).concat([{ text: 'actions', value: 'action' }]);
 };
 
 export const isRequiredFetchList = state => isRequiredRefresh(state) || !isSameModel(state) || !isSamePage(state);
@@ -65,6 +65,9 @@ export const getEditMethod = () => 'patch';
 export const getEditEntryPoint = state => getModel(state, STATE_MODE_TARGET) + '/' + getDetailId(state, STATE_MODE_TARGET);
 export const getDeleteMethod = () => 'delete';
 export const getDeleteEntryPoint = state => getModel(state, STATE_MODE_TARGET) + '/' + getDetailId(state, STATE_MODE_TARGET);
+
+export const getSearchEntryPoint = () => model => model;
+export const getReservationCheckEntryPoint = () => 'reservations/check';
 
 export const getListRouter = state => getModelListRouter(getModel(state, STATE_MODE_TARGET));
 export const isCreatable = state => model => model === getModel(state, STATE_MODE_CURRENT);

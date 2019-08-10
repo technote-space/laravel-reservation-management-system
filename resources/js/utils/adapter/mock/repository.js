@@ -39,11 +39,13 @@ export default async (method, url, data = undefined) => {
             }
         } else {
             if ('get' === method) {
-                const page = split.length > 1 ? get(arrayToObject(split[ 1 ].split('&'), {
+                const params = arrayToObject(split.length > 1 ? split[ 1 ] : ''.split('&'), {
                     getItem: item => item.split('=')[ 1 ],
                     getKey: ({ item }) => item.split('=')[ 0 ],
-                }), 'page', 1) : 1;
-                return pagination(model, page - 0);
+                });
+                const page = 'page' in data ? data.page : get(params, 'page', 1);
+                const count = 'count' in data ? data.count : get(params, 'count', null);
+                return pagination(model, page - 0, count);
             } else if ('post' === method) {
                 await store.dispatch('mock/create', {
                     model,

@@ -11,6 +11,7 @@ import { addErrorToasted } from './toasted';
  * @param {function?} options.succeeded succeeded
  * @param {function?} options.failed failed
  * @param {function?} options.always always
+ * @returns {Promise<{response, error}>}
  */
 export const apiAccess = async (method, url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => {
     const failed = async error => {
@@ -20,23 +21,30 @@ export const apiAccess = async (method, url, options = { data: undefined, succee
             await processError(error);
         }
     };
+    const succeeded = async response => {
+        if ('function' === typeof options.succeeded) {
+            await options.succeeded(response);
+        }
+    };
 
     const { response, error } = await adapter(method, url, options.data);
     if (error) {
         await failed(error);
     } else {
         if (!response.data) {
-            await options.succeeded({ data: null });
+            await succeeded({ data: null });
         } else if ('object' !== typeof response.data) {
             await failed('type of response is not json.');
-        } else if ('function' === typeof options.succeeded) {
-            await options.succeeded(response);
+        } else {
+            await succeeded(response);
         }
     }
 
     if ('function' === typeof options.always) {
         await options.always();
     }
+
+    return { response, error };
 };
 
 /**
@@ -46,6 +54,7 @@ export const apiAccess = async (method, url, options = { data: undefined, succee
  * @param {function?} options.succeeded succeeded
  * @param {function?} options.failed failed
  * @param {function?} options.always always
+ * @returns {Promise<{response, error}>}
  */
 export const apiGet = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('get', url, options);
 
@@ -56,6 +65,7 @@ export const apiGet = async (url, options = { data: undefined, succeeded: undefi
  * @param {function?} options.succeeded succeeded
  * @param {function?} options.failed failed
  * @param {function?} options.always always
+ * @returns {Promise<{response, error}>}
  */
 export const apiPost = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('post', url, options);
 
@@ -66,6 +76,7 @@ export const apiPost = async (url, options = { data: undefined, succeeded: undef
  * @param {function?} options.succeeded succeeded
  * @param {function?} options.failed failed
  * @param {function?} options.always always
+ * @returns {Promise<{response, error}>}
  */
 export const apiPatch = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('patch', url, options);
 
@@ -76,6 +87,7 @@ export const apiPatch = async (url, options = { data: undefined, succeeded: unde
  * @param {function?} options.succeeded succeeded
  * @param {function?} options.failed failed
  * @param {function?} options.always always
+ * @returns {Promise<{response, error}>}
  */
 export const apiDelete = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('delete', url, options);
 
@@ -106,7 +118,7 @@ export const processError = async error => {
             location.reload();
         }
     } else if (error.response && error.response.data && error.response.data.errors) {
-        Object.keys(error.response.data.errors).map(key => error.response.data.errors[ key ].map(message => key + ': ' + message)).flat().flat().forEach(message => addErrorToasted(message));
+        Object.keys(error.response.data.errors).map(key => error.response.data.errors[ key ]).flat().flat().forEach(message => addErrorToasted(message));
     } else {
         addErrorToasted(error.message);
     }

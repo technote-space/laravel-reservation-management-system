@@ -2,8 +2,12 @@ import mock from './mock';
 
 export default (method, url, data = undefined) => {
     if ('local' === process.env.NODE_ENV) {
-        return mock(method.toLocaleString(), url, data);
+        return mock(getMethod(method), url, data);
     } else {
-        return window.axios[ method.toLocaleString() ]('/api/' + url, data);
+        return window.axios[ getMethod(method) ]('/api/' + url, getData(method, data));
     }
 };
+
+const getMethod = method => method.toLocaleString();
+
+const getData = (method, data) => 'object' === typeof data && 'get' === getMethod(method) ? ({ params: data }) : data;

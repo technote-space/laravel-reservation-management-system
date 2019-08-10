@@ -1,5 +1,5 @@
 import { STATE_MODE_TARGET, STATE_MODE_CURRENT, ON_REQUIRED_REFRESH } from './constant';
-import { SET_MODEL, SET_PAGE, SET_ID, SET_RESPONSE } from './constant';
+import { SET_MODEL, SET_PAGE, SET_ID, SET_RESPONSE, CLEAR_CACHE } from './constant';
 
 const mutations = {
     [ SET_MODEL ] (state, payload) {
@@ -33,6 +33,11 @@ const mutations = {
     },
     [ ON_REQUIRED_REFRESH ] (state) {
         state.isRequiredRefresh = true;
+    },
+    [ CLEAR_CACHE ] (state, id) {
+        const update = Object.assign({}, state[ STATE_MODE_CURRENT ]);
+        delete update.detail.caches[ id ];
+        state[ STATE_MODE_CURRENT ] = update;
     },
 };
 

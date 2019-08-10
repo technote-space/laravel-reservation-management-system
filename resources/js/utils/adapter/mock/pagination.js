@@ -2,9 +2,13 @@ import { take, drop } from 'lodash';
 import store from '../../../store';
 import models from './models';
 
-export default (model, page) => {
-    const perPage = 10;
+export default (model, page, count) => {
     const all = store.getters[ 'mock/getAllArray' ](model);
+    if (null !== count) {
+        return all;
+    }
+
+    const perPage = 10;
     const items = drop(take(all.map(item => models(model, item)), perPage * page), perPage * (page - 1));
     return {
         current_page: page,
