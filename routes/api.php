@@ -14,4 +14,5 @@ Route::group([
         'rooms'        => 'Api\RoomController',
         'reservations' => 'Api\ReservationController',
     ]);
+    $router->post('reservations/check', 'Api\ReservationController@check')->name('reservations.check');
 });

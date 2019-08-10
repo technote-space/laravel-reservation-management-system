@@ -10,10 +10,10 @@ namespace App\Http\Requests\Reservation;
 class CreateRequest extends CrudRequest
 {
     /**
-     * @return bool
+     * @return array|int|string|null
      */
-    protected function isUpdate(): bool
+    protected function getRoomId()
     {
-        return false;
+        return $this->input('reservations.room_id');
     }
 }

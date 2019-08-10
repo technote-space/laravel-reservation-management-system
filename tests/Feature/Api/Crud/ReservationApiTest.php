@@ -18,6 +18,7 @@ use Illuminate\Support\Collection;
  * @group Feature
  * @group Feature.Api
  * @group Feature.Api.Crud
+ * @SuppressWarnings(PMD.TooManyPublicMethods)
  */
 class ReservationApiTest extends BaseTestCase
 {
@@ -56,6 +57,40 @@ class ReservationApiTest extends BaseTestCase
                      'total',
                  ])
                  ->assertJsonCount(10, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                'per_page' => 5,
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonStructure([
+                     'data',
+                     'path',
+                     'to',
+                     'total',
+                 ])
+                 ->assertJsonCount(5, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                'count' => 0,
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(25);
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                'count'  => 20,
+                'offset' => 20,
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(5);
     }
 
     public function testShow()
@@ -128,18 +163,160 @@ class ReservationApiTest extends BaseTestCase
         $this->assertTrue(Reservation::where('number', 2)->exists());
     }
 
+    public function testFailStore1()
+    {
+        $guest = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => $guest->id,
+        ]);
+        $room = factory(Room::class)->create([
+            'number' => 2,
+        ]);
+        $this->assertFalse(Reservation::where('number', 3)->exists());
+
+        /** @var Generator $faker */
+        $faker    = Factory::create(config('app.faker_locale'));
+        $start    = $faker->dateTimeBetween('-10days', '+10days')->format('Y-m-d');
+        $end      = $faker->dateTimeBetween($start, $start.'  +4 days')->format('Y-m-d');
+        $response = $this->actingAs($this->admin)->json(
+            'POST',
+            route('reservations.store'),
+            [
+                'reservations' => [
+                    'guest_id'   => $guest->id,
+                    'room_id'    => $room->id,
+                    'number'     => 3,
+                    'start_date' => $start,
+                    'end_date'   => $end,
+                ],
+            ]
+        );
+
+        $response->assertStatus(422)
+                 ->assertJsonStructure([
+                     'errors',
+                     'message',
+                 ]);
+        $this->assertFalse(Reservation::where('number', 3)->exists());
+    }
+
+    public function testFailStore2()
+    {
+        $guest = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => $guest->id,
+        ]);
+        $room1 = factory(Room::class)->create();
+        $room2 = factory(Room::class)->create();
+
+        $today = now()->format('Y-m-d');
+        factory(Reservation::class)->create([
+            'guest_id'   => $guest->id,
+            'room_id'    => $room1->id,
+            'number'     => 1,
+            'start_date' => $today,
+            'end_date'   => $today,
+        ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'POST',
+            route('reservations.store'),
+            [
+                'reservations' => [
+                    'guest_id'   => $guest->id,
+                    'room_id'    => $room1->id,
+                    'number'     => 1,
+                    'start_date' => $today,
+                    'end_date'   => $today,
+                ],
+            ]
+        );
+        $response->assertStatus(422)
+                 ->assertJsonStructure([
+                     'errors',
+                     'message',
+                 ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'POST',
+            route('reservations.store'),
+            [
+                'reservations' => [
+                    'guest_id'   => $guest->id,
+                    'room_id'    => $room2->id,
+                    'number'     => 1,
+                    'start_date' => $today,
+                    'end_date'   => $today,
+                ],
+            ]
+        );
+        $response->assertStatus(422)
+                 ->assertJsonStructure([
+                     'errors',
+                     'message',
+                 ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'POST',
+            route('reservations.store'),
+            [
+                'reservations' => [
+                    'guest_id'   => $guest->id,
+                    'number'     => 1,
+                    'start_date' => $today,
+                    'end_date'   => $today,
+                ],
+            ]
+        );
+        $response->assertStatus(422)
+                 ->assertJsonStructure([
+                     'errors',
+                     'message',
+                 ]);
+    }
+
+    public function testFailStore3()
+    {
+        $guest = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => $guest->id,
+        ]);
+        $room     = factory(Room::class)->create();
+        $response = $this->actingAs($this->admin)->json(
+            'POST',
+            route('reservations.store'),
+            [
+                'reservations' => [
+                    'guest_id'   => $guest->id,
+                    'room_id'    => $room->id,
+                    'number'     => 1,
+                    'start_date' => now()->format('Y-m-d'),
+                    'end_date'   => now()->addDays(5)->format('Y-m-d'),
+                ],
+            ]
+        );
+        $response->assertStatus(422)
+                 ->assertJsonStructure([
+                     'errors',
+                     'message',
+                 ]);
+    }
+
     public function testUpdate()
     {
         $guest = factory(Guest::class)->create();
         factory(GuestDetail::class)->create([
             'guest_id' => $guest->id,
         ]);
-        $room        = factory(Room::class)->create();
+        $room        = factory(Room::class)->create([
+            'number' => 10,
+        ]);
         $reservation = factory(Reservation::class)->create([
             'guest_id' => $guest->id,
             'room_id'  => $room->id,
             'number'   => 1,
         ]);
+        $this->assertTrue(Reservation::where('number', 1)->exists());
         $this->assertFalse(Reservation::where('number', 10)->exists());
 
         $response = $this->actingAs($this->admin)->json(
@@ -158,7 +335,184 @@ class ReservationApiTest extends BaseTestCase
                  ->assertJsonFragment([
                      'number' => 10,
                  ]);
+        $this->assertFalse(Reservation::where('number', 1)->exists());
         $this->assertTrue(Reservation::where('number', 10)->exists());
+    }
+
+    public function testFailUpdate1()
+    {
+        $guest = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => $guest->id,
+        ]);
+        $room        = factory(Room::class)->create([
+            'number' => 2,
+        ]);
+        $reservation = factory(Reservation::class)->create([
+            'guest_id' => $guest->id,
+            'room_id'  => $room->id,
+            'number'   => 1,
+        ]);
+        $this->assertTrue(Reservation::where('number', 1)->exists());
+        $this->assertFalse(Reservation::where('number', 3)->exists());
+
+        $response = $this->actingAs($this->admin)->json(
+            'PATCH',
+            route('reservations.update', [
+                'reservation' => $reservation->id,
+            ]),
+            [
+                'reservations' => [
+                    'number' => 3,
+                ],
+            ]
+        );
+
+        $response->assertStatus(422)
+                 ->assertJsonStructure([
+                     'errors',
+                     'message',
+                 ]);
+        $this->assertTrue(Reservation::where('number', 1)->exists());
+        $this->assertFalse(Reservation::where('number', 3)->exists());
+    }
+
+    public function testFailUpdate2()
+    {
+        $guest1 = factory(Guest::class)->create();
+        $guest2 = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => $guest1->id,
+        ]);
+        $room1       = factory(Room::class)->create();
+        $room2       = factory(Room::class)->create();
+        $day1        = now()->format('Y-m-d');
+        $day2        = now()->addDay()->format('Y-m-d');
+        $day3        = now()->subDay()->format('Y-m-d');
+        $reservation = factory(Reservation::class)->create([
+            'guest_id'   => $guest1->id,
+            'room_id'    => $room1->id,
+            'number'     => 1,
+            'start_date' => $day1,
+            'end_date'   => $day1,
+        ]);
+        factory(Reservation::class)->create([
+            'guest_id'   => $guest2->id,
+            'room_id'    => $room2->id,
+            'number'     => 1,
+            'start_date' => $day1,
+            'end_date'   => $day1,
+        ]);
+        factory(Reservation::class)->create([
+            'guest_id'   => $guest2->id,
+            'room_id'    => $room1->id,
+            'number'     => 1,
+            'start_date' => $day2,
+            'end_date'   => $day2,
+        ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'PATCH',
+            route('reservations.update', [
+                'reservation' => $reservation->id,
+            ]),
+            [
+                'reservations' => [
+                    'end_date' => $day3,
+                ],
+            ]
+        );
+        $response->assertStatus(422)
+                 ->assertJsonStructure([
+                     'errors',
+                     'message',
+                 ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'PATCH',
+            route('reservations.update', [
+                'reservation' => $reservation->id,
+            ]),
+            [
+                'reservations' => [
+                    'start_date' => $day2,
+                    'end_date'   => $day2,
+                ],
+            ]
+        );
+        $response->assertStatus(422)
+                 ->assertJsonStructure([
+                     'errors',
+                     'message',
+                 ]);
+    }
+
+    public function testFailUpdate3()
+    {
+        $guest1 = factory(Guest::class)->create();
+        $guest2 = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => $guest1->id,
+        ]);
+        $room1       = factory(Room::class)->create();
+        $room2       = factory(Room::class)->create();
+        $day1        = now()->format('Y-m-d');
+        $day2        = now()->addDay()->format('Y-m-d');
+        $reservation = factory(Reservation::class)->create([
+            'guest_id'   => $guest1->id,
+            'room_id'    => $room1->id,
+            'number'     => 1,
+            'start_date' => $day1,
+            'end_date'   => $day1,
+        ]);
+        factory(Reservation::class)->create([
+            'guest_id'   => $guest2->id,
+            'room_id'    => $room2->id,
+            'number'     => 1,
+            'start_date' => $day1,
+            'end_date'   => $day1,
+        ]);
+        factory(Reservation::class)->create([
+            'guest_id'   => $guest2->id,
+            'room_id'    => $room1->id,
+            'number'     => 1,
+            'start_date' => $day2,
+            'end_date'   => $day2,
+        ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'PATCH',
+            route('reservations.update', [
+                'reservation' => $reservation->id,
+            ]),
+            [
+                'reservations' => [
+                    'room_id' => $room2->id,
+                ],
+            ]
+        );
+        $response->assertStatus(422)
+                 ->assertJsonStructure([
+                     'errors',
+                     'message',
+                 ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'PATCH',
+            route('reservations.update', [
+                'reservation' => $reservation->id,
+            ]),
+            [
+                'reservations' => [
+                    'guest_id' => $guest2->id,
+                ],
+            ]
+        );
+        $response->assertStatus(422)
+                 ->assertJsonStructure([
+                     'errors',
+                     'message',
+                 ]);
     }
 
     public function testDestroy()
@@ -199,7 +553,7 @@ class ReservationApiTest extends BaseTestCase
             ])->guest_id,
             'room_id'  => factory(Room::class)->create([
                 'name' => 'room1',
-            ]),
+            ])->id,
         ]);
         factory(Reservation::class)->create([
             'guest_id' => factory(GuestDetail::class)->create([
@@ -212,7 +566,7 @@ class ReservationApiTest extends BaseTestCase
             ])->guest_id,
             'room_id'  => factory(Room::class)->create([
                 'name' => 'room2',
-            ]),
+            ])->id,
         ]);
 
         $response = $this->actingAs($this->admin)->json(
@@ -266,5 +620,120 @@ class ReservationApiTest extends BaseTestCase
         );
         $response->assertStatus(200)
                  ->assertJsonCount(0, 'data');
+    }
+
+    public function testTermSearch()
+    {
+        factory(Reservation::class)->create([
+            'guest_id'   => factory(GuestDetail::class)->create([
+                'guest_id' => factory(Guest::class)->create()->id,
+            ])->guest_id,
+            'room_id'    => factory(Room::class)->create()->id,
+            'start_date' => '2020-01-01',
+            'end_date'   => '2020-01-07',
+        ]);
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                'end_date' => '2019-12-31',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(0, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                'end_date'   => '2020-1-01',
+                'start_date' => '2020-01-07',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(1, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                'start_date' => '2020-01-8',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(0, 'data');
+    }
+
+    private function check($data, $result)
+    {
+        $response = $this->actingAs($this->admin)->json('POST', route('reservations.check'), $data);
+        $response->assertStatus(200)
+                 ->assertJsonFragment([
+                     'result' => $result,
+                 ]);
+    }
+
+    public function testCheck1()
+    {
+        $guest = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => $guest->id,
+        ]);
+        $room = factory(Room::class)->create();
+
+        $day1 = now()->format('Y-m-d');
+        $day2 = now()->addDay()->format('Y-m-d');
+        $day4 = now()->addDays(3)->format('Y-m-d');
+        $day5 = now()->addDays(4)->format('Y-m-d');
+
+        $check = function ($start, $end, $result) use ($room, $guest) {
+            $this->check([
+                'room_id'    => $room->id,
+                'guest_id'   => $guest->id,
+                'start_date' => $start,
+                'end_date'   => $end,
+            ], $result);
+        };
+
+        $check($day1, $day1, true);
+        $check($day1, $day4, true);
+        $check($day1, $day5, false);
+        $check($day2, $day1, false);
+    }
+
+    public function testCheck2()
+    {
+        $guest = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => $guest->id,
+        ]);
+        $room1 = factory(Room::class)->create();
+        $room2 = factory(Room::class)->create();
+
+        $day1 = now()->format('Y-m-d');
+        $day2 = now()->addDay()->format('Y-m-d');
+        $day3 = now()->addDays(2)->format('Y-m-d');
+        $day4 = now()->addDays(3)->format('Y-m-d');
+        $day5 = now()->addDays(4)->format('Y-m-d');
+        $day6 = now()->addDays(5)->format('Y-m-d');
+        factory(Reservation::class)->create([
+            'guest_id'   => $guest->id,
+            'room_id'    => $room1->id,
+            'number'     => 1,
+            'start_date' => $day3,
+            'end_date'   => $day4,
+        ]);
+
+        $check = function ($room, $start, $end, $result) use ($guest) {
+            $this->check([
+                'room_id'    => $room->id,
+                'guest_id'   => $guest->id,
+                'start_date' => $start,
+                'end_date'   => $end,
+            ], $result);
+        };
+
+        $check($room1, $day1, $day2, true);
+        $check($room1, $day2, $day5, false);
+        $check($room1, $day5, $day6, true);
+        $check($room2, $day2, $day5, false);
     }
 }

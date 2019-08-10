@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Reservation;
 
+use App\Models\Reservation;
+use Throwable;
+
 /**
  * Class UpdateRequest
  * @package App\Http\Requests\Reservation
@@ -10,10 +13,11 @@ namespace App\Http\Requests\Reservation;
 class UpdateRequest extends CrudRequest
 {
     /**
-     * @return bool
+     * @return int
+     * @throws Throwable
      */
-    protected function isUpdate(): bool
+    protected function getRoomId()
     {
-        return true;
+        return Reservation::findOrFail($this->route($this->getSingularName()))->room_id;
     }
 }

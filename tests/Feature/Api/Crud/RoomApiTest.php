@@ -40,6 +40,40 @@ class RoomApiTest extends BaseTestCase
                      'total',
                  ])
                  ->assertJsonCount(10, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('rooms.index', [
+                'per_page' => 5,
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonStructure([
+                     'data',
+                     'path',
+                     'to',
+                     'total',
+                 ])
+                 ->assertJsonCount(5, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('rooms.index', [
+                'count' => 0,
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(25);
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('rooms.index', [
+                'count'  => 20,
+                'offset' => 20,
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(5);
     }
 
     public function testShow()

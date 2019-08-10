@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Reservation\CreateRequest;
+use App\Http\Requests\Reservation\ReservationCheckRequest;
 use App\Http\Requests\Reservation\SearchRequest;
 use App\Http\Requests\Reservation\UpdateRequest;
 use App\Models\Reservation;
@@ -94,5 +95,15 @@ class ReservationController extends CrudController
     public function destroy($primaryId)
     {
         return response()->json($this->repository->delete($primaryId));
+    }
+
+    /**
+     * @param  ReservationCheckRequest  $request
+     *
+     * @return JsonResponse
+     */
+    public function check(ReservationCheckRequest $request)
+    {
+        return response()->json($request->checkReservable());
     }
 }
