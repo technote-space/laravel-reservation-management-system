@@ -721,6 +721,16 @@
   resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-4.2.0.tgz#c49a9e27baf40b5a637a5d8fffa2670f19ed636b"
   integrity sha512-9C61TowLTTZ657cErdylkdRYxXj5HO0NgogQgYX9X2wz7yvn6loiyGx6oq0o6OFf+e/Z4Ey06j7f/fqn/BPYEQ==
 
+"@fullcalendar/interaction@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/interaction/-/interaction-4.2.0.tgz#312e83f575aed67c33aec69884664d436aaedef2"
+  integrity sha512-wwAyocUp1HEY7c7xCymR9EGdh7AWZrwNiBQlIpP3ne0eJT0U4ZjlnoOoels3VPsTJ9a6pdO1/XoGjEvL1T5y4g==
+
+"@fullcalendar/moment-timezone@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/moment-timezone/-/moment-timezone-4.2.0.tgz#e133ae52e2a60872ffb50d70852d22da08eb9732"
+  integrity sha512-eqnBkt7uMMTvZUlFxCHsWCq0PJodIqVWJO1C2+g3I6+ovlpDHZjIHmphxZmeTDmldZxEyD3KHvnINddeyrtZlQ==
+
 "@fullcalendar/vue@^4.2.2":
   version "4.2.2"
   resolved "https://registry.yarnpkg.com/@fullcalendar/vue/-/vue-4.2.2.tgz#ab26e730e407019946483c4d1f2ba9f0014094a2"
@@ -875,10 +885,10 @@
     "@types/istanbul-reports" "^1.1.1"
     "@types/yargs" "^12.0.9"
 
-"@mdi/font@^3.8.95":
-  version "3.8.95"
-  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-3.8.95.tgz#772094ed7046b126457b1f3b8c82e26b209e71e8"
-  integrity sha512-KR6TBdVYV3p1ZOM+Ge45Kk3P8yHfSGt3YOryVlkEKdO3vMiPjRaaDcQsdogGxVl8FcXsAt/Gz8MoXObbOF1Pzg==
+"@mdi/font@^3.9.97":
+  version "3.9.97"
+  resolved "https://registry.yarnpkg.com/@mdi/font/-/font-3.9.97.tgz#b9f31e05574452e84f57e5b81d34ffd593bc9c29"
+  integrity sha512-yADBl2mzqIssrhLaRvJ2gZPyEQK+fN9uYh/1/cwwuq2lKDx+ITWsOrh1vlHMfw1IICMx9cwBjSoiCf3B8Br8nw==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -2974,10 +2984,10 @@ cosmiconfig@^5.0.0, cosmiconfig@^5.2.0:
     js-yaml "^3.13.1"
     parse-json "^4.0.0"
 
-coveralls@^3.0.5:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/coveralls/-/coveralls-3.0.5.tgz#28d7274c6c9827aa85537eab82d66e7e62d0d527"
-  integrity sha512-/KD7PGfZv/tjKB6LoW97jzIgFqem0Tu9tZL9/iwBnBd8zkIZp7vT1ZSHNvnr0GSQMV/LTMxUstWg8WcDDUVQKg==
+coveralls@^3.0.6:
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/coveralls/-/coveralls-3.0.6.tgz#5c63b2759b6781118e7439bd870ba5e9ee428b25"
+  integrity sha512-Pgh4v3gCI4T/9VijVrm8Ym5v0OgjvGLKj3zTUwkvsCiwqae/p6VLzpsFNjQS2i6ewV7ef+DjFJ5TSKxYt/mCrA==
   dependencies:
     growl "~> 1.10.0"
     js-yaml "^3.13.1"
@@ -10764,10 +10774,10 @@ vary@~1.1.2:
   resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
   integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
 
-vee-validate@^2.2.13:
-  version "2.2.13"
-  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.2.13.tgz#d77714eeb1bedea24efaaf1774bb2eb3165551ce"
-  integrity sha512-Mj5vFyrSnqIAFZOfhF1asLqymV/rEWQNv7gjWCQIydQ1evKoQ7TzP0F9HZzuWEIWotI2/UumMK5QI8wRkeL0kQ==
+vee-validate@^2.2.14:
+  version "2.2.14"
+  resolved "https://registry.yarnpkg.com/vee-validate/-/vee-validate-2.2.14.tgz#94f914cd30db5928887be98eee4eb635ad617b08"
+  integrity sha512-EDiEk8/PthLn9/1FISLCcviCzjvsc9Jv9B4wmyz0GoGqa0DT8yiTWuTORjSFQQ+UW0GLhXcPNfRhG3EdEOx0gw==
 
 vendors@^1.0.0:
   version "1.0.3"
@@ -10881,10 +10891,15 @@ vue-no-ssr@^1.1.1:
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz#875f3be6fb0ae41568a837f3ac1a80eaa137b998"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
 
-vue-router@^3.0.6, vue-router@^3.0.7:
+vue-router@^3.0.6:
   version "3.0.7"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.7.tgz#b36ca107b4acb8ff5bc4ff824584059c23fcb87b"
   integrity sha512-utJ+QR3YlIC/6x6xq17UMXeAfxEvXA0VKD3PiSio7hBOZNusA1jXcbxZxVEfJunLp48oonjTepY8ORoIlRx/EQ==
+
+vue-router@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.1.2.tgz#2e0904703545dabdd42b2b7a2e617f02f99a1969"
+  integrity sha512-WssQEHSEvIS1/CI4CO2T8LJdoK4Q9Ngox28K7FDNMTfzNTk2WS5D0dDlqYCaPG+AG4Z8wJkn1KrBc7AhspZJUQ==
 
 vue-scrollto@^2.15.0:
   version "2.15.0"
@@ -10938,10 +10953,10 @@ vue@^2.6.10:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==
 
-vuetify@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.0.4.tgz#0f751ba1d257212de16e30f3e1e9c4b8a8a93353"
-  integrity sha512-StXzJUph//ZJ1UTQNoJBmjAcC71Goeeg5Ag392z85dyertihy/3BIzPPxMqFTOJuDzst6oGQ3uQCfkIIqJvtfA==
+vuetify@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/vuetify/-/vuetify-2.0.5.tgz#3e9cd992bed2f4013bfcfc045ff2e301deb3272d"
+  integrity sha512-t2JNarqqJRzOEtNg2nP9U5EFU4jR6unA8RIiqBGb3pjSCaTxwHzu5H3wkcBh/NM3y6fd40EuIS+SkFejwGD6RQ==
 
 vuex@^3.1.1:
   version "3.1.1"
