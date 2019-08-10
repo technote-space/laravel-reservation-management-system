@@ -25,7 +25,7 @@
                             <v-list-item-icon>
                                 <v-icon>{{ icon }}</v-icon>
                             </v-list-item-icon>
-                            {{ title }}
+                            {{ $t(title) }}
                         </v-toolbar-title>
                         <v-divider
                             class="mx-4"
@@ -33,6 +33,30 @@
                             vertical
                         />
                         <v-spacer />
+                        <v-btn
+                            color="primary"
+                            dark
+                            class="mb-2"
+                            @click.stop="createItem"
+                        >
+                            {{ $t('misc.new_item') }}
+                        </v-btn>
+                        <v-dialog
+                            v-model="dialog"
+                        >
+                            <Edit
+                                :target-model="targetModel"
+                                :target-id="targetId"
+                                :increment="increment"
+                                @close-edit="close"
+                            />
+                        </v-dialog>
+                        <YesCancel
+                            :dialog="deleteDialog"
+                            message="messages.delete_item"
+                            @yes="deleteItem"
+                            @cancel="deleteTargetId = null"
+                        />
                     </v-toolbar>
                 </template>
                 <template v-slot:item.action="{ item }">
@@ -45,7 +69,7 @@
                     </v-icon>
                     <v-icon
                         small
-                        @click="deleteItem(item)"
+                        @click="deleteItemConfirm(item)"
                     >
                         delete
                     </v-icon>
@@ -68,10 +92,13 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import Edit from '../organisms/Edit';
+    import YesCancel from '../organisms/confirm/YesCancelDialog';
 
     export default {
-        metaInfo () {
-            return this.metaInfo;
+        components: {
+            Edit,
+            YesCancel,
         },
         props: {
             targetModel: {
@@ -79,11 +106,22 @@
                 required: true,
             },
         },
+        data () {
+            return {
+                dialog: false,
+                targetId: null,
+                increment: 0,
+                deleteTargetId: null,
+            };
+        },
+        metaInfo () {
+            return this.metaInfo;
+        },
         computed: {
             ...mapGetters({
                 getModelName: 'getModelName',
                 getModelIcon: 'getModelIcon',
-                getMetaInfo: 'getMetaInfo',
+                getModelMetaInfo: 'getModelMetaInfo',
                 model: 'crud/getTargetModel',
                 getListHeaders: 'crud/getListHeaders',
                 items: 'crud/getListItems',
@@ -91,26 +129,29 @@
                 totalPage: 'crud/getTotalPage',
                 page: 'crud/getPage',
             }),
-            isValidPagination: function () {
+            isValidPagination () {
                 return 1 < this.totalPage;
             },
-            metaInfo: function () {
+            metaInfo () {
                 return Object.assign({}, {
-                    title: this.$t(this.getModelName(this.model)),
-                }, this.getMetaInfo(this.model));
+                    title: this.$t(this.title),
+                }, this.getModelMetaInfo(this.model));
             },
-            title: function () {
-                return this.metaInfo.title;
+            title () {
+                return this.getModelName(this.model);
             },
-            icon: function () {
+            icon () {
                 return this.getModelIcon(this.model);
             },
-            headers: function () {
+            headers () {
                 return this.getListHeaders.map(item => {
                     return Object.assign({}, item, {
-                        text: this.$t(item.text),
+                        text: this.$t('column.' + item.text),
                     });
                 });
+            },
+            deleteDialog () {
+                return null !== this.deleteTargetId;
             },
         },
         watch: {
@@ -123,27 +164,32 @@
             ...mapActions({
                 setModel: 'crud/setModel',
                 setPage: 'crud/setPage',
-                create: 'crud/create',
-                edit: 'crud/edit',
                 destroy: 'crud/destroy',
             }),
             setup () {
                 this.setModel(this.targetModel);
                 this.setPage(1);
             },
-            editItem (item) {
-
+            createItem () {
+                this.editItem(null);
             },
-            deleteItem (item) {
-                if (confirm(this.$t('messages.delete_item'))) {
-                    this.destroy({ model: this.model, id: item.id });
-                }
+            editItem (item) {
+                this.targetId = item ? item.id - 0 : null;
+                this.increment++;
+                this.dialog = true;
+            },
+            deleteItemConfirm (item) {
+                this.deleteTargetId = item.id;
+            },
+            deleteItem () {
+                this.destroy({ model: this.model, id: this.deleteTargetId });
+                this.deleteTargetId = null;
             },
             close () {
-
-            },
-            save () {
-
+                this.dialog = false;
+                setTimeout(() => {
+                    this.targetId = null;
+                }, 300);
             },
         },
     };
