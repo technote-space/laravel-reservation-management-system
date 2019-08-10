@@ -2,6 +2,7 @@
     <v-overlay
         :value="isActiveOverlay"
         class="text-center"
+        z-index="1000"
     >
         <v-progress-circular
             indeterminate

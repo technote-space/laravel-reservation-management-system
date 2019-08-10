@@ -218,7 +218,7 @@ exports[`LoginForm should render login form 2`] = `
                     <div
                       class="v-messages__message"
                     >
-                      The email field must be a valid email.
+                      The email field must be a valid email
                     </div>
                   </span>
                 </div>
@@ -282,7 +282,7 @@ exports[`LoginForm should render login form 2`] = `
                     <div
                       class="v-messages__message"
                     >
-                      The password field must be at least 8 characters.
+                      The password field must be at least 8 characters
                     </div>
                   </span>
                 </div>

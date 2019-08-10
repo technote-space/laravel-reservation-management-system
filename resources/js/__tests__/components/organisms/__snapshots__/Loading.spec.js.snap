@@ -27,7 +27,7 @@ exports[`Loading should not render loading if not active: not active 1`] = `
     </main>
     <div
       class="v-overlay text-center theme--dark"
-      style="z-index: 5;"
+      style="z-index: 1000;"
     >
       <div
         class="v-overlay__scrim"
@@ -65,7 +65,7 @@ exports[`Loading should render loading message: message 1`] = `
     </main>
     <div
       class="v-overlay text-center v-overlay--active theme--dark"
-      style="z-index: 5;"
+      style="z-index: 1000;"
     >
       <div
         class="v-overlay__scrim"
@@ -142,7 +142,7 @@ exports[`Loading should render loading: active 1`] = `
     </main>
     <div
       class="v-overlay text-center v-overlay--active theme--dark"
-      style="z-index: 5;"
+      style="z-index: 1000;"
     >
       <div
         class="v-overlay__scrim"

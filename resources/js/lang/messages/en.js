@@ -22,15 +22,9 @@ export default {
         'zip_code': 'ZIP Code',
         address: 'Address',
         phone: 'Phone',
-        'start_datetime': 'Start Datetime',
-        'end_datetime': 'End Datetime',
+        'start_date': 'Start Date',
+        'end_date': 'End Date',
         actions: 'Actions',
-    },
-    validations: {
-        attributes: {
-            email: 'E-Mail',
-            password: 'Password',
-        },
     },
     loading: {},
     messages: {
@@ -40,5 +34,18 @@ export default {
     unit: {
         number: '1 person | {value} people',
         price: '{value} yen',
+    },
+    hint: {
+        'zip_code': 'e.g. 012-3456',
+        'phone': 'e.g. 012-3456-7890',
+    },
+    misc: {
+        'new_item': 'New Item',
+        'edit_item': 'Edit Item',
+        yes: 'Yes',
+        no: 'No',
+        cancel: 'Cancel',
+        ok: 'OK',
+        save: 'Save',
     },
 };

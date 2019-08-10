@@ -44,10 +44,10 @@
             };
         },
         computed: {
-            passwordIcon: function () {
+            passwordIcon () {
                 return this.passwordVisibility ? 'visibility' : 'visibility_off';
             },
-            passwordType: function () {
+            passwordType () {
                 return this.passwordVisibility ? 'text' : 'password';
             },
         },
