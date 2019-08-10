@@ -15,3 +15,6 @@ window.axios.interceptors.response.use(response => {
         error,
     });
 });
+window.siteParams = {
+    timezone: document.head.querySelector('meta[name="timezone"]').content,
+};

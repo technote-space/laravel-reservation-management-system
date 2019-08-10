@@ -25,7 +25,10 @@ abstract class SearchRequest extends FormRequest
     public function rules(): array
     {
         return array_merge([
-            's' => 'string|nullable',
+            's'        => 'nullable|string',
+            'count'    => 'nullable|integer|min:0',
+            'offset'   => 'nullable|integer|min:0',
+            'per_page' => 'nullable|integer|min:1',
         ], $this->additionalRules());
     }
 
@@ -35,7 +38,10 @@ abstract class SearchRequest extends FormRequest
     public function attributes()
     {
         return array_merge([
-            's' => '検索ワード',
+            's'        => __('request.search.s'),
+            'count'    => __('request.search.count'),
+            'offset'   => __('request.search.offset'),
+            'per_page' => __('request.search.per_page'),
         ], $this->additionalAttributes());
     }
 
