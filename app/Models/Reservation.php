@@ -103,6 +103,13 @@ class Reservation extends Model implements SearchableContract
                 });
             });
         }
+
+        if (! empty($conditions['start_date'])) {
+            $query->where('reservations.end_date', '>=', $conditions['start_date']);
+        }
+        if (! empty($conditions['end_date'])) {
+            $query->where('reservations.start_date', '<=', $conditions['end_date']);
+        }
     }
 
     /**
@@ -211,4 +218,99 @@ class Reservation extends Model implements SearchableContract
     {
         return $this->start_datetime->timestamp > $this->now();
     }
+
+    /**
+     * @param  string|null  $startDate
+     * @param  string|null  $endDate
+     *
+     * @return bool
+     */
+    public static function isTermValid(?string $startDate, ?string $endDate): bool
+    {
+        if (empty($startDate) || empty($endDate)) {
+            return true;
+        }
+
+        if (strtotime($startDate) > strtotime($endDate)) {
+            return false;
+        }
+
+        if (Setting::getSetting('max_day') <= Carbon::parse($endDate)->diffInDays(Carbon::parse($startDate))) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param  int|null  $reservationId
+     * @param  int|null  $roomId
+     * @param  string|null  $startDate
+     * @param  string|null  $endDate
+     *
+     * @return bool
+     */
+    public static function isReservationAvailable(?int $reservationId, ?int $roomId, ?string $startDate, ?string $endDate): bool
+    {
+        if (empty($roomId) || empty($startDate) || empty($endDate)) {
+            return true;
+        }
+
+        $startDate = self::normalizeDate($startDate);
+        $endDate   = self::normalizeDate($endDate);
+
+        $builder = static::where('room_id', $roomId)
+                         ->where('end_date', '>=', $startDate)
+                         ->where('start_date', '<=', $endDate);
+        if (! empty($reservationId)) {
+            $builder->where('id', '!=', $reservationId);
+        }
+
+        return ! $builder->exists();
+    }
+
+    /**
+     * @param  int|null  $reservationId
+     * @param  int|null  $guestId
+     * @param  string|null  $startDate
+     * @param  string|null  $endDate
+     *
+     * @return bool
+     */
+    public static function isNotDuplicated(?int $reservationId, ?int $guestId, ?string $startDate, ?string $endDate): bool
+    {
+        if (empty($guestId) || empty($startDate) || empty($endDate)) {
+            return true;
+        }
+
+        $startDate = self::normalizeDate($startDate);
+        $endDate   = self::normalizeDate($endDate);
+
+        $builder = static::where('guest_id', $guestId)
+                         ->where('end_date', '>=', $startDate)
+                         ->where('start_date', '<=', $endDate);
+        if (! empty($reservationId)) {
+            $builder->where('id', '!=', $reservationId);
+        }
+
+        return ! $builder->exists();
+    }
+
+    /**
+     * @param  string  $date
+     *
+     * @return string
+     */
+    // @codeCoverageIgnoreStart
+    private static function normalizeDate(string $date)
+    {
+        if ('sqlite' === config('database.default')) {
+            if (strlen($date) <= 10) {
+                return $date.' 00:00:00';
+            }
+        }
+
+        return $date;
+    }
+    // @codeCoverageIgnoreEnd
 }

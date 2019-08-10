@@ -11,7 +11,7 @@ use Eloquent;
  * Class UpdateRequest
  * @package App\Http\Requests\Room
  */
-abstract class CrudRequest extends \App\Http\Requests\CrudRequest
+class CrudRequest extends \App\Http\Requests\CrudRequest
 {
     /**
      * @return string|Eloquent

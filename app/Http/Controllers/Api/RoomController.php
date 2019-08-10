@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Room\CreateRequest;
+use App\Http\Requests\Room\CrudRequest;
 use App\Http\Requests\Room\SearchRequest;
-use App\Http\Requests\Room\UpdateRequest;
 use App\Models\Room;
 use Eloquent;
 use Illuminate\Http\JsonResponse;
@@ -54,24 +53,24 @@ class RoomController extends CrudController
     }
 
     /**
-     * @param  CreateRequest  $request
+     * @param  CrudRequest  $request
      *
      * @return JsonResponse
      * @throws Throwable
      */
-    public function store(CreateRequest $request)
+    public function store(CrudRequest $request)
     {
         return response()->json($request->store());
     }
 
     /**
-     * @param  UpdateRequest  $request
+     * @param  CrudRequest  $request
      * @param  int  $primaryId
      *
      * @return JsonResponse
      * @throws Throwable
      */
-    public function update(UpdateRequest $request, $primaryId)
+    public function update(CrudRequest $request, $primaryId)
     {
         return response()->json($request->update($primaryId));
     }

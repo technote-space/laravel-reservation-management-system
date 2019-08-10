@@ -30,12 +30,13 @@ trait Searchable
         $table = $this->getTable();
         $query = $this->newQuery();
         //        $this->setIdConditions($query, $conditions);
+        $this->setLimitConditions($query, $conditions);
         $this->setConditions($query, $conditions);
         $this->joinTables($query);
 
         $selectTables = collect();
         foreach ($this->getOrderBy() as $k => $v) {
-            $this->orderByRaw("$k $v");
+            $query->orderByRaw("$k $v");
             if (preg_match_all('#(\w+)\.\w+#', $k, $matches) > 0) {
                 $selectTables = $selectTables->concat($matches[1]);
             }
@@ -76,6 +77,16 @@ trait Searchable
     //            $query->whereNotIn("{$table}.id", $conditions['not_ids']);
     //        }
     //    }
+
+    protected function setLimitConditions(Builder $builder, array $conditions)
+    {
+        if (! empty($conditions['count']) && $conditions['count'] > 0) {
+            $builder->limit($conditions['count']);
+        }
+        if (! empty($conditions['offset'])) {
+            $builder->offset($conditions['offset']);
+        }
+    }
 
     /**
      * @param  Builder  $query

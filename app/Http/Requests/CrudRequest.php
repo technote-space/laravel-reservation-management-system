@@ -32,6 +32,15 @@ abstract class CrudRequest extends FormRequest
     abstract protected function getTarget();
 
     /**
+     * @return string
+     * @throws Throwable
+     */
+    protected function getSingularName()
+    {
+        return Str::singular($this->getTable($this->getTarget()));
+    }
+
+    /**
      * @return array
      */
     protected function getSubTargets(): array
@@ -41,8 +50,12 @@ abstract class CrudRequest extends FormRequest
 
     /**
      * @return bool
+     * @throws Throwable
      */
-    abstract protected function isUpdate(): bool;
+    protected function isUpdate(): bool
+    {
+        return ! empty($this->route($this->getSingularName()));
+    }
 
     /**
      * @return array
@@ -193,17 +206,17 @@ abstract class CrudRequest extends FormRequest
             $rules['url'] = 'url';
         }
         if (stristr($name, 'phone') !== false) {
-            $rules['regex:phone'] = 'regex:/^\d{2,4}-?\d{2,4}-?\d{3,4}$/u';
+            $rules['phone'] = 'phone';
         }
         if (preg_match('#\A(\w+)_id\z#', $name, $matches)) {
             $table           = Str::snake(Str::pluralStudly($matches[1]));
             $rules['exists'] = "exists:{$table},id";
         }
         if (stristr($name, 'kana') !== false) {
-            $rules['regex:kana'] = 'regex:/^[ァ-ヴー・ 　]+$/u';
+            $rules['katakana'] = 'katakana';
         }
         if (stristr($name, 'zip_code') !== false || stristr($name, 'postal_code') !== false) {
-            $rules['regex:zip_code'] = 'regex:/^\d{3}-\d{4}$|^\d{3}-\d{2}$|^\d{3}$|^\d{5}$|^\d{7}$/u';
+            $rules['zip_code'] = 'zip_code';
         }
 
         return $rules;
@@ -394,16 +407,19 @@ abstract class CrudRequest extends FormRequest
                 'updated_at',
             ], true);
         })->mapWithKeys(function (Column $column) use ($target) {
-            return ["{$this->getTable($target)}.{$column->getName()}" => $this->filterAttribute($column->getComment() ?? $column->getName())];
+            return ["{$this->getTable($target)}.{$column->getName()}" => $this->filterAttribute(__("database.{$this->getTable($target)}.{$column->getName()}"), $column, $target)];
         })->toArray();
     }
 
     /**
      * @param  string  $attr
+     * @param  Column  $column
+     * @param  string  $target
      *
      * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function filterAttribute(string $attr): string
+    protected function filterAttribute(/** @noinspection PhpUnusedParameterInspection */ string $attr, Column $column, string $target): string
     {
         return $attr;
     }

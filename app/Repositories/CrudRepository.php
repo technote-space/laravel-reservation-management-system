@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use App\Models\Contracts\Searchable as SearchableContract;
+use App\Models\Traits\Searchable;
 use Eloquent;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Throwable;
@@ -51,13 +53,16 @@ class CrudRepository
 
     /**
      * @param  array  $conditions
-     * @param  int|null  $perPage
      *
-     * @return LengthAwarePaginator
+     * @return Searchable[]|LengthAwarePaginator|Builder[]|Collection|Model[]
      */
-    public function all(array $conditions, ?int $perPage = null)
+    public function all(array $conditions)
     {
-        return $this->instance()->search($conditions)->with($this->listEagerLoading)->paginate($perPage);
+        if (isset($conditions['count'])) {
+            return $this->instance()->search($conditions)->with($this->listEagerLoading)->get();
+        }
+
+        return $this->instance()->search($conditions)->with($this->listEagerLoading)->paginate($conditions['per_page'] ?? null);
     }
 
     /**

@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Requests\Guest\CreateRequest;
+use App\Http\Requests\Guest\CrudRequest;
 use App\Http\Requests\Guest\SearchRequest;
-use App\Http\Requests\Guest\UpdateRequest;
 use App\Models\Guest;
 use Eloquent;
 use Illuminate\Http\JsonResponse;
@@ -54,24 +53,24 @@ class GuestController extends CrudController
     }
 
     /**
-     * @param  CreateRequest  $request
+     * @param  CrudRequest  $request
      *
      * @return JsonResponse
      * @throws Throwable
      */
-    public function store(CreateRequest $request)
+    public function store(CrudRequest $request)
     {
         return response()->json($request->store());
     }
 
     /**
-     * @param  UpdateRequest  $request
+     * @param  CrudRequest  $request
      * @param  int  $primaryId
      *
      * @return JsonResponse
      * @throws Throwable
      */
-    public function update(UpdateRequest $request, $primaryId)
+    public function update(CrudRequest $request, $primaryId)
     {
         return response()->json($request->update($primaryId));
     }
