@@ -43,11 +43,11 @@ class ReservationApiTest extends BaseTestCase
                 'room_id'  => $room->id,
             ]);
         });
+
         $response = $this->actingAs($this->admin)->json(
             'GET',
             route('reservations.index')
         );
-
         $response->assertStatus(200)
                  ->assertJsonStructure([
                      'data',

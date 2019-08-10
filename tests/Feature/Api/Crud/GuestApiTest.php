@@ -36,11 +36,11 @@ class GuestApiTest extends BaseTestCase
                 'guest_id' => $guest->id,
             ]);
         });
+
         $response = $this->actingAs($this->admin)->json(
             'GET',
             route('guests.index')
         );
-
         $response->assertStatus(200)
                  ->assertJsonStructure([
                      'data',

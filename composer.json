@@ -85,8 +85,7 @@
             "if [[ -n $(php artisan list --raw | grep 'ide-helper:generate') ]]; then composer ide; fi",
             "php artisan optimize --ansi",
             "php artisan cache:clear --ansi",
-            "php artisan config:clear --ansi",
-            "php artisan route:clear --ansi"
+            "php artisan config:clear --ansi"
         ],
         "setup": [
             "composer install --no-interaction --prefer-dist --no-suggest",
@@ -210,7 +209,6 @@
             "php artisan migrate:refresh --ansi"
         ],
         "seed": [
-            "php artisan config:clear --ansi",
             "php artisan db:seed --ansi"
         ],
         "da": [

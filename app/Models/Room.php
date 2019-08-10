@@ -105,7 +105,7 @@ class Room extends Model implements SearchableContract
     protected function getOrderBy(): array
     {
         return [
-            'rooms.id' => 'asc',
+            'rooms.id' => 'desc',
         ];
     }
 

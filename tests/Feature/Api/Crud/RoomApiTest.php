@@ -27,11 +27,11 @@ class RoomApiTest extends BaseTestCase
     public function testIndex()
     {
         factory(Room::class, 25)->create();
+
         $response = $this->actingAs($this->admin)->json(
             'GET',
             route('rooms.index')
         );
-
         $response->assertStatus(200)
                  ->assertJsonStructure([
                      'data',

@@ -31,7 +31,7 @@
         <server name="MAIL_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
-        <env name="QUERY_DETECTOR_ENABLED" value="false"/>
+        <server name="QUERY_DETECTOR_ENABLED" value="false"/>
     </php>
     <logging>
         <log type="coverage-clover" target="./coverage/php/clover.xml"/>
