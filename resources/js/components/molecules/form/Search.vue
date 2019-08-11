@@ -22,6 +22,22 @@
                 width="100%"
             >
                 <v-card-text>
+                    <v-form @submit.prevent="searchItem">
+                        <v-text-field
+                            :disabled="isSearching"
+                            v-model="searchWord"
+                        />
+                        <div class="text-right">
+                            <v-btn
+                                :disabled="isDisabledSearchButton"
+                                type="submit"
+                            >
+                                {{ $t('misc.search') }}
+                            </v-btn>
+                        </div>
+                    </v-form>
+                </v-card-text>
+                <v-card-text>
                     <v-select
                         ref="select"
                         :disabled="isDisabledSelect"
@@ -39,22 +55,6 @@
                             {{ $t('misc.ok') }}
                         </v-btn>
                     </div>
-                </v-card-text>
-                <v-card-text>
-                    <v-form @submit.prevent="searchItem">
-                        <v-text-field
-                            :disabled="isSearching"
-                            v-model="searchWord"
-                        />
-                        <div class="text-right">
-                            <v-btn
-                                :disabled="isSearching"
-                                type="submit"
-                            >
-                                {{ $t('misc.search') }}
-                            </v-btn>
-                        </div>
-                    </v-form>
                 </v-card-text>
             </v-card>
         </v-layout>
@@ -122,6 +122,9 @@
             },
             searchText () {
                 return this.searchSettings[ 2 ];
+            },
+            isDisabledSearchButton () {
+                return this.isSearching || !this.searchWord.trim();
             },
             isDisabledSelect () {
                 return this.isSearching || !this.items.length;

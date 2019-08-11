@@ -1,5 +1,8 @@
 <template>
-    <v-form @submit.prevent="login">
+    <v-form
+        @submit.prevent="login"
+        class="text-center"
+    >
         <v-text-field
             v-model="loginForm.email"
             v-validate="'required|email'"

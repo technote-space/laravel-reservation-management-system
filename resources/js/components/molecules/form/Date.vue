@@ -93,14 +93,20 @@
             isDisabled () {
                 return !this.formInputs[ 'reservations.room_id' ];
             },
+            isValidTargetEvent () {
+                return this.value;
+            },
             targetDate () {
-                return this.value || moment().format(this.format);
+                return this.value;
+            },
+            isValidActiveEvent () {
+                return this.formInputs[ 'reservations.start_date' ] && this.formInputs[ 'reservations.end_date' ];
             },
             activeEventStart () {
-                return (this.formInputs[ 'reservations.start_date' ] ? moment(this.formInputs[ 'reservations.start_date' ]) : moment()).format(this.format);
+                return moment(this.formInputs[ 'reservations.start_date' ]).format(this.format);
             },
             activeEventEnd () {
-                return (this.formInputs[ 'reservations.end_date' ] ? moment(this.formInputs[ 'reservations.end_date' ]) : moment()).add(1, 'days').format(this.format);
+                return moment(this.formInputs[ 'reservations.end_date' ]).add(1, 'days').format(this.format);
             },
         },
         methods: {
@@ -119,7 +125,14 @@
                 if (calendar) {
                     this.clearAllEvents(calendar);
                 }
-                callback(reserves.filter(reserve => reserve.id !== this.detail.id).map(this.createEvent).concat([this.createTargetEvent(), this.createActiveEvent()]));
+                const events = reserves.filter(reserve => reserve.id !== this.detail.id).map(this.createEvent);
+                if (this.isValidTargetEvent) {
+                    events.push(this.createTargetEvent());
+                }
+                if (this.isValidActiveEvent) {
+                    events.push(this.createActiveEvent());
+                }
+                callback(events);
             },
             createEvent (reserve) {
                 const start = moment(reserve.start_datetime);
@@ -164,8 +177,12 @@
             },
             resetCalendarCallback (calendar) {
                 this.clearAllEvents(calendar);
-                calendar.addEvent(this.createTargetEvent());
-                calendar.addEvent(this.createActiveEvent());
+                if (this.isValidTargetEvent) {
+                    calendar.addEvent(this.createTargetEvent());
+                }
+                if (this.isValidActiveEvent) {
+                    calendar.addEvent(this.createActiveEvent());
+                }
             },
             clearAllEvents (calendar) {
                 this.clearEvent('targetEvent', calendar);
@@ -190,6 +207,10 @@
     .fc {
         background-color: white;
         padding: 1em;
+
+        .fc-content {
+            text-align: center;
+        }
     }
 
 </style>
