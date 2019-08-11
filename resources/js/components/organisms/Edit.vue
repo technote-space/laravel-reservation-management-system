@@ -136,9 +136,6 @@
                 this.formInputs = {};
                 this.forms.map(form => {
                     this.formInputs[ form.name ] = '';
-                    if (form.display) {
-                        this.formInputs[ form.display ] = '';
-                    }
                 });
             },
             async getDetail () {
@@ -156,9 +153,6 @@
                 const inputs = {};
                 this.forms.map(form => {
                     inputs[ form.name ] = get(this.detail, form.value, '');
-                    if (form.display) {
-                        inputs[ form.display ] = get(this.detail, form.display, '');
-                    }
                 });
                 this.formInputs = inputs;
             },

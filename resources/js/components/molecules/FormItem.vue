@@ -5,7 +5,6 @@
             :form="form"
             :detail="detail"
             :form-inputs="formInputs"
-            :display="display"
             :value="value"
             :label="label"
             :hint="hint"
@@ -59,9 +58,6 @@
             },
             label () {
                 return this.$t('column.' + this.name);
-            },
-            display () {
-                return get(this.detail, get(this.form, 'display', 'value'), '');
             },
             type () {
                 return this.form.type || 'text';
