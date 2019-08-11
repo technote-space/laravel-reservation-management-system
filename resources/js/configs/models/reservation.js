@@ -11,12 +11,12 @@ export default {
             value: 'id',
         },
         {
-            text: 'start_date',
+            text: 'start_datetime',
             value: 'start_datetime',
             processor: date,
         },
         {
-            text: 'end_date',
+            text: 'end_datetime',
             value: 'end_datetime',
             processor: date,
         },
