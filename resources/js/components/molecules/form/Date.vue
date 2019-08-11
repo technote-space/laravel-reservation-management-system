@@ -106,7 +106,6 @@
         methods: {
             ...mapActions({
                 search: 'crud/search',
-                check: 'crud/checkReservation',
             }),
             async eventCallback (start, end, callback, calendar) {
                 const reserves = await this.search({
@@ -160,19 +159,6 @@
                 };
             },
             async dateClicked (info) {
-                //                const data = {
-                //                    reservationId: this.detail.id,
-                //                    roomId: this.formInputs[ 'reservations.room_id' ],
-                //                    guestId: this.formInputs[ 'reservations.guest_id' ],
-                //                    startDate: this.formInputs[ 'reservations.start_date' ],
-                //                    endDate: this.formInputs[ 'reservations.end_date' ],
-                //                };
-                //                data[ this.form.checkKey ] = info.dateStr;
-                //
-                //                if (!await this.check(data)) {
-                //                    return;
-                //                }
-
                 this.$emit('input', info.dateStr);
                 this.dialog = false;
             },
