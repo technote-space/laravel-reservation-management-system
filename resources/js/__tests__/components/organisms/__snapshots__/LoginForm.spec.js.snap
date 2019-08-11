@@ -19,7 +19,7 @@ exports[`LoginForm should render login form 1`] = `
         class="v-content__wrap"
       >
         <form
-          class="v-form"
+          class="v-form text-center"
           novalidate="novalidate"
         >
           <div
@@ -173,7 +173,7 @@ exports[`LoginForm should render login form 2`] = `
         class="v-content__wrap"
       >
         <form
-          class="v-form"
+          class="v-form text-center"
           novalidate="novalidate"
         >
           <div
@@ -339,7 +339,7 @@ exports[`LoginForm should render login form 3`] = `
         class="v-content__wrap"
       >
         <form
-          class="v-form"
+          class="v-form text-center"
           novalidate="novalidate"
         >
           <div
