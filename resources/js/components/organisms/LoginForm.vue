@@ -41,6 +41,7 @@
                     password: '',
                 },
                 passwordVisibility: false,
+                submitting: false,
             };
         },
         computed: {
@@ -53,11 +54,17 @@
         },
         methods: {
             async login () {
+                if (this.submitting) {
+                    return;
+                }
+                this.submitting = true;
                 this.$validator.validateAll().then(async result => {
                     if (!result) {
                         return;
                     }
                     await this.$store.dispatch('auth/login', this.loginForm);
+                }).finally(() => {
+                    this.submitting = false;
                 });
             },
         },
