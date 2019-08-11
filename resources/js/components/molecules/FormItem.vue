@@ -15,7 +15,6 @@
 </template>
 
 <script>
-    import { get } from 'lodash';
     import TextForm from './form/Text';
     import DateForm from './form/Date';
     import SearchForm from './form/Search';
