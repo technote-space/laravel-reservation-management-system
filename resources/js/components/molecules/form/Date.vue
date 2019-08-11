@@ -158,7 +158,7 @@
                     rendering: 'background',
                 };
             },
-            async dateClicked (info) {
+            dateClicked (info) {
                 this.$emit('input', info.dateStr);
                 this.dialog = false;
             },

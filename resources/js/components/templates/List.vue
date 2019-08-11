@@ -43,6 +43,8 @@
                         </v-btn>
                         <v-dialog
                             v-model="dialog"
+                            max-width="750px"
+                            persistent
                         >
                             <Edit
                                 :target-model="targetModel"
