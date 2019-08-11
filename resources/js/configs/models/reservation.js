@@ -54,7 +54,7 @@ export default {
                 numeric: true,
             },
             type: 'search',
-            search: 'guests:detail.id:detail.name',
+            search: 'guests:id:detail.name',
         },
         {
             name: 'reservations.room_id',

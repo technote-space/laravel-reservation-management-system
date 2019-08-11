@@ -62,5 +62,6 @@ export default {
         cancel: 'キャンセル',
         ok: 'OK',
         save: '保存',
+        search: '検索',
     },
 };

@@ -49,5 +49,6 @@ export default {
         cancel: 'Cancel',
         ok: 'OK',
         save: 'Save',
+        search: 'Search',
     },
 };
