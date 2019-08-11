@@ -82,14 +82,13 @@
             "@php artisan key:generate --ansi"
         ],
         "post-update-cmd": [
-            "if [[ -n $(php artisan list --raw | grep 'ide-helper:generate') ]]; then composer ide; fi",
+            "if [[ -n $(php artisan list --raw | grep 'ide-helper:generate') ]] && [[ -f .env ]]; then composer ide; fi",
             "php artisan optimize --ansi",
             "php artisan cache:clear --ansi",
             "php artisan config:clear --ansi"
         ],
         "setup": [
-            "composer install --no-interaction --prefer-dist --no-suggest",
-            "@build:js"
+            "bash bin/setup.sh"
         ],
         "build": [
             "@build:php",
@@ -204,6 +203,10 @@
         ],
         "coveralls-js": [
             "yarn coveralls"
+        ],
+        "migrate:seed": [
+            "@migrate",
+            "@seed"
         ],
         "migrate": [
             "php artisan migrate:refresh --ansi"
