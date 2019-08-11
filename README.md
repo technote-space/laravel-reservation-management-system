@@ -83,6 +83,11 @@
   - テスト
   - Deploy
     - GitHub Releases
+    - GitHub Pages
+### デザインフレームワーク
+- Vuetify
+### その他
+- 多言語化
 
 ## Author
 [GitHub (Technote)](https://github.com/technote-space)  
