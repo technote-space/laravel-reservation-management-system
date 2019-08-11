@@ -1,7 +1,7 @@
 <template>
     <v-form
-        @submit.prevent="login"
         class="text-center"
+        @submit.prevent="login"
     >
         <v-text-field
             v-model="loginForm.email"
