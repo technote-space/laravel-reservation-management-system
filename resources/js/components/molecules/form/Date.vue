@@ -2,7 +2,7 @@
     <v-dialog
         :disabled="isDisabled"
         v-model="dialog"
-        full-width
+        max-width="850px"
     >
         <template v-slot:activator="{ on }">
             <v-text-field

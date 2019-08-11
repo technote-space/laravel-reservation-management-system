@@ -13,6 +13,7 @@
                 :page.sync="page"
                 :items-per-page="perPage"
                 hide-default-footer
+                hide-default-header
                 disable-sort
                 class="elevation-1 pa-5 mb-3"
             >
