@@ -12,6 +12,10 @@ if [[ -z "${RELEASE_FILE}" ]]; then
 fi
 
 echo ""
+echo ">> Build"
+composer build
+
+echo ""
 echo ">> Prepare release files"
 rm -rdf ${PACKAGE_DIR}
 rm -f ${RELEASE_FILE}

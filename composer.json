@@ -98,7 +98,7 @@
             "composer install --no-dev --no-interaction --prefer-dist --no-suggest"
         ],
         "build:js": [
-            "yarn install",
+            "yarn --prod install",
             "yarn prod"
         ],
         "test": [
@@ -228,7 +228,6 @@
             "composer update"
         ],
         "gh-releases": [
-            "@build",
             "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && bash bin/deploy/gh-releases.sh"
         ],
         "routes": [
