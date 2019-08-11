@@ -27,11 +27,23 @@ export default {
         'end_date': 'End Date',
         'end_datetime': 'End Datetime',
         actions: 'Actions',
+        guest: 'Guest',
+        room: 'Room',
     },
     loading: {},
     messages: {
         'password_hint': 'At least {min} characters',
         'delete_item': 'Are you sure you want to delete this item?',
+        failed: {
+            create: 'Failed to create.',
+            edit: 'Failed to edit.',
+            delete: 'Failed to delete.',
+        },
+        succeeded: {
+            create: 'Succeeded to create.',
+            edit: 'Succeeded to edit.',
+            delete: 'Succeeded to delete.',
+        },
     },
     unit: {
         number: '1 person | {value} people',
@@ -44,6 +56,7 @@ export default {
     misc: {
         'new_item': 'New Item',
         'edit_item': 'Edit Item',
+        confirm: 'Confirm',
         yes: 'Yes',
         no: 'No',
         cancel: 'Cancel',
