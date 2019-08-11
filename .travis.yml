@@ -111,3 +111,22 @@ jobs:
         overwrite: true
         on:
           tags: true
+
+    - stage: deploy
+      language: node_js
+      node_js: '11'
+      dist: trusty
+      env:
+        - GH_PAGES_TRACKING_ID=UA-78163306-3
+      script: skip
+      before_deploy:
+        - source bin/deploy/env.sh
+        - bash bin/deploy/gh-pages.sh
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        github_token: ${GITHUB_TOKEN}
+        keep_history: true
+        local_dir: ${GH_PAGES_DIR}
+        on:
+          tags: true

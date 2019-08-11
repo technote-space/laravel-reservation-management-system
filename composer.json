@@ -230,6 +230,12 @@
         "gh-releases": [
             "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && bash bin/deploy/gh-releases.sh"
         ],
+        "gh-pages": [
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && bash bin/deploy/gh-pages.sh"
+        ],
+        "gh-pages:ga": [
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_TRACKING_ID=TEST source bin/deploy/env.sh && bash bin/deploy/gh-pages.sh"
+        ],
         "routes": [
             "php artisan route:clear --ansi",
             "php artisan route:list --ansi"

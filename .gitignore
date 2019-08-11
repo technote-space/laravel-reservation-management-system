@@ -24,3 +24,4 @@ composer.lock
 /release.zip
 /_ide_helper.php
 /.phpstorm.meta.php
+/gh-pages
