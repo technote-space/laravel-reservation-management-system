@@ -4,7 +4,7 @@
         fill-height
     >
         <v-layout
-            wrap
+            align-center
             justify-center
         >
             <v-card
