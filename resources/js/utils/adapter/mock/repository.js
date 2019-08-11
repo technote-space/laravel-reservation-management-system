@@ -26,8 +26,7 @@ export default async (method, url, data = undefined) => {
                 await store.dispatch('mock/update', {
                     model,
                     id,
-                    key: data.key,
-                    value: data.value,
+                    data,
                 }, { root: true });
                 return models(model, store.getters[ 'mock/getItem' ](model, id));
             } else if ('delete' === method) {
@@ -39,12 +38,12 @@ export default async (method, url, data = undefined) => {
             }
         } else {
             if ('get' === method) {
-                const params = arrayToObject(split.length > 1 ? split[ 1 ] : ''.split('&'), {
+                const params = arrayToObject((split.length > 1 ? split[ 1 ] : '').split('&'), {
                     getItem: item => item.split('=')[ 1 ],
                     getKey: ({ item }) => item.split('=')[ 0 ],
                 });
-                const page = 'page' in data ? data.page : get(params, 'page', 1);
-                const count = 'count' in data ? data.count : get(params, 'count', null);
+                const page = data && 'page' in data ? data.page : get(params, 'page', 1);
+                const count = data && 'count' in data ? data.count : get(params, 'count', null);
                 return pagination(model, page - 0, count);
             } else if ('post' === method) {
                 await store.dispatch('mock/create', {

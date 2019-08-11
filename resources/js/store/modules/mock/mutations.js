@@ -3,14 +3,13 @@ import { CREATE, UPDATE, DELETE, LOGIN, LOGOUT } from './constant';
 const mutations = {
     [ CREATE ] (state, { model, data }) {
         state.items[ model ] = Object.assign({}, state.items[ model ]);
-        const item = state.factories[ model ]().create(data);
+        const item = state.factories[ model ]().create(data[ model ]);
         state.items[ model ][ item.id ] = item;
     },
     [ UPDATE ] (state, { model, id, data }) {
         if (id in state.items[ model ]) {
-            data.id = id;
             state.items[ model ] = Object.assign({}, state.items[ model ]);
-            state.items[ model ][ id ] = state.factories[ model ]().create(data);
+            state.items[ model ][ id ] = Object.assign({}, state.items[ model ][ id ], data[ model ]);
         }
     },
     [ DELETE ] (state, { model, id }) {

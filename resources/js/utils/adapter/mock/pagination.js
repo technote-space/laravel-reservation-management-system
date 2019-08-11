@@ -5,7 +5,10 @@ import models from './models';
 export default (model, page, count) => {
     const all = store.getters[ 'mock/getAllArray' ](model);
     if (null !== count) {
-        return all;
+        if (count > 0) {
+            return all.slice(0, count).map(item => models(model, item));
+        }
+        return all.map(item => models(model, item));
     }
 
     const perPage = 10;
