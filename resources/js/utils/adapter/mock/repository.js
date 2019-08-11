@@ -13,7 +13,11 @@ export default async (method, url, data = undefined) => {
             return store.getters[ 'mock/getUser' ];
         } else if ('login' === model) {
             const user = store.getters[ 'mock/search' ]('admins', item => item.email === data.email && item.password === data.password);
-            await store.dispatch('mock/login', user, { root: true });
+            if (user) {
+                await store.dispatch('mock/login', user, { root: true });
+            } else {
+                throw Error('Failed to login');
+            }
             return user;
         } else if ('logout' === model) {
             await store.dispatch('mock/logout', undefined, { root: true });
