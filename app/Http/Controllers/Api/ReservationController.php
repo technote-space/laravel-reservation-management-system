@@ -8,8 +8,13 @@ use App\Http\Requests\Reservation\CreateRequest;
 use App\Http\Requests\Reservation\ReservationCheckRequest;
 use App\Http\Requests\Reservation\SearchRequest;
 use App\Http\Requests\Reservation\UpdateRequest;
+use App\Models\Traits\Searchable;
 use App\Repositories\Crud\ReservationRepository;
-use Illuminate\Http\JsonResponse;
+use Eloquent;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Throwable;
 
 /**
@@ -33,63 +38,63 @@ class ReservationController extends Controller
     /**
      * @param  SearchRequest  $request
      *
-     * @return JsonResponse
+     * @return Searchable[]|LengthAwarePaginator|Builder[]|Collection|Model[]
      */
     public function index(SearchRequest $request)
     {
-        return response()->json($this->repository->all($request->getConditions()));
+        return $this->repository->all($request->getConditions());
     }
 
     /**
      * @param  int  $primaryId
      *
-     * @return JsonResponse
+     * @return Eloquent|Eloquent[]|Collection|Model
      */
     public function show($primaryId)
     {
-        return response()->json($this->repository->get($primaryId));
+        return $this->repository->get($primaryId);
     }
 
     /**
      * @param  CreateRequest  $request
      *
-     * @return JsonResponse
+     * @return Eloquent|Model
      * @throws Throwable
      */
     public function store(CreateRequest $request)
     {
-        return response()->json($this->repository->create($request->getData()));
+        return $this->repository->create($request->getData());
     }
 
     /**
      * @param  UpdateRequest  $request
      * @param  int  $primaryId
      *
-     * @return JsonResponse
+     * @return Eloquent|Model
      * @throws Throwable
      */
     public function update(UpdateRequest $request, $primaryId)
     {
-        return response()->json($this->repository->update($primaryId, $request->getData()));
+        return $this->repository->update($primaryId, $request->getData());
     }
 
     /**
      * @param  int  $primaryId
      *
-     * @return JsonResponse
+     * @return array
      */
     public function destroy($primaryId)
     {
-        return response()->json($this->repository->delete($primaryId));
+        return $this->repository->delete($primaryId);
     }
 
     /**
      * @param  ReservationCheckRequest  $request
      *
-     * @return JsonResponse
+     * @return array
      */
     public function check(ReservationCheckRequest $request)
     {
-        return response()->json($request->checkReservable());
+        return $request->checkReservable();
     }
 }

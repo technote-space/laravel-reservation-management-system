@@ -152,7 +152,7 @@ class ReservationApiTest extends BaseTestCase
             ]
         );
 
-        $response->assertStatus(200)
+        $response->assertStatus(201)
                  ->assertJsonFragment([
                      'guest_id'       => $guest->id,
                      'room_id'        => $room->id,
