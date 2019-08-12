@@ -12,5 +12,10 @@ return [
         'start_date' => '取得開始日',
         'end_date'   => '取得終了日',
     ],
+    'summary'      => [
+        'start_date' => '取得開始日',
+        'end_date'   => '取得終了日',
+        'type'       => '取得タイプ',
+    ],
 
 ];

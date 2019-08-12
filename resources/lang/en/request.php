@@ -12,5 +12,10 @@ return [
         'start_date' => 'Get start date',
         'end_date'   => 'Get end date',
     ],
+    'summary'      => [
+        'start_date' => 'Get start date',
+        'end_date'   => 'Get end date',
+        'type'       => 'Get type',
+    ],
 
 ];

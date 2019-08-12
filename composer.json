@@ -153,6 +153,9 @@
         "phpunit:auth": [
             "@phpunit:no --group=Feature.Api.Auth"
         ],
+        "phpunit:summary": [
+            "@phpunit:no --group=Feature.Api.Summary"
+        ],
         "phpunit:unit": [
             "@phpunit:no --group=Unit"
         ],
