@@ -56,14 +56,6 @@ trait CrudRepository
     }
 
     /**
-     * @return string
-     */
-    private function getForeignKey()
-    {
-        return $this->instance()->getForeignKey();
-    }
-
-    /**
      * @param  array  $conditions
      *
      * @return Searchable[]|LengthAwarePaginator|Builder[]|Collection|Model[]
@@ -95,13 +87,10 @@ trait CrudRepository
     public function create(\Illuminate\Support\Collection $data)
     {
         $record = $this->getModel()::create($data->shift());
-        if ($data->isNotEmpty()) {
-            $foreignKey = $this->getForeignKey();
-            $data->each(function ($data) use ($record, $foreignKey) {
-                $relation = $data['relation'];
-                $record->$relation()->create(array_merge($data['attributes'], [$foreignKey => $record->getAttribute('id')]));
-            });
-        }
+        $data->each(function ($data) use ($record) {
+            $relation = $data['relation'];
+            $record->$relation()->create(array_merge($data['attributes'], [$record->getForeignKey() => $record->getAttribute('id')]));
+        });
 
         return $record;
     }
@@ -116,13 +105,10 @@ trait CrudRepository
     {
         $record = $this->getModel()::findOrFail($primaryId);
         $record->fill($data->shift())->save();
-        if ($data->isNotEmpty()) {
-            $foreignKey = $this->getForeignKey();
-            $data->each(function ($data) use ($record, $foreignKey) {
-                $relation = $data['relation'];
-                $record->$relation()->save($data['target']::updateOrCreate([$foreignKey => $record->getAttribute('id')], $data['attributes']));
-            });
-        }
+        $data->each(function ($data) use ($record) {
+            $relation = $data['relation'];
+            $record->$relation()->save($data['target']::updateOrCreate([$record->getForeignKey() => $record->getAttribute('id')], $data['attributes']));
+        });
 
         return $record;
     }
