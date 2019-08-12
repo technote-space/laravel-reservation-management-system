@@ -3,33 +3,29 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Guest\CrudRequest;
 use App\Http\Requests\Guest\SearchRequest;
-use App\Models\Guest;
-use Eloquent;
+use App\Repositories\Crud\GuestRepository;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
-class GuestController extends CrudController
+/**
+ * Class GuestController
+ * @package App\Http\Controllers\Api
+ */
+class GuestController extends Controller
 {
-    /**
-     * @return string|Eloquent
-     */
-    protected function getTarget()
-    {
-        return Guest::class;
-    }
+    /** @var GuestRepository $repository */
+    private $repository;
 
     /**
-     * @return array
+     * GuestController constructor.
+     * @throws Throwable
      */
-    protected function getDetailEagerLoadingTargets(): array
+    public function __construct()
     {
-        return [
-            'latestReservation',
-            'latestUsage',
-            'recentUsages',
-        ];
+        $this->repository = new GuestRepository();
     }
 
     /**
@@ -60,7 +56,7 @@ class GuestController extends CrudController
      */
     public function store(CrudRequest $request)
     {
-        return response()->json($request->store());
+        return response()->json($this->repository->create($request->getData()));
     }
 
     /**
@@ -72,7 +68,7 @@ class GuestController extends CrudController
      */
     public function update(CrudRequest $request, $primaryId)
     {
-        return response()->json($request->update($primaryId));
+        return response()->json($this->repository->update($primaryId, $request->getData()));
     }
 
     /**

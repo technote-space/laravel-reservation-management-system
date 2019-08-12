@@ -3,45 +3,31 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Reservation\CreateRequest;
 use App\Http\Requests\Reservation\ReservationCheckRequest;
 use App\Http\Requests\Reservation\SearchRequest;
 use App\Http\Requests\Reservation\UpdateRequest;
-use App\Models\Reservation;
-use Eloquent;
+use App\Repositories\Crud\ReservationRepository;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
-class ReservationController extends CrudController
+/**
+ * Class ReservationController
+ * @package App\Http\Controllers\Api
+ */
+class ReservationController extends Controller
 {
-    /**
-     * @return string|Eloquent
-     */
-    protected function getTarget()
-    {
-        return Reservation::class;
-    }
+    /** @var ReservationRepository $repository */
+    private $repository;
 
     /**
-     * @return array
+     * ReservationController constructor.
+     * @throws Throwable
      */
-    protected function getListEagerLoadingTargets(): array
+    public function __construct()
     {
-        return [
-            'guest',
-            'room',
-        ];
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDetailEagerLoadingTargets(): array
-    {
-        return [
-            'guest',
-            'room',
-        ];
+        $this->repository = new ReservationRepository();
     }
 
     /**
@@ -72,7 +58,7 @@ class ReservationController extends CrudController
      */
     public function store(CreateRequest $request)
     {
-        return response()->json($request->store());
+        return response()->json($this->repository->create($request->getData()));
     }
 
     /**
@@ -84,7 +70,7 @@ class ReservationController extends CrudController
      */
     public function update(UpdateRequest $request, $primaryId)
     {
-        return response()->json($request->update($primaryId));
+        return response()->json($this->repository->update($primaryId, $request->getData()));
     }
 
     /**

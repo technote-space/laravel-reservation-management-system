@@ -10,6 +10,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Throwable;
@@ -449,71 +450,17 @@ abstract class CrudRequest extends FormRequest
     }
 
     /**
-     * @return Model
+     * @return Collection
      * @throws Throwable
      */
-    public function store(): Model
+    public function getData(): Collection
     {
-        throw_if($this->isUpdate(), Exception::class, 'Request is for update');
-
-        return $this->createRecord();
-    }
-
-    /**
-     * @param  int  $primaryId
-     *
-     * @return Model
-     * @throws Throwable
-     */
-    public function update($primaryId): Model
-    {
-        throw_if(! $this->isUpdate(), Exception::class, 'Request is not for update');
-
-        return $this->updateRecord($primaryId);
-    }
-
-    /**
-     * @return Eloquent|Model
-     * @throws Throwable
-     */
-    protected function createRecord(): Model
-    {
-        $record     = $this->getModel($this->getTarget())::create($this->getSaveData($this->getTarget()));
-        $foreignKey = $this->getForeignKey();
-        collect($this->getSubTargets())->each(function ($target, $relation) use ($record, $foreignKey) {
-            $record->$relation()->create(
-                $this->getSaveData(
-                    $target,
-                    [
-                        $foreignKey => $record->getAttribute('id'),
-                    ]
-                )
-            );
-        });
-
-        return $record;
-    }
-
-    /**
-     * @param  int  $primaryId
-     *
-     * @return Model
-     * @throws Throwable
-     */
-    protected function updateRecord($primaryId): Model
-    {
-        $record = $this->getModel($this->getTarget())::findOrFail($primaryId);
-        $record->fill($this->getSaveData($this->getTarget()))->save();
-        $foreignKey = $this->getForeignKey();
-        collect($this->getSubTargets())->each(function ($target, $relation) use ($record, $foreignKey) {
-            $record->$relation()->save($this->getModel($target)::updateOrCreate(
-                [
-                    $foreignKey => $record->getAttribute('id'),
-                ],
-                $this->getSaveData($target)
-            ));
-        });
-
-        return $record;
+        return collect([$this->getSaveData($this->getTarget())])->concat(collect($this->getSubTargets())->map(function ($target, $relation) {
+            return [
+                'target'     => $target,
+                'relation'   => $relation,
+                'attributes' => $this->getSaveData($target),
+            ];
+        }));
     }
 }

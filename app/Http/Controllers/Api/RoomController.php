@@ -3,33 +3,29 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Room\CrudRequest;
 use App\Http\Requests\Room\SearchRequest;
-use App\Models\Room;
-use Eloquent;
+use App\Repositories\Crud\RoomRepository;
 use Illuminate\Http\JsonResponse;
 use Throwable;
 
-class RoomController extends CrudController
+/**
+ * Class RoomController
+ * @package App\Http\Controllers\Api
+ */
+class RoomController extends Controller
 {
-    /**
-     * @return string|Eloquent
-     */
-    protected function getTarget()
-    {
-        return Room::class;
-    }
+    /** @var RoomRepository $repository */
+    private $repository;
 
     /**
-     * @return array
+     * RoomController constructor.
+     * @throws Throwable
      */
-    protected function getDetailEagerLoadingTargets(): array
+    public function __construct()
     {
-        return [
-            'latestReservation',
-            'latestUsage',
-            'recentUsages',
-        ];
+        $this->repository = new RoomRepository();
     }
 
     /**
@@ -60,7 +56,7 @@ class RoomController extends CrudController
      */
     public function store(CrudRequest $request)
     {
-        return response()->json($request->store());
+        return response()->json($this->repository->create($request->getData()));
     }
 
     /**
@@ -72,7 +68,7 @@ class RoomController extends CrudController
      */
     public function update(CrudRequest $request, $primaryId)
     {
-        return response()->json($request->update($primaryId));
+        return response()->json($this->repository->update($primaryId, $request->getData()));
     }
 
     /**
