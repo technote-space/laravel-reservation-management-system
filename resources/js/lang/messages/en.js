@@ -63,5 +63,7 @@ export default {
         ok: 'OK',
         save: 'Save',
         search: 'Search',
+        sales: 'Sales',
+        monthly_sales: 'Monthly sales',
     },
 };

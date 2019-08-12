@@ -63,5 +63,7 @@ export default {
         ok: 'OK',
         save: '保存',
         search: '検索',
+        sales: '売上',
+        monthly_sales: '月間売上',
     },
 };
