@@ -638,7 +638,7 @@ class ReservationApiTest extends BaseTestCase
         $response = $this->actingAs($this->admin)->json(
             'GET',
             route('reservations.index', [
-                'end_date' => '2019-12-31',
+                'end_date' => '2020-01-01',
             ])
         );
         $response->assertStatus(200)
@@ -647,8 +647,8 @@ class ReservationApiTest extends BaseTestCase
         $response = $this->actingAs($this->admin)->json(
             'GET',
             route('reservations.index', [
-                'end_date'   => '2020-1-01',
-                'start_date' => '2020-01-07',
+                'start_date' => '2020-01-01',
+                'end_date'   => '2020-01-08',
             ])
         );
         $response->assertStatus(200)
@@ -657,7 +657,7 @@ class ReservationApiTest extends BaseTestCase
         $response = $this->actingAs($this->admin)->json(
             'GET',
             route('reservations.index', [
-                'start_date' => '2020-01-8',
+                'start_date' => '2020-01-09',
             ])
         );
         $response->assertStatus(200)
@@ -666,8 +666,8 @@ class ReservationApiTest extends BaseTestCase
         $response = $this->actingAs($this->admin)->json(
             'GET',
             route('reservations.index', [
-                'end_date'   => '2020-1-01',
-                'start_date' => '2020-01-07',
+                'start_date' => '2020-01-02',
+                'end_date'   => '2020-01-06',
                 'room_id'    => $room1->id,
             ])
         );
@@ -677,8 +677,8 @@ class ReservationApiTest extends BaseTestCase
         $response = $this->actingAs($this->admin)->json(
             'GET',
             route('reservations.index', [
-                'end_date'   => '2020-1-01',
-                'start_date' => '2020-01-07',
+                'start_date' => '2020-01-02',
+                'end_date'   => '2020-01-06',
                 'room_id'    => $room2->id,
             ])
         );

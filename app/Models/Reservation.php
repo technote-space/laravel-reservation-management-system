@@ -106,11 +106,12 @@ class Reservation extends Model implements SearchableContract
         }
 
         if (! empty($conditions['start_date'])) {
-            $query->where('reservations.end_date', '>=', $conditions['start_date']);
+            $query->whereDate('reservations.end_date', '>=', $conditions['start_date']);
         }
         if (! empty($conditions['end_date'])) {
-            $query->where('reservations.start_date', '<=', $conditions['end_date']);
+            $query->whereDate('reservations.start_date', '<', $conditions['end_date']);
         }
+
         if (! empty($conditions['room_id'])) {
             $query->where('reservations.room_id', $conditions['room_id']);
         }
