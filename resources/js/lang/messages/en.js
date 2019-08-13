@@ -64,6 +64,7 @@ export default {
         save: 'Save',
         search: 'Search',
         sales: 'Sales',
-        monthly_sales: 'Monthly sales',
+        'monthly_sales': 'Monthly sales',
+        'daily_sales': 'Daily sales',
     },
 };

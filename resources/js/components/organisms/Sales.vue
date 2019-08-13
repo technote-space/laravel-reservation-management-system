@@ -1,22 +1,31 @@
 <template>
     <v-card
         raised
-        class="pa-6"
+        class="pa-6 ma-4"
     >
         <v-card-title>
-            {{ $t('misc.sales') }}
+            {{ label }}
         </v-card-title>
         <v-card-text>
             <Bar
                 :label="label"
                 :dataset="data"
             />
+            <v-overlay
+                absolute
+                class="text-center"
+                :value="isLoading"
+            >
+                <v-progress-circular
+                    indeterminate
+                    size="32"
+                />
+            </v-overlay>
         </v-card-text>
     </v-card>
 </template>
 
 <script>
-    import moment from 'moment';
     import Bar from '../molecules/Bar';
     import { apiGet } from '../../utils/api';
     import { arrayToObject } from '../../utils/misc';
@@ -25,21 +34,40 @@
         components: {
             Bar,
         },
+        props: {
+            label: {
+                type: String,
+                required: true,
+            },
+            start: {
+                type: String,
+                required: true,
+            },
+            end: {
+                type: String,
+                required: true,
+            },
+            type: {
+                type: String,
+                required: true,
+            },
+        },
         data () {
             return {
                 data: [],
-                label: this.$t('misc.monthly_sales'),
-                start: moment().subtract(11, 'months').startOf('month').format('YYYY-MM-DD'),
-                end: moment().add(1, 'months').startOf('month').format('YYYY-MM-DD'),
+                isLoading: false,
             };
         },
         async mounted () {
+            this.isLoading = true;
             const { response } = await apiGet('summary', {
                 data: {
                     'start_date': this.start,
                     'end_date': this.end,
+                    type: this.type,
                 },
             });
+            this.isLoading = false;
             if (response) {
                 this.data = Object.values(arrayToObject(Object.keys(response.data), {
                     getItem: key => ({ label: key, value: response.data[ key ] }),

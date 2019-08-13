@@ -61,7 +61,7 @@
             options () {
                 return {
                     title: {
-                        display: this.title !== null,
+                        display: null !== this.title,
                         text: this.title,
                     },
                     scales: {

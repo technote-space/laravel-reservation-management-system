@@ -64,6 +64,7 @@ export default {
         save: '保存',
         search: '検索',
         sales: '売上',
-        monthly_sales: '月間売上',
+        'monthly_sales': '月間売上',
+        'daily_sales': '日間売上',
     },
 };
