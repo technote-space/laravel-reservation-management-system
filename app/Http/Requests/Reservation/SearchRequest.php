@@ -14,6 +14,7 @@ class SearchRequest extends \App\Http\Requests\SearchRequest
         return [
             'start_date' => 'filled|date',
             'end_date'   => 'filled|date',
+            'room_id'    => 'filled|integer|exists:rooms,id',
         ];
     }
 
@@ -22,6 +23,7 @@ class SearchRequest extends \App\Http\Requests\SearchRequest
         return [
             'start_date' => __('request.reservations.start_date'),
             'end_date'   => __('request.reservations.end_date'),
+            'room_id'    => __('request.reservations.room_id'),
         ];
     }
 }

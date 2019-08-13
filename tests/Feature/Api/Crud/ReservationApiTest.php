@@ -624,11 +624,13 @@ class ReservationApiTest extends BaseTestCase
 
     public function testTermSearch()
     {
+        $room1 = factory(Room::class)->create();
+        $room2 = factory(Room::class)->create();
         factory(Reservation::class)->create([
             'guest_id'   => factory(GuestDetail::class)->create([
                 'guest_id' => factory(Guest::class)->create()->id,
             ])->guest_id,
-            'room_id'    => factory(Room::class)->create()->id,
+            'room_id'    => $room1->id,
             'start_date' => '2020-01-01',
             'end_date'   => '2020-01-07',
         ]);
@@ -656,6 +658,28 @@ class ReservationApiTest extends BaseTestCase
             'GET',
             route('reservations.index', [
                 'start_date' => '2020-01-8',
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(0, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                'end_date'   => '2020-1-01',
+                'start_date' => '2020-01-07',
+                'room_id'    => $room1->id,
+            ])
+        );
+        $response->assertStatus(200)
+                 ->assertJsonCount(1, 'data');
+
+        $response = $this->actingAs($this->admin)->json(
+            'GET',
+            route('reservations.index', [
+                'end_date'   => '2020-1-01',
+                'start_date' => '2020-01-07',
+                'room_id'    => $room2->id,
             ])
         );
         $response->assertStatus(200)
