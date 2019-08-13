@@ -1,2 +1,2 @@
 const env = require('../../../../../seed/env.json');
-export default env.dev;
+export default env.prod;
