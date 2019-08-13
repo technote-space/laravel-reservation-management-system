@@ -16,6 +16,7 @@
             />
         </template>
         <Calendar
+            v-if="dialog"
             ref="calendar"
             :value="value"
             :event-callback="eventCallback"
@@ -90,8 +91,11 @@
                 }
                 return moment().add(24, 'months').endOf('month').format(this.format);
             },
+            roomId () {
+                return this.formInputs[ 'reservations.room_id' ];
+            },
             isDisabled () {
-                return !this.formInputs[ 'reservations.room_id' ];
+                return !this.roomId;
             },
             isValidTargetEvent () {
                 return this.value;
@@ -119,6 +123,7 @@
                     query: {
                         'start_date': start.format(this.format),
                         'end_date': end.format(this.format),
+                        'room_id': this.roomId,
                     },
                 });
 
