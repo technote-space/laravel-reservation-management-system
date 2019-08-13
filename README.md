@@ -11,6 +11,15 @@
 ホテルの予約管理システム
 
 ## スクリーンショット
+### Login
+<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/login.png" width="500px"/>
+
+### Dashboard
+<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/dashboard.png" width="500px"/>
+
+### CRUD
+<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/list.png" width="400px"/>
+<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/edit.png" width="400px"/>
 
 ## 仕様
 - 最大4泊5日
