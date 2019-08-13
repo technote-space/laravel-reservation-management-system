@@ -5,7 +5,11 @@
  * @param {boolean} isMultiple is multiple?
  * @returns {object} object
  */
-export const arrayToObject = (items, { getKey = undefined, getItem = undefined, isMultiple = false }) => isMultiple ? arrayToObjectMultiple(items, { getKey, getItem }) : arrayToObjectSingle(items, { getKey, getItem });
+export const arrayToObject = (items, { getKey = undefined, getItem = undefined, isMultiple = false }) => !items.length ?
+    {} :
+    (
+        isMultiple ? arrayToObjectMultiple(items, { getKey, getItem }) : arrayToObjectSingle(items, { getKey, getItem })
+    );
 
 /**
  * @param {array} items items

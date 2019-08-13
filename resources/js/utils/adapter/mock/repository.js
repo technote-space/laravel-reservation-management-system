@@ -2,6 +2,7 @@ import { get } from 'lodash';
 import store from '../../../store';
 import models from './models';
 import pagination from './pagination';
+import summary from './summary';
 import { arrayToObject } from '../../misc';
 
 export default async (method, url, data = undefined) => {
@@ -22,6 +23,8 @@ export default async (method, url, data = undefined) => {
         } else if ('logout' === model) {
             await store.dispatch('mock/logout', undefined, { root: true });
             return false;
+        } else if ('summary' === model) {
+            return summary(data);
         } else if (matches[ 3 ]) {
             const id = matches[ 3 ] - 0;
             if ('get' === method) {
