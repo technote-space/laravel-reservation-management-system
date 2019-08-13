@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Traits\FileHelper;
 use Illuminate\Database\Seeder;
 use App\Models\Reservation;
 use App\Models\Guest;
@@ -8,7 +9,7 @@ use Illuminate\Support\Collection;
 
 class ReservationTableSeeder extends Seeder
 {
-    use Seeds\Traits\SeederHelper;
+    use Seeds\Traits\SeederHelper, FileHelper;
 
     /**
      * @return void
@@ -17,7 +18,7 @@ class ReservationTableSeeder extends Seeder
     {
         $rooms = Room::all();
         Guest::all()->each(function (Guest $guest) use ($rooms) {
-            Collection::times($this->getValue('reservation_number'), function () use ($guest, $rooms) {
+            Collection::times($this->getValue('number.reservation'), function () use ($guest, $rooms) {
                 factory(Reservation::class)->create([
                     'guest_id' => $guest->id,
                     'room_id'  => $rooms->random()->id,

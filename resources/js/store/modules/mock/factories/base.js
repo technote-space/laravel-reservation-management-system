@@ -27,6 +27,9 @@ export default (model, generator) => (count = undefined) => ({
         if (undefined === count) {
             return generate(model, generator, overwrite);
         }
+        if (0 >= count) {
+            return {};
+        }
         return arrayToObject([...Array(count)], {
             getItem: () => generate(model, generator, overwrite),
             getKey: ({ value }) => value.id,

@@ -17,6 +17,7 @@
     "require": {
         "php": "^7.2",
         "ext-mbstring": "*",
+        "ext-json": "*",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
@@ -207,7 +208,8 @@
         "coveralls-js": [
             "yarn coveralls"
         ],
-        "migrate:seed": [
+        "m": [
+            "@da",
             "@migrate",
             "@seed"
         ],

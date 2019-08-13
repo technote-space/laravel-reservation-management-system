@@ -1,31 +1,41 @@
 <?php
 
-use Illuminate\Database\Seeder;
+use App\Helpers\Traits\FileHelper;
 use App\Models\Setting;
+use Illuminate\Database\Seeder;
 
 class SettingTableSeeder extends Seeder
 {
-    use Seeds\Traits\SeederHelper;
+    use Seeds\Traits\SeederHelper, Seeds\Traits\MasterTableSeeder, FileHelper;
+
+
+    /**
+     * @return string|Eloquent
+     */
+    protected function getTarget()
+    {
+        return Setting::class;
+    }
+
+    /**
+     * @param  array  $row
+     *
+     * @return array
+     */
+    protected function converter(array $row): array
+    {
+        return [
+            'key'   => $row[0],
+            'value' => $row[1],
+            'type'  => $row[2],
+        ];
+    }
 
     /**
      * @return void
      */
     public function run()
     {
-        factory(Setting::class)->create([
-            'key'   => 'max_day',
-            'value' => config("reservation.max_day"),
-            'type'  => 'int',
-        ]);
-        factory(Setting::class)->create([
-            'key'   => 'check_in',
-            'value' => config("reservation.check_in"),
-            'type'  => 'time',
-        ]);
-        factory(Setting::class)->create([
-            'key'   => 'check_out',
-            'value' => config("reservation.check_out"),
-            'type'  => 'time',
-        ]);
+        $this->import();
     }
 }
