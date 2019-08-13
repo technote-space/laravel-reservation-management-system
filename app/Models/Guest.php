@@ -73,7 +73,8 @@ class Guest extends Model implements SearchableContract
     {
         if (! empty($conditions['s'])) {
             collect($conditions['s'])->each(function ($search) use ($query) {
-                $query->where(function (Builder $builder) use ($search) {
+                $query->where(function ($builder) use ($search) {
+                    /** @var Builder $builder */
                     $builder->where('guest_details.name', 'like', "%{$search}%")
                             ->orWhere('guest_details.name_kana', 'like', "%{$search}%")
                             ->orWhere('guest_details.zip_code', 'like', "%{$search}%")
