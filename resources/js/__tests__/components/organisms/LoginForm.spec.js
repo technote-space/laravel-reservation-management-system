@@ -7,7 +7,7 @@ import flushPromises from 'flush-promises';
 
 describe('LoginForm', () => {
     it('should render login form', async () => {
-        const login = jest.fn();
+        const login = jest.fn(() => setTimeout(() => {}, 100));
         const wrapper = mount(app(LoginForm, 'inner'), setupLocalVue({
             store: new Vuex.Store({
                 state: {
@@ -56,9 +56,10 @@ describe('LoginForm', () => {
         expect(email.element.value).toBe('test@example.com');
         expect(password.element.value).toBe('password');
         wrapper.find('form').trigger('submit.prevent');
+        wrapper.find('form').trigger('submit.prevent');
         await flushPromises();
         expect(wrapper.element).toMatchSnapshot();
         expect(wrapper.find('.v-counter').text()).toBe('8');
-        expect(login).toBeCalled();
+        expect(login).toBeCalledTimes(1);
     });
 });

@@ -4,6 +4,13 @@ describe('arrayToObject', () => {
     [
         {
             args: [
+                [],
+                {},
+            ],
+            expected: {},
+        },
+        {
+            args: [
                 [1, 2, 3],
                 {
                     getKey: ({ item }) => item * 2,
