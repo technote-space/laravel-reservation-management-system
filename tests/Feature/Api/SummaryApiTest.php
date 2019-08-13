@@ -36,12 +36,12 @@ class SummaryApiTest extends BaseTestCase
 
     public function testSummaryMonthly()
     {
-        $this->createReservation('2019-12-31', '2019-12-31', 0x1);   // 2019/12
-        $this->createReservation('2019-12-31', '2020-01-01', 0x2);   // 2019/12
-        $this->createReservation('2020-01-01', '2020-01-01', 0x4);   // 2020/01
-        $this->createReservation('2020-01-31', '2020-01-31', 0x8);   // 2020/01
-        $this->createReservation('2020-01-31', '2020-02-01', 0x10);  // 2020/01
-        $this->createReservation('2020-02-01', '2020-02-01', 0x20);  // 2020/02
+        $this->createReservation('2019-12-31', '2019-12-31', 1);      // 2019/12 * 1
+        $this->createReservation('2019-12-31', '2020-01-01', 10);     // 2019/12 * 2
+        $this->createReservation('2020-01-01', '2020-01-01', 100);    // 2020/01 * 1
+        $this->createReservation('2020-01-31', '2020-01-31', 1000);   // 2020/01 * 1
+        $this->createReservation('2020-01-31', '2020-02-01', 10000);  // 2020/01 * 2
+        $this->createReservation('2020-02-01', '2020-02-01', 100000); // 2020/02 + 1
 
         $admin    = factory(Admin::class)->create();
         $response = $this->actingAs($admin)->json('GET', route('summary', [
@@ -52,18 +52,18 @@ class SummaryApiTest extends BaseTestCase
         $response->assertStatus(200)
                  ->assertExactJson([
                      '2019-11' => 0,
-                     '2019-12' => 0x1 | 0x2,
-                     '2020-01' => 0x4 | 0x8 | 0x10,
-                     '2020-02' => 0x20,
+                     '2019-12' => 1 * 1 + 10 * 2,
+                     '2020-01' => 100 * 1 + 1000 * 1 + 10000 * 2,
+                     '2020-02' => 100000 * 1,
                      '2020-03' => 0,
                  ]);
     }
 
     public function testSummaryDaily()
     {
-        $this->createReservation('2020-01-02', '2020-01-02', 0x1);   // 2020/01/02
-        $this->createReservation('2020-01-02', '2020-01-03', 0x2);   // 2020/01/02
-        $this->createReservation('2020-01-03', '2020-01-04', 0x4);   // 2020/01/03
+        $this->createReservation('2020-01-02', '2020-01-02', 1);   // 2020/01/02 * 1
+        $this->createReservation('2020-01-02', '2020-01-03', 10);  // 2020/01/02 * 2
+        $this->createReservation('2020-01-03', '2020-01-04', 100); // 2020/01/03 * 2
 
         $admin    = factory(Admin::class)->create();
         $response = $this->actingAs($admin)->json('GET', route('summary', [
@@ -75,8 +75,8 @@ class SummaryApiTest extends BaseTestCase
         $response->assertStatus(200)
                  ->assertExactJson([
                      '2020-01-01' => 0,
-                     '2020-01-02' => 0x1 | 0x2,
-                     '2020-01-03' => 0x4,
+                     '2020-01-02' => 1 * 1 + 10 * 2,
+                     '2020-01-03' => 100 * 2,
                      '2020-01-04' => 0,
                  ]);
     }
