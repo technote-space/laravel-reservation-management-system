@@ -32,8 +32,9 @@ trait MasterTableSeeder
 
     /**
      * @return string
+     * @SuppressWarnings(PHPMD.MissingImport)
      */
-    private final function getTableName()
+    private function getTableName()
     {
         if (! $this->tableName) {
             $class = $this->getTarget();
