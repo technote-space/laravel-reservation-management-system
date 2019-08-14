@@ -16,8 +16,9 @@
     ],
     "require": {
         "php": "^7.2",
-        "ext-mbstring": "*",
         "ext-json": "*",
+        "ext-mbstring": "*",
+        "composer/composer": "^1.9",
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "fzaninotto/faker": "^1.4",
@@ -39,7 +40,6 @@
         "php-coveralls/php-coveralls": "^2.1",
         "phpmd/phpmd": "^2.6",
         "phpunit/phpunit": "^8.0",
-        "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "^3.4"
     },
     "config": {
@@ -91,6 +91,9 @@
         "setup": [
             "bash bin/setup.sh"
         ],
+        "deploy": [
+            "bash bin/deploy.sh"
+        ],
         "build": [
             "@build:php",
             "@build:js"
@@ -99,7 +102,6 @@
             "composer install --no-dev --no-interaction --prefer-dist --no-suggest"
         ],
         "build:js": [
-            "yarn --prod install",
             "yarn prod"
         ],
         "test": [
@@ -232,14 +234,20 @@
             "yarn --audit install",
             "composer update"
         ],
+        "gh-prepare": [
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_BUILD_STAGE_NAME=Deploy CI=1 bash bin/prepare.sh"
+        ],
         "gh-releases": [
+            "@gh-prepare",
             "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && bash bin/deploy/gh-releases.sh"
         ],
         "gh-pages": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && bash bin/deploy/gh-pages.sh"
+            "@gh-prepare",
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && GH_PAGES_BASE=gh-pages bash bin/deploy/gh-pages.sh"
         ],
         "gh-pages:ga": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_TRACKING_ID=TEST source bin/deploy/env.sh && bash bin/deploy/gh-pages.sh"
+            "@gh-prepare",
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_TRACKING_ID=TEST source bin/deploy/env.sh && GH_PAGES_BASE=gh-pages bash bin/deploy/gh-pages.sh"
         ],
         "routes": [
             "php artisan route:clear --ansi",
