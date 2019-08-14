@@ -13,7 +13,6 @@ import { arrayToObject } from '../../../utils/misc';
 
 const state = {};
 if ('local' === process.env.NODE_ENV || 'test' === process.env.NODE_ENV) {
-    state.items = {};
     state.factories = {
         admins: adminFactory,
         guests: guestFactory,
@@ -24,24 +23,31 @@ if ('local' === process.env.NODE_ENV || 'test' === process.env.NODE_ENV) {
     };
     state.user = null;
 
-    state.items.admins = adminSeeder(state.factories, getEnv('number.admin'));
-    state.items.guests = guestFactory(getEnv('number.guest')).create();
-    state.items.guestDetails = arrayToObject(Object.keys(state.items.guests), {
-        getKey: ({ value }) => value.id,
-        getItem: guest_id => guestDetailFactory().create({
-            guest_id: guest_id - 0,
-        }),
-    });
-    state.items.rooms = roomSeeder(state.factories, getEnv('number.room'));
-    state.items.reservations = arrayToObject(Object.keys(state.items.guests), {
-        getKey: ({ value }) => value.id,
-        getItem: guest_id => [...Array(faker.random.number(getEnv('number.reservation')))].flatMap(() => reservationFactory().create({
-            guest_id: guest_id - 0,
-            room_id: Object.keys(state.items.rooms)[ faker.random.number({ min: 0, max: Object.keys(state.items.rooms).length - 1 }) ] - 0,
-        })),
-        isMultiple: true,
-    });
-    state.items.settings = settingSeeder(state.factories);
+    const store = localStorage.getItem('items');
+    if (store) {
+        state.items = JSON.parse(store);
+    } else {
+        state.items = {};
+        state.items.admins = adminSeeder(state.factories, getEnv('number.admin'));
+        state.items.guests = guestFactory(getEnv('number.guest')).create();
+        state.items.guestDetails = arrayToObject(Object.keys(state.items.guests), {
+            getKey: ({ value }) => value.id,
+            getItem: guest_id => guestDetailFactory().create({
+                guest_id: guest_id - 0,
+            }),
+        });
+        state.items.rooms = roomSeeder(state.factories, getEnv('number.room'));
+        state.items.reservations = arrayToObject(Object.keys(state.items.guests), {
+            getKey: ({ value }) => value.id,
+            getItem: guest_id => [...Array(faker.random.number(getEnv('number.reservation')))].flatMap(() => reservationFactory().create({
+                guest_id: guest_id - 0,
+                room_id: Object.keys(state.items.rooms)[ faker.random.number({ min: 0, max: Object.keys(state.items.rooms).length - 1 }) ] - 0,
+            })),
+            isMultiple: true,
+        });
+        state.items.settings = settingSeeder(state.factories);
+    }
+
     console.info(state);
 }
 

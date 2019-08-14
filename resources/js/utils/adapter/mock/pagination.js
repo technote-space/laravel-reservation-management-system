@@ -11,6 +11,9 @@ export default (model, page, count) => {
         return all.map(item => models(model, item));
     }
 
+    if (page <= 0) {
+        page = 1;
+    }
     const perPage = 10;
     const items = drop(take(all.map(item => models(model, item)), perPage * page), perPage * (page - 1));
     return {

@@ -23,7 +23,7 @@ branches:
   only:
     - master
     - "/^v[0-9\\.]+/"
-    - "release-v[0-9\\.]+"
+    - "/^release-v[0-9\\.]+/"
 
 cache:
   yarn: true

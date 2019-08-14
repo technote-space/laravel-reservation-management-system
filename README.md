@@ -21,6 +21,13 @@
 <img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/list.png" width="500px"/>
 <img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/edit.png" width="500px"/>
 
+## 要件
+- 現在の予約状況の確認
+- 予約登録
+- 利用者の管理
+  - 名前/住所/電話番号
+- 月毎の売り上げ金額の確認
+
 ## 仕様
 - 最大4泊5日
 - 1部屋に最大2人
@@ -28,13 +35,6 @@
 - 1予約者につき1部屋
 - 支払いは利用当日に前払い
   - 2000円/1部屋1泊
-
-## 要件
-- 現在の予約状況の確認
-- 予約登録
-- 利用者の管理
-  - 名前/住所/電話番号
-- 月毎の売り上げ金額の確認
 
 ## データ設計
 ### 部屋 (rooms)
@@ -59,12 +59,7 @@
 ### 管理者 (admins)
 - 名前 (name)
 - メールアドレス (email)
-- メール認証完了日時 (email_verified_at)
 - パスワード (password)
-- パスワード再発行トークン (remember_token)
-### パスワードリセット (password_resets)
-- メールアドレス (email)
-- トークン (token)
 
 ## 構成
 ### 言語・フレームワーク
@@ -94,9 +89,12 @@
     - GitHub Releases
     - GitHub Pages
 ### デザインフレームワーク
-- Vuetify
+- [Vuetify](https://vuetifyjs.com/)
 ### その他
 - 多言語化
+- Nuxt, SPA
+- [FullCalendar](https://fullcalendar.io/)
+- [Charts.js](https://www.chartjs.org/)
 
 ## Demonstration
 [GitHub Pages](https://technote-space.github.io/laravel-reservation-management-system)  
@@ -104,8 +102,9 @@
   - データの並び順
   - データ検索
   - バリデーションなし
-  - データ保存なし
-- データはランダムに生成されたものです
+
+[Deployed](https://reservation.technote.space)
+   - Basic認証の情報が必要な方はSlack等でお問い合わせください
 
 ## Author
 [GitHub (Technote)](https://github.com/technote-space)  
