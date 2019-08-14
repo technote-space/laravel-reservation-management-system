@@ -8,7 +8,6 @@ class SettingTableSeeder extends Seeder
 {
     use Seeds\Traits\SeederHelper, Seeds\Traits\MasterTableSeeder, FileHelper;
 
-
     /**
      * @return string|Eloquent
      */
@@ -36,6 +35,7 @@ class SettingTableSeeder extends Seeder
      */
     public function run()
     {
+        Setting::clearCache();
         $this->import();
     }
 }

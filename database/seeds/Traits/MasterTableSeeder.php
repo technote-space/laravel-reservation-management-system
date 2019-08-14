@@ -59,7 +59,7 @@ trait MasterTableSeeder
      */
     private function getCsvPath(): string
     {
-        return resource_path('seed').DIRECTORY_SEPARATOR.$this->getCsvFilename();
+        return resource_path('config').DIRECTORY_SEPARATOR.$this->getCsvFilename();
     }
 
     /**

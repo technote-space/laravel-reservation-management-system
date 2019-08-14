@@ -72,7 +72,6 @@ class GuestTest extends BaseTestCase
         static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
-        Setting::clearCache();
         Reservation::all()->each(function ($row) {
             /** @var Model $row */
             $row->delete();

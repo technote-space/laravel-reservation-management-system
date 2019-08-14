@@ -67,7 +67,6 @@ class RoomTest extends BaseTestCase
         static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
-        Setting::clearCache();
 
         Reservation::setNow(strtotime(date('Y-m-d 14:59:59')));
         $this->assertFalse(Room::find($room->id)->is_reserved);
@@ -102,7 +101,6 @@ class RoomTest extends BaseTestCase
         static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
-        Setting::clearCache();
         Reservation::all()->each(function ($row) {
             /** @var Model $row */
             $row->delete();

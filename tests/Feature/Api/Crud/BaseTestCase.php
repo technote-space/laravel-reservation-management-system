@@ -17,6 +17,5 @@ abstract class BaseTestCase extends \Tests\BaseTestCase
         static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
-        Setting::clearCache();
     }
 }

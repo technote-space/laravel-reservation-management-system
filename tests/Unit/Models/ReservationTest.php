@@ -60,7 +60,6 @@ class ReservationTest extends BaseTestCase
         static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
-        Setting::clearCache();
 
         Reservation::setNow(strtotime(date('Y-m-d 14:59:59')));
         $this->assertFalse(Reservation::find($reservation->id)->is_past);
@@ -94,7 +93,6 @@ class ReservationTest extends BaseTestCase
         static::runSeed([
             '--class' => 'SettingTableSeeder',
         ]);
-        Setting::clearCache();
 
         $day1 = now()->format('Y-m-d');
         $day2 = now()->addDay()->format('Y-m-d');
