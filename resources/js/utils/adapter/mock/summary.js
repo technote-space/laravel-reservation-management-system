@@ -31,7 +31,7 @@ export default (data) => {
         getKey: ({ item }) => item.format(getFormat(type)),
         getItem: () => 0,
     });
-    store.getters[ 'mock/getAllArray' ](model).filter(item => moment(item[ 'start_date' ]).isBetween(start, end, null, '[)')).map(item => models(model, item)).forEach(item => {
+    store.getters[ 'adapter/getAllArray' ](model).filter(item => moment(item[ 'start_date' ]).isBetween(start, end, null, '[)')).map(item => models(model, item)).forEach(item => {
         summary[ moment(item[ 'start_date' ]).format(getFormat(type)) ] += getPrice(item);
     });
 

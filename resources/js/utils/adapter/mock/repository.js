@@ -11,33 +11,33 @@ export default async (method, url, data = undefined) => {
     if (matches) {
         const model = matches[ 1 ];
         if ('user' === model) {
-            return store.getters[ 'mock/getUser' ];
+            return store.getters[ 'adapter/getUser' ];
         } else if ('login' === model) {
-            const user = store.getters[ 'mock/search' ]('admins', item => item.email === data.email && item.password === data.password);
+            const user = store.getters[ 'adapter/search' ]('admins', item => item.email === data.email && item.password === data.password);
             if (user) {
-                await store.dispatch('mock/login', user, { root: true });
+                await store.dispatch('adapter/login', user, { root: true });
             } else {
                 throw Error('Failed to login');
             }
             return user;
         } else if ('logout' === model) {
-            await store.dispatch('mock/logout', undefined, { root: true });
+            await store.dispatch('adapter/logout', undefined, { root: true });
             return false;
         } else if ('summary' === model) {
             return summary(data);
         } else if (matches[ 3 ]) {
             const id = matches[ 3 ] - 0;
             if ('get' === method) {
-                return models(model, store.getters[ 'mock/getItem' ](model, id));
+                return models(model, store.getters[ 'adapter/getItem' ](model, id));
             } else if ('patch' === method) {
-                await store.dispatch('mock/update', {
+                await store.dispatch('adapter/update', {
                     model,
                     id,
                     data,
                 }, { root: true });
-                return models(model, store.getters[ 'mock/getItem' ](model, id));
+                return models(model, store.getters[ 'adapter/getItem' ](model, id));
             } else if ('delete' === method) {
-                await store.dispatch('mock/destroy', {
+                await store.dispatch('adapter/destroy', {
                     model,
                     id,
                 }, { root: true });
@@ -53,11 +53,11 @@ export default async (method, url, data = undefined) => {
                 const count = data && 'count' in data ? data.count : get(params, 'count', null);
                 return pagination(model, page - 0, count);
             } else if ('post' === method) {
-                await store.dispatch('mock/create', {
+                await store.dispatch('adapter/create', {
                     model,
                     data,
                 }, { root: true });
-                return models(model, store.getters[ 'mock/getLastItem' ](model));
+                return models(model, store.getters[ 'adapter/getLastItem' ](model));
             }
         }
     }

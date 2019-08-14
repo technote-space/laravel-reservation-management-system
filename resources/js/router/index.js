@@ -9,6 +9,7 @@ Vue.use(Meta);
 
 const router = new Router({
     mode: 'history',
+    base: ROUTE_BASE,
     routes,
 });
 
