@@ -22,4 +22,4 @@ if [[ ! -f ${current}/../.env ]]; then
     cp ${current}/../.env.sample ${current}/../.env
 fi
 
-echo -e "Please run\e[32;1m composer migrate:seed\e[m after prepare .evn file."
+echo -e "Please run\e[32;1m composer m\e[m after prepare .evn file."
