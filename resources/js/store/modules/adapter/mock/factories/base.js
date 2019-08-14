@@ -1,5 +1,5 @@
 import { pick } from 'lodash';
-import { arrayToObject } from '../../../../utils/misc';
+import { arrayToObject } from '../../../../../utils/misc';
 
 const moment = require('moment');
 const ids = {};

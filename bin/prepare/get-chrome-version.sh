@@ -5,4 +5,4 @@ set -e
 VERSION=$(google-chrome-stable --version)
 VERSION=${VERSION% *}
 VERSION=${VERSION##* }
-echo ${VERSION%%.*}
+echo "${VERSION%%.*}"

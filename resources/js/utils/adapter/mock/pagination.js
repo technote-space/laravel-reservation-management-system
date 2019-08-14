@@ -3,7 +3,7 @@ import store from '../../../store';
 import models from './models';
 
 export default (model, page, count) => {
-    const all = store.getters[ 'mock/getAllArray' ](model);
+    const all = store.getters[ 'adapter/getAllArray' ](model);
     if (null !== count) {
         if (count > 0) {
             return all.slice(0, count).map(item => models(model, item));

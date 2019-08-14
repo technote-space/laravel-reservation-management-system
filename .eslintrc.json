@@ -50,6 +50,9 @@
     ],
     "globals": {
         "Vue": true,
-        "siteParams": true
+        "siteParams": true,
+        "ROUTE_BASE": true,
+        "ADAPTER": true,
+        "IS_STRICT": true
     }
 }

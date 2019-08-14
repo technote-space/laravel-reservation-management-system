@@ -1,5 +1,5 @@
 import { get, orderBy, first, find, filter } from 'lodash';
-import { arrayToObject } from '../../../utils/misc';
+import { arrayToObject } from '../../../../utils/misc';
 
 export const getAll = state => model => model in state.items ? state.items[ model ] : {};
 export const getAllArray = state => model => Object.values(getAll(state)(model)).reverse();
