@@ -117,7 +117,7 @@ jobs:
       php: '7.2'
       env:
         - GH_PAGES_TRACKING_ID=UA-78163306-3
-        - GH_PAGES_BASE=laravel-reservation-management-system
+        - GH_PAGES_BASE=/laravel-reservation-management-system
       script: skip
       before_deploy:
         - source bin/deploy/env.sh
