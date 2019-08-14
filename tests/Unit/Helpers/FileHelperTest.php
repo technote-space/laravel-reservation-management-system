@@ -46,13 +46,13 @@ class FileHelperTest extends TestCase
 
     public function testLoadJson()
     {
-        $json = self::$helper->loadJson(resource_path('seed/env.json'))->toArray();
+        $json = self::$helper->loadJson(resource_path('config/env.json'))->toArray();
         $this->assertTrue(is_array($json));
         $this->assertNotEmpty($json);
         $this->assertArrayHasKey('prod', $json);
         $this->assertArrayHasKey('dev', $json);
 
-        $json = self::$helper->loadJson(resource_path('seed/env.json.test'))->toArray();
+        $json = self::$helper->loadJson(resource_path('config/env.json.test'))->toArray();
         $this->assertTrue(is_array($json));
         $this->assertEmpty($json);
     }

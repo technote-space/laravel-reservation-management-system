@@ -33,7 +33,7 @@ exports[`Footer should render footer 1`] = `
         class="layout justify-center wrap"
       >
         <a
-          class="mx-4 white--text v-btn v-btn--fab v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default"
+          class="mx-4 white--text v-btn v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default"
           href="https://github.com"
           target="_blank"
         >
@@ -48,7 +48,7 @@ exports[`Footer should render footer 1`] = `
           </span>
         </a>
         <a
-          class="mx-4 white--text v-btn v-btn--fab v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default"
+          class="mx-4 white--text v-btn v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default"
           href="https://twitter.com"
           target="_blank"
         >
