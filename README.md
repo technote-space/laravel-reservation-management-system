@@ -98,6 +98,15 @@
 ### その他
 - 多言語化
 
+## Demonstration
+[GitHub Pages](https://technote-space.github.io/laravel-reservation-management-system)  
+- APIはモックなので実際の動作と差異があります
+  - データの並び順
+  - データ検索
+  - バリデーションなし
+  - データ保存なし
+- データはランダムに生成されたものです
+
 ## Author
 [GitHub (Technote)](https://github.com/technote-space)  
 [Blog](https://technote.space)
