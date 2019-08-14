@@ -10,7 +10,8 @@ use Tests\Unit\Helpers\Implement\ValueHelperImplemented;
 /**
  * Class ValueHelperTest
  * @package Tests\Unit\Models
- * @group Helpers
+ * @group Unit
+ * @group Unit.Helpers
  * @SuppressWarnings(PMD.TooManyPublicMethods)
  */
 class ValueHelperTest extends TestCase
@@ -18,7 +19,7 @@ class ValueHelperTest extends TestCase
     /** @var ValueHelperImplemented $helper */
     private static $helper;
 
-    public static function setUpBeforeClass()
+    public static function setUpBeforeClass(): void
     {
         parent::setUpBeforeClass();
 

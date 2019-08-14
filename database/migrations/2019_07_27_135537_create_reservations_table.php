@@ -15,11 +15,11 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('guest_id')->nullable(false)->comment('利用者ID');
-            $table->unsignedBigInteger('room_id')->nullable(false)->comment('部屋ID');
-            $table->date('start_date')->nullable(false)->comment('利用開始日');
-            $table->date('end_date')->nullable(false)->comment('利用終了日');
-            $table->unsignedTinyInteger('number')->nullable(false)->comment('利用人数');
+            $table->unsignedBigInteger('guest_id')->nullable(false)->comment(__('database.reservations.guest_id'));
+            $table->unsignedBigInteger('room_id')->nullable(false)->comment(__('database.reservations.room_id'));
+            $table->date('start_date')->nullable(false)->comment(__('database.reservations.start_date'));
+            $table->date('end_date')->nullable(false)->comment(__('database.reservations.end_date'));
+            $table->unsignedSmallInteger('number')->nullable(false)->comment(__('database.reservations.number'));
             $table->timestamps();
 
             $table->foreign('guest_id')->references('id')->on('guests')->onUpdate('cascade')->onDelete('cascade');

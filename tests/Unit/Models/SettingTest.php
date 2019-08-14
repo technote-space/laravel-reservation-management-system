@@ -10,7 +10,8 @@ use Tests\TestHelper;
 /**
  * Class RoomTest
  * @package Tests\Unit\Models
- * @group Models
+ * @group Unit
+ * @group Unit.Models
  */
 class SettingTest extends TestCase
 {
@@ -20,7 +21,7 @@ class SettingTest extends TestCase
     {
         parent::setUp();
 
-        $this->runMigrate();
+        static::runMigrate();
         factory(Setting::class)->create([
             'key'   => 'test1',
             'value' => 'test1',

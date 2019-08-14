@@ -8,7 +8,7 @@ use Exception;
 use Illuminate\Support\Arr;
 
 /**
- * Trait ValueProcessHelper
+ * Trait ValueHelper
  * @package App\Helpers\Traits
  */
 trait ValueHelper

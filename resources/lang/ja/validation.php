@@ -84,6 +84,15 @@ return [
     'uploaded'             => ':attributeのアップロードに失敗しました。',
     'url'                  => ':attributeには正しい形式のURLを指定してください。',
 
+    'kanakana'    => ':attributeには正しい形式のカタカナを指定してください。',
+    'zip_code'    => ':attributeには正しい形式の郵便番号を指定してください。',
+    'phone'       => ':attributeには正しい形式の電話番号を指定してください。',
+    'reservation' => '指定された日は予約できません。',
+
+    'reservation_term'         => '指定された期間は予約できません。',
+    'reservation_availability' => '指定された期間は部屋を利用できません。',
+    'reservation_duplicate'    => '指定された期間はすでに予約済みです。',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

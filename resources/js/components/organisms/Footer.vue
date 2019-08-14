@@ -1,23 +1,25 @@
 <template>
     <v-footer
+        app
         dark
         color="primary"
         padless
+        absolute
     >
         <v-layout
             justify-center
             wrap
         >
             <v-btn
-                v-for="icon in icons"
-                :key="icon.icon"
+                v-for="item in sns"
+                :key="item.icon"
                 class="mx-4 white--text"
                 icon
-                :href="icon.url"
+                :href="item.url"
                 target="_blank"
             >
                 <v-icon size="24px">
-                    {{ icon.icon }}
+                    {{ item.icon }}
                 </v-icon>
             </v-btn>
             <v-flex
@@ -28,7 +30,7 @@
                 white--text
                 xs12
             >
-                {{ new Date().getFullYear() }} — <strong>{{ title }}</strong>
+                {{ year }} — <strong>{{ $t('title') }}</strong>
             </v-flex>
         </v-layout>
     </v-footer>
@@ -40,9 +42,11 @@
     export default {
         computed: {
             ...mapGetters({
-                title: 'getTitle',
-                icons: 'common/getIcons',
+                sns: 'getSns',
             }),
+            year () {
+                return new Date().getFullYear();
+            },
         },
     };
 </script>

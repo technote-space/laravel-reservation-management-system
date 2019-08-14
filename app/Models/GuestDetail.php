@@ -45,6 +45,16 @@ class GuestDetail extends Model
         'id',
     ];
 
+    /**
+     * @var array
+     */
+    protected $casts = [
+        'guest_id' => 'int',
+    ];
+
+    /**
+     * @return BelongsTo
+     */
     public function guest(): BelongsTo
     {
         return $this->belongsTo(Guest::class);

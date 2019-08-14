@@ -1,0 +1,474 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginForm should render login form 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 0px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <form
+          class="v-form text-center"
+          novalidate="novalidate"
+        >
+          <div
+            class="v-input theme--light v-text-field"
+          >
+            <div
+              class="v-input__control"
+            >
+              <div
+                class="v-input__slot"
+              >
+                <div
+                  class="v-text-field__slot"
+                >
+                  <label
+                    class="v-label theme--light"
+                    for="input-11"
+                    style="left: 0px; position: absolute;"
+                  >
+                    E-Mail
+                  </label>
+                  <input
+                    data-vv-name="email"
+                    data-vv-validate-on="blur"
+                    id="input-11"
+                    required="required"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div
+                class="v-text-field__details"
+              >
+                <div
+                  class="v-messages theme--light"
+                >
+                  <span
+                    class="v-messages__wrapper"
+                    name="message-transition"
+                    tag="div"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="v-input theme--light v-text-field"
+          >
+            <div
+              class="v-input__control"
+            >
+              <div
+                class="v-input__slot"
+              >
+                <div
+                  class="v-text-field__slot"
+                >
+                  <label
+                    class="v-label theme--light"
+                    for="input-14"
+                    style="left: 0px; position: absolute;"
+                  >
+                    Password
+                  </label>
+                  <input
+                    data-vv-name="password"
+                    data-vv-validate-on="blur"
+                    id="input-14"
+                    required="required"
+                    type="password"
+                  />
+                </div>
+                <div
+                  class="v-input__append-inner"
+                >
+                  <div
+                    class="v-input__icon v-input__icon--append"
+                  >
+                    <i
+                      class="v-icon notranslate v-icon--link material-icons theme--light"
+                      role="button"
+                    >
+                      visibility_off
+                    </i>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="v-text-field__details"
+              >
+                <div
+                  class="v-messages theme--light"
+                >
+                  <span
+                    class="v-messages__wrapper"
+                    name="message-transition"
+                    tag="div"
+                  />
+                </div>
+                <div
+                  class="v-counter theme--light"
+                >
+                  0
+                </div>
+              </div>
+            </div>
+          </div>
+           
+          <button
+            class="mt-4 v-btn v-btn--contained theme--light v-size--default"
+            type="submit"
+          >
+            <span
+              class="v-btn__content"
+            >
+              
+        Login
+    
+            </span>
+          </button>
+        </form>
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;
+
+exports[`LoginForm should render login form 2`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      data-booted="true"
+      style="padding: 0px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <form
+          class="v-form text-center"
+          novalidate="novalidate"
+        >
+          <div
+            class="v-input v-input--has-state v-input--is-label-active v-input--is-dirty theme--light v-text-field v-text-field--is-booted error--text"
+          >
+            <div
+              class="v-input__control"
+            >
+              <div
+                class="v-input__slot"
+              >
+                <div
+                  class="v-text-field__slot"
+                >
+                  <label
+                    class="v-label v-label--active theme--light error--text"
+                    for="input-11"
+                    style="left: 0px; position: absolute;"
+                  >
+                    E-Mail
+                  </label>
+                  <input
+                    data-vv-name="email"
+                    data-vv-validate-on="blur"
+                    id="input-11"
+                    required="required"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div
+                class="v-text-field__details"
+              >
+                <div
+                  class="v-messages theme--light error--text"
+                >
+                  <span
+                    class="v-messages__wrapper"
+                    name="message-transition"
+                    tag="div"
+                  >
+                    <div
+                      class="v-messages__message"
+                    >
+                      The email field must be a valid email
+                    </div>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="v-input v-input--has-state v-input--is-label-active v-input--is-dirty theme--light v-text-field v-text-field--is-booted error--text"
+          >
+            <div
+              class="v-input__control"
+            >
+              <div
+                class="v-input__slot"
+              >
+                <div
+                  class="v-text-field__slot"
+                >
+                  <label
+                    class="v-label v-label--active theme--light error--text"
+                    for="input-14"
+                    style="left: 0px; position: absolute;"
+                  >
+                    Password
+                  </label>
+                  <input
+                    data-vv-name="password"
+                    data-vv-validate-on="blur"
+                    id="input-14"
+                    required="required"
+                    type="password"
+                  />
+                </div>
+                <div
+                  class="v-input__append-inner"
+                >
+                  <div
+                    class="v-input__icon v-input__icon--append"
+                  >
+                    <i
+                      class="v-icon notranslate v-icon--link material-icons theme--light error--text"
+                      role="button"
+                    >
+                      visibility_off
+                    </i>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="v-text-field__details"
+              >
+                <div
+                  class="v-messages theme--light error--text"
+                >
+                  <span
+                    class="v-messages__wrapper"
+                    name="message-transition"
+                    tag="div"
+                  >
+                    <div
+                      class="v-messages__message"
+                    >
+                      The password field must be at least 8 characters
+                    </div>
+                  </span>
+                </div>
+                <div
+                  class="v-counter theme--light"
+                >
+                  5
+                </div>
+              </div>
+            </div>
+          </div>
+           
+          <button
+            class="mt-4 v-btn v-btn--contained theme--light v-size--default"
+            type="submit"
+          >
+            <span
+              class="v-btn__content"
+            >
+              
+        Login
+    
+            </span>
+          </button>
+        </form>
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;
+
+exports[`LoginForm should render login form 3`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      data-booted="true"
+      style="padding: 0px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <form
+          class="v-form text-center"
+          novalidate="novalidate"
+        >
+          <div
+            class="v-input v-input--is-label-active v-input--is-dirty theme--light v-text-field v-text-field--is-booted"
+          >
+            <div
+              class="v-input__control"
+            >
+              <div
+                class="v-input__slot"
+              >
+                <div
+                  class="v-text-field__slot"
+                >
+                  <label
+                    class="v-label v-label--active theme--light"
+                    for="input-11"
+                    style="left: 0px; position: absolute;"
+                  >
+                    E-Mail
+                  </label>
+                  <input
+                    data-vv-name="email"
+                    data-vv-validate-on="blur"
+                    id="input-11"
+                    required="required"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div
+                class="v-text-field__details"
+              >
+                <div
+                  class="v-messages theme--light"
+                >
+                  <span
+                    class="v-messages__wrapper"
+                    name="message-transition"
+                    tag="div"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+           
+          <div
+            class="v-input v-input--is-label-active v-input--is-dirty theme--light v-text-field v-text-field--is-booted"
+          >
+            <div
+              class="v-input__control"
+            >
+              <div
+                class="v-input__slot"
+              >
+                <div
+                  class="v-text-field__slot"
+                >
+                  <label
+                    class="v-label v-label--active theme--light"
+                    for="input-14"
+                    style="left: 0px; position: absolute;"
+                  >
+                    Password
+                  </label>
+                  <input
+                    data-vv-name="password"
+                    data-vv-validate-on="blur"
+                    id="input-14"
+                    required="required"
+                    type="password"
+                  />
+                </div>
+                <div
+                  class="v-input__append-inner"
+                >
+                  <div
+                    class="v-input__icon v-input__icon--append"
+                  >
+                    <i
+                      class="v-icon notranslate v-icon--link material-icons theme--light"
+                      role="button"
+                    >
+                      visibility_off
+                    </i>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="v-text-field__details"
+              >
+                <div
+                  class="v-messages theme--light"
+                >
+                  <span
+                    class="v-messages__wrapper"
+                    name="message-transition"
+                    tag="div"
+                  />
+                </div>
+                <div
+                  class="v-counter theme--light"
+                >
+                  8
+                </div>
+              </div>
+            </div>
+          </div>
+           
+          <button
+            class="mt-4 v-btn v-btn--contained theme--light v-size--default"
+            type="submit"
+          >
+            <span
+              class="v-btn__content"
+            >
+              
+        Login
+    
+            </span>
+          </button>
+        </form>
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;

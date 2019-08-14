@@ -1,29 +1,43 @@
 <?php
 
+use App\Helpers\Traits\FileHelper;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 
 class AdminTableSeeder extends Seeder
 {
-    use Seeds\Traits\SeederHelper;
+    use Seeds\Traits\SeederHelper, Seeds\Traits\MasterTableSeeder, FileHelper;
+
+    /**
+     * @return string|Eloquent
+     */
+    protected function getTarget()
+    {
+        return Admin::class;
+    }
+
+    /**
+     * @param  array  $row
+     *
+     * @return array
+     */
+    protected function converter(array $row): array
+    {
+        return [
+            'name'     => $row[0],
+            'email'    => $row[1],
+            'password' => Hash::make($row[2]),
+        ];
+    }
 
     /**
      * @return void
      */
     public function run()
     {
-        factory(Admin::class, $this->getValue('admin_number'))->create();
+        factory(Admin::class, $this->getValue('number.admin'))->create();
 
-        $name     = $this->getValue('admin_name');
-        $email    = $this->getValue('admin_email');
-        $password = $this->getValue('admin_password', 'password');
-        if ($name && $email && $password) {
-            factory(Admin::class)->create([
-                'name'     => $name,
-                'email'    => $email,
-                'password' => Hash::make($password),
-            ]);
-        }
+        $this->import();
     }
 }

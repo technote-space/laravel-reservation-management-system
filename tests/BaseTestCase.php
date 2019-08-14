@@ -11,11 +11,11 @@ abstract class BaseTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->truncateTables();
+        static::truncateTables();
         static::seeder();
     }
 
-    protected static function seeder()
+    protected static function seeder(): void
     {
     }
 }

@@ -73,4 +73,12 @@ class Setting extends Model
 
         return self::$cache[$key];
     }
+
+    /**
+     * clear cache
+     */
+    public static function clearCache()
+    {
+        self::$cache = [];
+    }
 }

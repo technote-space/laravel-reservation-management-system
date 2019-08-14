@@ -2,30 +2,45 @@
 
 namespace Seeds\Traits;
 
-use \Illuminate\Support\Facades\Config;
+use App\Helpers\Traits\FileHelper;
+use Illuminate\Support\Arr;
 
+/**
+ * Trait SeederHelper
+ * @package Seeds\Traits
+ * @mixin FileHelper
+ */
 trait SeederHelper
 {
+    private $env;
+
     /**
      * @param $key
      * @param $default
      *
      * @return mixed
      */
-    private function getConfigValue($key, $default = null)
+    private function getEnvValue($key, $default = null)
     {
-        return Config::get("seeder.{$key}", $default);
+        if (! $this->env) {
+            $this->env = Arr::get($this->loadJson(resource_path('config').DIRECTORY_SEPARATOR.'env.json'), config('seed.env'));
+        }
+
+        return Arr::get($this->env, $key, $default);
     }
 
     /**
      * @param $key
      *
-     * @return int
+     * @return int|null
      */
     private function getRand($key)
     {
-        $min = $this->getConfigValue($key.'_min', 0) - 0;
-        $max = $this->getConfigValue($key.'_max', 0) - 0;
+        $min = $this->getEnvValue($key.'.min');
+        $max = $this->getEnvValue($key.'.max');
+        if (! isset($min) || ! isset($max)) {
+            return null;
+        }
         if ($min == $max) {
             return $min;
         }
@@ -38,13 +53,17 @@ trait SeederHelper
 
     /**
      * @param $key
-     * @param $default
      *
      * @return int|mixed
      */
-    protected function getValue($key, $default = null)
+    protected function getValue($key)
     {
-        $value = $this->getConfigValue($key, $default);
+        $value = $this->getRand($key);
+        if (isset($value)) {
+            return $value;
+        }
+
+        $value = $this->getEnvValue($key);
         if (isset($value)) {
             if (ctype_digit($value)) {
                 return $value - 0;
@@ -53,6 +72,6 @@ trait SeederHelper
             return $value;
         }
 
-        return $this->getRand($key);
+        return 0;
     }
 }

@@ -14,8 +14,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ($this->app->environment('testing')) {
+        if ($this->app->environment('testing', 'dusk')) {
             $this->app->register(DuskServiceProvider::class);
+            if ('sqlite' === config('database.default')) {
+                $path = config('database.connections.sqlite.database');
+                if (':memory:' !== $path && ! file_exists($path) && is_dir(dirname($path))) {
+                    // @codeCoverageIgnoreStart
+                    touch($path);
+                    // @codeCoverageIgnoreEnd
+                }
+            }
         }
     }
 

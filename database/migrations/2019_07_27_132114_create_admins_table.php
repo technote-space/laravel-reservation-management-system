@@ -15,11 +15,11 @@ class CreateAdminsTable extends Migration
     {
         Schema::create('admins', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name')->nullable(false)->comment('名前');
-            $table->string('email')->nullable(false)->unique()->comment('メールアドレス');
-            $table->timestamp('email_verified_at')->nullable()->comment('メール認証完了日時');
-            $table->string('password')->nullable(false)->comment('パスワード');
-            $table->rememberToken()->comment('パスワード再発行トークン');
+            $table->string('name', 128)->nullable(false)->comment(__('database.admins.name'));
+            $table->string('email', 128)->nullable(false)->unique()->comment(__('database.admins.email'));
+            $table->timestamp('email_verified_at')->nullable()->comment(__('database.admins.email_verified_at'));
+            $table->string('password')->nullable(false)->comment(__('database.admins.password'));
+            $table->rememberToken()->comment(__('database.admins.remember_token'));
             $table->timestamps();
         });
     }

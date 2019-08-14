@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Helpers\Traits;
 
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -25,5 +26,19 @@ trait FileHelper
         }
 
         return Storage::disk($name)->url($path);
+    }
+
+    /**
+     * @param  string  $path
+     *
+     * @return Collection
+     */
+    protected function loadJson(string $path): Collection
+    {
+        if (! is_readable($path)) {
+            return collect([]);
+        }
+
+        return collect(json_decode(file_get_contents($path), true));
     }
 }

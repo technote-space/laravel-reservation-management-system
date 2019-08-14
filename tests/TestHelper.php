@@ -3,45 +3,44 @@ declare(strict_types=1);
 
 namespace Tests;
 
-use Artisan;
-use DB;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 trait TestHelper
 {
-    protected function getTables()
+    protected static function getTables()
     {
         return [
-            'admins',
-            'guests',
-            'guest_details',
             'password_resets',
-            'reservations',
-            'rooms',
             'settings',
+            'admins',
+            'reservations',
+            'guest_details',
+            'guests',
+            'rooms',
         ];
     }
 
-    protected function dropTables()
+    protected static function dropTables()
     {
-        collect($this->getTables())->each(function ($table) {
+        collect(static::getTables())->each(function ($table) {
             DB::statement('DROP TABLE IF EXISTS `'.$table.'`');
         });
     }
 
-    protected function truncateTables()
+    protected static function truncateTables()
     {
-        $this->dropTables();
-        $this->runMigrate();
+        static::dropTables();
+        static::runMigrate();
     }
 
-    protected function runMigrate()
+    protected static function runMigrate()
     {
-        Artisan::call('migrate');
+        Artisan::call('migrate:refresh');
     }
 
-    protected function runSeed()
+    protected static function runSeed(array $params = [])
     {
-        Artisan::call('db:seed');
+        Artisan::call('db:seed', $params);
     }
 }

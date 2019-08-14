@@ -50,7 +50,7 @@ abstract class DuskTestCase extends BaseTestCase
     {
         parent::setUp();
 
-        $this->truncateTables();
-        $this->runSeed();
+        static::truncateTables();
+        static::runSeed();
     }
 }

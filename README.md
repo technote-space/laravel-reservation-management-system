@@ -11,6 +11,15 @@
 ホテルの予約管理システム
 
 ## スクリーンショット
+### Login
+<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/login.png" width="500px"/>
+
+### Dashboard
+<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/dashboard.png" width="500px"/>
+
+### CRUD
+<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/list.png" width="500px"/>
+<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/edit.png" width="500px"/>
 
 ## 仕様
 - 最大4泊5日
@@ -83,6 +92,20 @@
   - テスト
   - Deploy
     - GitHub Releases
+    - GitHub Pages
+### デザインフレームワーク
+- Vuetify
+### その他
+- 多言語化
+
+## Demonstration
+[GitHub Pages](https://technote-space.github.io/laravel-reservation-management-system)  
+- APIはモックなので実際の動作と差異があります
+  - データの並び順
+  - データ検索
+  - バリデーションなし
+  - データ保存なし
+- データはランダムに生成されたものです
 
 ## Author
 [GitHub (Technote)](https://github.com/technote-space)  

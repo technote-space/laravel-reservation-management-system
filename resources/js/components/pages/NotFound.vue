@@ -1,24 +1,23 @@
 <template>
-    <v-container fluid>
-        <v-layout justify-center>
-            Not Found
+    <v-container
+        fluid
+        fill-height
+    >
+        <v-layout
+            wrap
+            justify-center
+        >
+            {{ $t('pages.not_found') }}
         </v-layout>
     </v-container>
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
-
     export default {
-        created () {
-            this.offDrawer();
-            this.offToolbar();
-        },
-        methods: {
-            ...mapActions({
-                offDrawer: 'common/offDrawer',
-                offToolbar: 'common/onToolbar',
-            }),
+        metaInfo () {
+            return {
+                title: this.$t('pages.not_found'),
+            };
         },
     };
 </script>

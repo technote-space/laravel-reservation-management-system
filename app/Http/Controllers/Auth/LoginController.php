@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
@@ -27,17 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+    protected $redirectTo = '/';
 
     /**
      * @param  Request  $request
@@ -60,6 +51,6 @@ class LoginController extends Controller
     {
         $request->session()->regenerate();
 
-        return response()->json();
+        return response()->json(false);
     }
 }

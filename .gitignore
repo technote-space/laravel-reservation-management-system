@@ -4,8 +4,10 @@
 /storage/*.key
 /vendor
 .env
-.env.dusk.local
+.env.dusk
+.env.dusk.dusk
 .env.testing
+.env.backup
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -18,6 +20,8 @@ yarn-error.log
 composer.lock
 /public/css
 /public/js
+/public/mix-manifest.json
 /release.zip
 /_ide_helper.php
 /.phpstorm.meta.php
+/gh-pages

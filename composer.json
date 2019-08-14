@@ -15,16 +15,20 @@
         }
     ],
     "require": {
-        "php": "^7.1.3",
+        "php": "^7.2",
+        "ext-mbstring": "*",
+        "ext-json": "*",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "ext-mbstring": "*"
+        "staudenmeir/eloquent-eager-limit": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "barryvdh/laravel-ide-helper": "^2.6",
         "beyondcode/laravel-dump-server": "^1.0",
+        "beyondcode/laravel-query-detector": "^1.0",
+        "codedungeon/phpunit-result-printer": "^0.26.2",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
         "doctrine/dbal": "^2.9",
         "filp/whoops": "^2.0",
@@ -34,14 +38,15 @@
         "nunomaduro/collision": "^3.0",
         "php-coveralls/php-coveralls": "^2.1",
         "phpmd/phpmd": "^2.6",
-        "phpunit/phpunit": "^7.5",
+        "phpunit/phpunit": "^8.0",
         "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "^3.4"
     },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "process-timeout": 1200
     },
     "extra": {
         "laravel": {
@@ -78,12 +83,13 @@
             "@php artisan key:generate --ansi"
         ],
         "post-update-cmd": [
-            "if [[ -n $(php artisan list --raw | grep 'ide-helper:generate') ]]; then composer ide; fi",
-            "php artisan optimize --ansi"
+            "if [[ -n $(php artisan list --raw | grep 'ide-helper:generate') ]] && [[ -f .env ]]; then composer ide; fi",
+            "php artisan optimize --ansi",
+            "php artisan cache:clear --ansi",
+            "php artisan config:clear --ansi"
         ],
         "setup": [
-            "composer install --no-interaction --prefer-dist --no-suggest",
-            "yarn install"
+            "bash bin/setup.sh"
         ],
         "build": [
             "@build:php",
@@ -93,7 +99,7 @@
             "composer install --no-dev --no-interaction --prefer-dist --no-suggest"
         ],
         "build:js": [
-            "yarn install",
+            "yarn --prod install",
             "yarn prod"
         ],
         "test": [
@@ -131,10 +137,37 @@
             "phpmd ./app/,./config,./database/factories,./database/seeds,./routes/,./tests/ text phpmd.xml"
         ],
         "phpunit": [
-            "phpunit"
+            "phpunit --stop-on-failure --colors=always"
+        ],
+        "phpunit:no": [
+            "@phpunit --no-coverage"
+        ],
+        "phpunit:feature": [
+            "@phpunit:no --group=Feature"
+        ],
+        "phpunit:api": [
+            "@phpunit:no --group=Feature.Api"
+        ],
+        "phpunit:crud": [
+            "@phpunit:no --group=Feature.Api.Crud"
+        ],
+        "phpunit:auth": [
+            "@phpunit:no --group=Feature.Api.Auth"
+        ],
+        "phpunit:summary": [
+            "@phpunit:no --group=Feature.Api.Summary"
+        ],
+        "phpunit:unit": [
+            "@phpunit:no --group=Unit"
+        ],
+        "phpunit:models": [
+            "@phpunit:no --group=Unit.Models"
+        ],
+        "phpunit:helpers": [
+            "@phpunit:no --group=Unit.Helpers"
         ],
         "dusk": [
-            "php artisan dusk --env=testing"
+            "php artisan dusk --env=dusk"
         ],
         "eslint": [
             "yarn lint"
@@ -175,11 +208,15 @@
         "coveralls-js": [
             "yarn coveralls"
         ],
+        "m": [
+            "@da",
+            "@migrate",
+            "@seed"
+        ],
         "migrate": [
             "php artisan migrate:refresh --ansi"
         ],
         "seed": [
-            "php artisan config:clear --ansi",
             "php artisan db:seed --ansi"
         ],
         "da": [
@@ -196,15 +233,20 @@
             "composer update"
         ],
         "gh-releases": [
-            "@build",
             "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && bash bin/deploy/gh-releases.sh"
+        ],
+        "gh-pages": [
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && bash bin/deploy/gh-pages.sh"
+        ],
+        "gh-pages:ga": [
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_TRACKING_ID=TEST source bin/deploy/env.sh && bash bin/deploy/gh-pages.sh"
         ],
         "routes": [
             "php artisan route:clear --ansi",
             "php artisan route:list --ansi"
         ],
         "chrome": [
-            "php artisan dusk:chrome-driver 74 --env=testing"
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/prepare/install-chrome.sh"
         ]
     }
 }
