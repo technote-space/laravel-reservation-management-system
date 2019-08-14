@@ -23,7 +23,7 @@ trait SeederHelper
     private function getEnvValue($key, $default = null)
     {
         if (! $this->env) {
-            $this->env = Arr::get($this->loadJson(resource_path('seed').DIRECTORY_SEPARATOR.'env.json'), config('seed.env'));
+            $this->env = Arr::get($this->loadJson(resource_path('config').DIRECTORY_SEPARATOR.'env.json'), config('seed.env'));
         }
 
         return Arr::get($this->env, $key, $default);

@@ -26,7 +26,7 @@ export default (data) => {
     const type = data[ 'type' ];
     const model = 'reservations';
 
-    const range = Array.from(moment.range(moment(start), moment(end).subtract(1, 'days')).by(getBy(type)));
+    const range = Array.from(moment.range(start, end.subtract(1, 'days')).by(getBy(type)));
     const summary = !range.length ? {} : arrayToObject(range, {
         getKey: ({ item }) => item.format(getFormat(type)),
         getItem: () => 0,
