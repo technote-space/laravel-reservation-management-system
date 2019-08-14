@@ -44,10 +44,10 @@ HTML=$(
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="timezone" content="Asia/Tokyo">
     <title>Reservation Service</title>
-    <script src="js/app.js" defer></script>
+    <script src="./js/app.js" defer></script>
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
-    <link href="css/app.css" rel="stylesheet">
+    <link href="./css/app.css" rel="stylesheet">
 </head>
 <body>
     <div id="app"></div>

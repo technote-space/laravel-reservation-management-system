@@ -243,11 +243,11 @@
         ],
         "gh-pages": [
             "@gh-prepare",
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && GH_PAGES_BASE=gh-pages bash bin/deploy/gh-pages.sh"
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && GH_PAGES_BASE=/gh-pages bash bin/deploy/gh-pages.sh"
         ],
         "gh-pages:ga": [
             "@gh-prepare",
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_TRACKING_ID=TEST source bin/deploy/env.sh && GH_PAGES_BASE=gh-pages bash bin/deploy/gh-pages.sh"
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_TRACKING_ID=TEST source bin/deploy/env.sh && GH_PAGES_BASE=/gh-pages bash bin/deploy/gh-pages.sh"
         ],
         "routes": [
             "php artisan route:clear --ansi",
