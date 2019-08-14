@@ -113,9 +113,8 @@ jobs:
           tags: true
 
     - stage: deploy
-      language: node_js
-      node_js: '11'
-      dist: trusty
+      language: php
+      php: '7.2'
       env:
         - GH_PAGES_TRACKING_ID=UA-78163306-3
       script: skip
