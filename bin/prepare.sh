@@ -2,14 +2,19 @@
 
 set -e
 
-current=$(cd $(dirname $0);
-pwd)
-source ${current}/variables.sh
+current=$(
+  # shellcheck disable=SC2046
+  cd $(dirname "$0")
+  pwd
+)
+# shellcheck disable=SC1090
+source "${current}"/variables.sh
 
 if [[ -z "${NO_NPM}" ]]; then
     echo ""
     echo ">> Install latest node."
-    source ${current}/prepare/install-latest-node.sh
+  # shellcheck disable=SC1090
+  source "${current}"/prepare/install-latest-node.sh
 fi
 
 if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Deploy" ]]; then
@@ -43,7 +48,7 @@ if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; th
     if [[ -n "${LARAVEL_DUSK}" ]]; then
         echo ""
         echo ">> Prepare for Laravel Dusk"
-        bash ${current}/prepare/install-chrome.sh
+    bash "${current}"/prepare/install-chrome.sh
         google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
         php artisan serve &
     fi

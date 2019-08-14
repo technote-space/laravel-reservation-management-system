@@ -2,9 +2,13 @@
 
 set -e
 
-current=$(cd $(dirname $0);
-pwd)
-source ${current}/../variables.sh
+current=$(
+  # shellcheck disable=SC2046
+  cd $(dirname "$0")
+  pwd
+)
+# shellcheck disable=SC1090
+source "${current}"/../variables.sh
 
 echo ""
 echo ">> Prepare files"
@@ -18,7 +22,7 @@ cp -a ${TRAVIS_BUILD_DIR}/public/js ${GH_PAGES_DIR}/js
 cp -a ${TRAVIS_BUILD_DIR}/public/fonts ${GH_PAGES_DIR}/fonts
 cp ${TRAVIS_BUILD_DIR}/public/favicon.ico ${GH_PAGES_DIR}/
 
-cat << EOS >> ${GH_PAGES_DIR}/.htaccess
+cat <<EOS >>${GH_PAGES_DIR}/.htaccess
 Allow from all
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -30,7 +34,8 @@ RewriteRule . /index.html [L]
 </IfModule>
 EOS
 
-HTML=$(cat << EOS
+HTML=$(
+  cat <<EOS
 <!doctype html>
 <html lang="ja">
 <head>
@@ -52,7 +57,8 @@ EOS
 )
 
 if [[ -n "${GH_PAGES_TRACKING_ID}" ]]; then
-    SCRIPT=$(cat << EOS
+  SCRIPT=$(
+    cat <<EOS
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=${GH_PAGES_TRACKING_ID}"></script>
 <script>
@@ -62,13 +68,13 @@ if [[ -n "${GH_PAGES_TRACKING_ID}" ]]; then
   gtag('config', '${GH_PAGES_TRACKING_ID}');
 </script>
 EOS
-)
-    SCRIPT=$(echo ${SCRIPT} | sed -e 's/\n//g')
-    echo "${HTML}" | sed -e "s/___google_analytics___/${SCRIPT//\//\\/}/g" >> ${GH_PAGES_DIR}/index.html
+  )
+  SCRIPT=$(echo ${SCRIPT} | sed -e 's/\n//g')
+  echo "${HTML}" | sed -e "s/___google_analytics___/${SCRIPT//\//\\/}/g" >>${GH_PAGES_DIR}/index.html
 else
-    echo "${HTML}" | sed -e "/___google_analytics___/d" >> ${GH_PAGES_DIR}/index.html
+  echo "${HTML}" | sed -e "/___google_analytics___/d" >>${GH_PAGES_DIR}/index.html
 fi
 
 if [[ -f ${WORK_DIR}/gh-pages.sh ]]; then
-    bash ${WORK_DIR}/gh-pages.sh
+  bash ${WORK_DIR}/gh-pages.sh
 fi
