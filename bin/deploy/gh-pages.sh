@@ -22,18 +22,6 @@ cp -a ${TRAVIS_BUILD_DIR}/public/js ${GH_PAGES_DIR}/js
 cp -a ${TRAVIS_BUILD_DIR}/public/fonts ${GH_PAGES_DIR}/fonts
 cp ${TRAVIS_BUILD_DIR}/public/favicon.ico ${GH_PAGES_DIR}/
 
-cat <<EOS >>${GH_PAGES_DIR}/.htaccess
-Allow from all
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.html$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.html [L]
-</IfModule>
-EOS
-
 HTML=$(
   cat <<EOS
 <!doctype html>
@@ -72,8 +60,10 @@ EOS
   )
   SCRIPT=$(echo ${SCRIPT} | sed -e 's/\n//g')
   echo "${HTML}" | sed -e "s/___google_analytics___/${SCRIPT//\//\\/}/g" >>${GH_PAGES_DIR}/index.html
+  echo "${HTML}" | sed -e "s/___google_analytics___/${SCRIPT//\//\\/}/g" >>${GH_PAGES_DIR}/404.html
 else
   echo "${HTML}" | sed -e "/___google_analytics___/d" >>${GH_PAGES_DIR}/index.html
+  echo "${HTML}" | sed -e "/___google_analytics___/d" >>${GH_PAGES_DIR}/404.html
 fi
 
 if [[ -f ${WORK_DIR}/gh-pages.sh ]]; then
