@@ -45,6 +45,7 @@ HTML=$(
     <meta name="timezone" content="Asia/Tokyo">
     <title>Reservation Service</title>
     <script src="./js/app.js" defer></script>
+    <link rel="icon" href="./favicon.ico">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
     <link href="./css/app.css" rel="stylesheet">
