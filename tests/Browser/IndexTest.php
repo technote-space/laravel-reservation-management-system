@@ -61,11 +61,6 @@ class IndexTest extends DuskTestCase
      */
     public function testFailLogin()
     {
-        factory(Admin::class)->create([
-            'name'     => 'test name',
-            'email'    => 'test@example.com',
-            'password' => Hash::make('password'),
-        ]);
         $this->browse(
             function (Browser $browser) {
                 $browser->visit('/')
@@ -86,11 +81,6 @@ class IndexTest extends DuskTestCase
      */
     public function testLogin()
     {
-        factory(Admin::class)->create([
-            'name'     => 'test name',
-            'email'    => 'test@example.com',
-            'password' => Hash::make('password'),
-        ]);
         $this->browse(
             function (Browser $browser) {
                 $browser->visit('/')
@@ -115,11 +105,6 @@ class IndexTest extends DuskTestCase
      */
     public function testDrawer()
     {
-        factory(Admin::class)->create([
-            'name'     => 'test name',
-            'email'    => 'test@example.com',
-            'password' => Hash::make('password'),
-        ]);
         $this->browse(
             function (Browser $browser) {
                 $browser->visit('/')
