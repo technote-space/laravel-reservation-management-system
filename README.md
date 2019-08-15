@@ -68,21 +68,21 @@
 - JavaScript（Vue.js）
 ### Lint
 - PHP
-  - PHPCS
-  - PHPMD
+  - [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer)
+  - [PHPMD](https://phpmd.org/)
 - JavaScript
-  - ESLint
+  - [ESLint](https://eslint.org/)
 - CSS
-  - stylelint
+  - [stylelint](https://github.com/stylelint/stylelint)
 ### テスト
 - PHP
-  - PHPUnit（単体テスト）
-  - Laravel Dusk（e2e）
+  - [PHPUnit](https://phpunit.de/)（単体テスト）
+  - [Laravel Dusk](https://github.com/laravel/dusk)（e2e）
 - JavaScript
-  - Jest（単体テスト）
-  - Laravel Dusk（e2e）
+  - [Jest](https://jestjs.io/)（単体テスト）
+  - [Laravel Dusk](https://github.com/laravel/dusk)（e2e）
 ### CI
-- Travis CI
+- [Travis CI](https://travis-ci.com/)
   - Lint
   - テスト
   - Deploy
@@ -94,7 +94,7 @@
 - 多言語化
 - Nuxt, SPA
 - [FullCalendar](https://fullcalendar.io/)
-- [Charts.js](https://www.chartjs.org/)
+- [Chart.js](https://www.chartjs.org/)
 
 ## Demonstration
 [GitHub Pages](https://technote-space.github.io/laravel-reservation-management-system)  
