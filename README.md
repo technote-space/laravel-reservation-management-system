@@ -94,7 +94,7 @@
 - 多言語化
 - Nuxt, SPA
 - [FullCalendar](https://fullcalendar.io/)
-- [Charts.js](https://www.chartjs.org/)
+- [Chart.js](https://www.chartjs.org/)
 
 ## Demonstration
 [GitHub Pages](https://technote-space.github.io/laravel-reservation-management-system)  
