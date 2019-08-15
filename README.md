@@ -98,6 +98,9 @@
 
 ## Demonstration
 [GitHub Pages](https://technote-space.github.io/laravel-reservation-management-system)  
+- ログイン情報
+  - email: test@example.com
+  - password: test1234
 - APIはモックなので実際の動作と差異があります
   - データの並び順
   - データ検索
