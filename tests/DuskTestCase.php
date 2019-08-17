@@ -52,5 +52,8 @@ abstract class DuskTestCase extends BaseTestCase
 
         static::truncateTables();
         static::runSeed();
+        foreach (static::$browsers as $browser) {
+            $browser->driver->manage()->deleteAllCookies();
+        }
     }
 }
