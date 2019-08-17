@@ -48,13 +48,6 @@
         "sort-packages": true,
         "process-timeout": 1200
     },
-    "extra": {
-        "laravel": {
-            "dont-discover": [
-                "laravel/dusk"
-            ]
-        }
-    },
     "autoload": {
         "psr-4": {
             "App\\": "app/"
