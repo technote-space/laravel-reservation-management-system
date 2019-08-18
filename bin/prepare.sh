@@ -22,6 +22,14 @@ if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Deploy" ]]; then
   echo ">> Build"
   bash "${current}"/deploy.sh
 else
+  if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; then
+    rm -f .env
+    cp .env.travis .env
+    ls -la .env
+    php artisan key:generate
+    php artisan config:cache
+  fi
+
   echo ""
   echo ">> Setup"
   if [[ -z "${NO_COMPOSER}" ]]; then
@@ -33,12 +41,6 @@ else
 fi
 
 if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; then
-  rm -f .env
-  cp .env.travis .env
-  ls -la .env
-  php artisan key:generate
-  php artisan config:cache
-
   if [[ -z "${NO_NPM}" ]]; then
     echo ""
     echo ">> Build JS"
