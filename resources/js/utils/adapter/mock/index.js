@@ -1,5 +1,5 @@
 import repository from './repository';
-import { getSetting } from './env';
+import { getSetting } from '../../env';
 
 const sleep = msec => new Promise(resolve => setTimeout(resolve, msec));
 const getSleepMs = method => getSetting('sleep.' + method, getSetting('sleep.default', 500));

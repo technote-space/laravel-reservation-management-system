@@ -5,7 +5,7 @@ import guestDetailFactory from './factories/guest-detail';
 import roomFactory from './factories/room';
 import reservationFactory from './factories/reservation';
 import settingFactory from './factories/setting';
-import { getEnv } from '../../../../utils/adapter/mock/env';
+import { getEnv } from '../../../../utils/env';
 import adminSeeder from './seeds/admin';
 import roomSeeder from './seeds/room';
 import settingSeeder from './seeds/setting';
