@@ -92,7 +92,7 @@
 - [Vuetify](https://vuetifyjs.com/)
 ### その他
 - 多言語化
-- Nuxt, SPA
+- Vuex, SPA
 - [FullCalendar](https://fullcalendar.io/)
 - [Chart.js](https://www.chartjs.org/)
 
@@ -107,7 +107,7 @@
   - バリデーションなし
 
 [Deployed](https://reservation.technote.space)
-   - Basic認証の情報が必要な方はSlack等でお問い合わせください
+ - Basic認証の情報が必要な方はSlack等でお問い合わせください
 
 ## Author
 [GitHub (Technote)](https://github.com/technote-space)  
