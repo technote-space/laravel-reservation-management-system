@@ -28,10 +28,11 @@ else
     rm -f .env
     cp .env.travis .env
     ls -la .env
-    php artisan key:generate
-    php artisan config:cache
 
     composer install --no-interaction --prefer-dist --no-suggest
+
+    php artisan key:generate
+    php artisan config:cache
   fi
   if [[ -z "${NO_NPM}" ]]; then
     yarn install
