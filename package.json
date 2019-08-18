@@ -61,7 +61,7 @@
         "vue-toasted": "^1.1.27",
         "vuetify": "^2.0.7",
         "vuex": "^3.1.1",
-        "webpack-cli": "^3.3.6"
+        "webpack-cli": "^3.3.7"
     },
     "devDependencies": {
         "@vue/test-utils": "^1.0.0-beta.29",
