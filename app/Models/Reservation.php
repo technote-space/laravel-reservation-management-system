@@ -4,14 +4,18 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Helpers\Traits\TimeHelper;
-use App\Models\Traits\Searchable;
-use App\Models\Contracts\Searchable as SearchableContract;
+use Doctrine\DBAL\Schema\Column;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+use Technote\CrudHelper\Models\Contracts\Crudable as CrudableContract;
+use Technote\CrudHelper\Models\Traits\Crudable;
+use Technote\SearchHelper\Models\Contracts\Searchable as SearchableContract;
+use Technote\SearchHelper\Models\Traits\Searchable;
 
 /**
  * App\Models\Reservation
@@ -47,9 +51,9 @@ use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
  * @mixin Eloquent
  * @mixin Builder
  */
-class Reservation extends Model implements SearchableContract
+class Reservation extends Model implements CrudableContract, SearchableContract
 {
-    use HasEagerLimit, TimeHelper, Searchable;
+    use HasEagerLimit, TimeHelper, Crudable, Searchable;
 
     /**
      * @var array
@@ -88,10 +92,34 @@ class Reservation extends Model implements SearchableContract
     protected $perPage = 10;
 
     /**
+     * @return array
+     */
+    public static function getSearchRules(): array
+    {
+        return [
+            'start_date' => 'filled|date',
+            'end_date'   => 'filled|date',
+            'room_id'    => 'filled|integer|exists:rooms,id',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getSearchAttributes(): array
+    {
+        return [
+            'start_date' => __('request.reservations.start_date'),
+            'end_date'   => __('request.reservations.end_date'),
+            'room_id'    => __('request.reservations.room_id'),
+        ];
+    }
+
+    /**
      * @param  Builder  $query
      * @param  array  $conditions
      */
-    protected function setConditions(Builder $query, array $conditions)
+    protected static function setConditions(Builder $query, array $conditions)
     {
         if (! empty($conditions['s'])) {
             collect($conditions['s'])->each(function ($search) use ($query) {
@@ -120,7 +148,7 @@ class Reservation extends Model implements SearchableContract
     /**
      * @return array
      */
-    protected function getJoinData(): array
+    protected static function getSearchJoins(): array
     {
         return [
             'rooms'         => [
@@ -141,12 +169,103 @@ class Reservation extends Model implements SearchableContract
     /**
      * @return array
      */
-    protected function getOrderBy(): array
+    protected static function getSearchOrderBy(): array
     {
         return [
             'reservations.start_date' => 'desc',
             'reservations.id'         => 'desc',
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCrudListRelations(): array
+    {
+        return [
+            'guest',
+            'room',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCrudDetailRelations(): array
+    {
+        return [
+            'guest',
+            'room',
+        ];
+    }
+
+    /**
+     * @param  array  $rules
+     * @param  string  $name
+     * @param  Column  $column
+     * @param  bool  $isUpdate
+     * @param  int|null  $primaryId
+     * @param  FormRequest  $request
+     *
+     * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public static function filterCrudRules(/** @noinspection PhpUnusedParameterInspection */ array $rules, string $name, Column $column, bool $isUpdate, ?int $primaryId, FormRequest $request): array
+    {
+        if ('reservations.end_date' === $name) {
+            $rules[] = 'after_or_equal:reservations.start_date';
+        }
+        if ('reservations.number' === $name) {
+            $rules['min'] = 'min:1';
+
+            if ($isUpdate) {
+                $roomId = static::findOrFail($primaryId)->room_id;
+            } else {
+                $roomId = request()->input('reservations.room_id');
+            }
+            if ($roomId) {
+                $room = Room::find($roomId);
+                if ($room) {
+                    $rules['max'] = 'max:'.$room->number;
+                }
+            }
+        }
+
+        return self::addReservationRule($rules, $name, $request);
+    }
+
+    /**
+     * @param  array  $rules
+     * @param  string  $name
+     * @param  FormRequest  $request
+     *
+     * @return array
+     */
+    private static function addReservationRule(array $rules, string $name, FormRequest $request)
+    {
+        if ($request->has('reservations.start_date')) {
+            if ('reservations.start_date' === $name) {
+                $rules[] = 'reservation_term';
+                $rules[] = 'reservation_availability';
+                $rules[] = 'reservation_duplicate';
+            }
+        } elseif ($request->has('reservations.end_date')) {
+            if ('reservations.end_date' === $name) {
+                $rules[] = 'reservation_term';
+                $rules[] = 'reservation_availability';
+                $rules[] = 'reservation_duplicate';
+            }
+        } elseif ($request->has('reservations.room_id')) {
+            if ('reservations.room_id' === $name) {
+                $rules[] = 'reservation_availability';
+            }
+        } elseif ($request->has('reservations.guest_id')) {
+            if ('reservations.guest_id' === $name) {
+                $rules[] = 'reservation_duplicate';
+            }
+        }
+
+        return $rules;
     }
 
     /**

@@ -4,16 +4,20 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Helpers\Traits\TimeHelper;
-use App\Models\Traits\Searchable;
-use App\Models\Contracts\Searchable as SearchableContract;
+use Doctrine\DBAL\Schema\Column;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+use Technote\CrudHelper\Models\Contracts\Crudable as CrudableContract;
+use Technote\CrudHelper\Models\Traits\Crudable;
+use Technote\SearchHelper\Models\Contracts\Searchable as SearchableContract;
+use Technote\SearchHelper\Models\Traits\Searchable;
 
 /**
  * App\Models\Room
@@ -41,9 +45,9 @@ use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
  * @mixin Eloquent
  * @mixin Builder
  */
-class Room extends Model implements SearchableContract
+class Room extends Model implements CrudableContract, SearchableContract
 {
-    use HasEagerLimit, TimeHelper, Searchable;
+    use HasEagerLimit, TimeHelper, Crudable, Searchable;
 
     /**
      * @var array
@@ -90,7 +94,7 @@ class Room extends Model implements SearchableContract
      * @param  Builder  $query
      * @param  array  $conditions
      */
-    protected function setConditions(Builder $query, array $conditions)
+    protected static function setConditions(Builder $query, array $conditions)
     {
         if (! empty($conditions['s'])) {
             collect($conditions['s'])->each(function ($search) use ($query) {
@@ -102,11 +106,43 @@ class Room extends Model implements SearchableContract
     /**
      * @return array
      */
-    protected function getOrderBy(): array
+    protected static function getSearchOrderBy(): array
     {
         return [
             'rooms.id' => 'desc',
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getCrudDetailRelations(): array
+    {
+        return [
+            'latestReservation',
+            'latestUsage',
+            'recentUsages',
+        ];
+    }
+
+    /**
+     * @param  array  $rules
+     * @param  string  $name
+     * @param  Column  $column
+     * @param  bool  $isUpdate
+     * @param  int|null  $primaryId
+     * @param  FormRequest  $request
+     *
+     * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public static function filterCrudRules(/** @noinspection PhpUnusedParameterInspection */ array $rules, string $name, Column $column, bool $isUpdate, ?int $primaryId, FormRequest $request): array
+    {
+        if ('rooms.number' === $name) {
+            $rules[] = 'min:1';
+        }
+
+        return $rules;
     }
 
     /**
