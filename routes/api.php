@@ -9,6 +9,5 @@ Route::get('user', 'IndexController@user')->name('user');
 Route::group([
     'middleware' => ['auth'],
 ], function (Router $router) {
-    $router->post('reservations/check', 'Api\ReservationController@check')->name('reservations.check');
     $router->get('summary', 'Api\SummaryController@index')->name('summary');
 });
