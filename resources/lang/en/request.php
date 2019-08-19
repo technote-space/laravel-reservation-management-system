@@ -11,6 +11,7 @@ return [
         'start_date' => 'Get start date',
         'end_date'   => 'Get end date',
         'type'       => 'Get type',
+        'room_id'    => 'Room ID',
     ],
 
 ];

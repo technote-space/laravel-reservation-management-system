@@ -23,16 +23,21 @@ class SummaryService
     public function getSummary(array $conditions)
     {
         $summary = $this->initSummary($conditions);
-        Reservation::join('rooms', 'reservations.room_id', 'rooms.id')
-                   ->whereDate('reservations.start_date', '>=', $conditions['start_date'])
-                   ->whereDate('reservations.start_date', '<', $conditions['end_date'])
-                   ->select('reservations.start_date', 'reservations.end_date', 'rooms.price')
-                   ->orderBy('reservations.id')
-                   ->chunk(1000, function (Collection $records) use ($conditions, &$summary) {
-                       $records->each(function ($record) use ($conditions, &$summary) {
-                           $summary[$this->getKey($conditions, $record)] += $this->getPrice($record);
-                       });
-                   });
+        $builder = Reservation::join('rooms', 'reservations.room_id', 'rooms.id')
+                              ->whereDate('reservations.start_date', '>=', $conditions['start_date'])
+                              ->whereDate('reservations.start_date', '<', $conditions['end_date'])
+                              ->select('reservations.start_date', 'reservations.end_date', 'rooms.price')
+                              ->orderBy('reservations.id');
+
+        if (! empty($conditions['room_id'])) {
+            $builder->where('reservations.room_id', $conditions['room_id']);
+        }
+
+        $builder->chunk(1000, function (Collection $records) use ($conditions, &$summary) {
+            $records->each(function ($record) use ($conditions, &$summary) {
+                $summary[$this->getKey($conditions, $record)] += $this->getPrice($record);
+            });
+        });
 
         return $summary;
     }
