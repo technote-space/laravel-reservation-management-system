@@ -24,7 +24,7 @@ class CustomValidator extends Validator
     public function validateReservationTerm(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
         $reservationId = request()->route('reservation');
-        $reservation   = $reservationId ? Reservation::find($reservationId) : null;
+        $reservation   = $reservationId ? Reservation::findOrFail($reservationId) : null;
         if ($reservation) {
             $data      = $this->getData();
             $startDate = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
@@ -48,7 +48,7 @@ class CustomValidator extends Validator
     public function validateReservationAvailability(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
         $reservationId = request()->route('reservation');
-        $reservation   = $reservationId ? Reservation::find($reservationId) : null;
+        $reservation   = $reservationId ? Reservation::findOrFail($reservationId) : null;
         if ($reservation) {
             $reservationId -= 0;
             $data          = $this->getData();
@@ -76,7 +76,7 @@ class CustomValidator extends Validator
     public function validateReservationDuplicate(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
         $reservationId = request()->route('reservation');
-        $reservation   = $reservationId ? Reservation::find($reservationId) : null;
+        $reservation   = $reservationId ? Reservation::findOrFail($reservationId) : null;
         if ($reservation) {
             $reservationId -= 0;
             $data          = $this->getData();
