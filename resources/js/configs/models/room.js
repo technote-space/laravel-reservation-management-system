@@ -29,7 +29,11 @@ export default {
         {
             text: 'status',
             value: 'status',
-            processor: generator(data => vm.$createElement(Reservation, { props: { roomId: data.id } }, null)),
+            processor: generator(data => vm.$createElement(Reservation, {
+                props: {
+                    roomId: data.id,
+                },
+            }, null)),
         },
     ],
     forms: [

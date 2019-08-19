@@ -6,7 +6,7 @@
         <template v-slot:activator="{ on: { click } }">
             <v-btn
                 icon
-                v-on:click="click"
+                @click="click"
             >
                 <v-icon>mdi-calendar-month</v-icon>
             </v-btn>
@@ -30,17 +30,17 @@
         components: {
             Calendar,
         },
-        data () {
-            return {
-                dialog: false,
-                format: 'YYYY-MM-DD',
-            };
-        },
         props: {
             roomId: {
                 type: Number,
                 required: true,
             },
+        },
+        data () {
+            return {
+                dialog: false,
+                format: 'YYYY-MM-DD',
+            };
         },
         methods: {
             ...mapActions({
