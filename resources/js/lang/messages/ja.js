@@ -67,5 +67,6 @@ export default {
         sales: '売上',
         'monthly_sales': '月別売上',
         'daily_sales': '日別売上',
+        'all_rooms': '全部屋',
     },
 };

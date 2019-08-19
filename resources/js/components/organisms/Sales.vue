@@ -51,6 +51,16 @@
                 type: String,
                 required: true,
             },
+            roomId: {
+                type: [Number, String],
+                required: true,
+            },
+        },
+        watch: {
+            roomId: {
+                handler: 'setup',
+                immediate: true,
+            },
         },
         data () {
             return {
@@ -58,21 +68,24 @@
                 isLoading: false,
             };
         },
-        async mounted () {
-            this.isLoading = true;
-            const { response } = await apiGet('summary', {
-                data: {
-                    'start_date': this.start,
-                    'end_date': this.end,
-                    type: this.type,
-                },
-            });
-            this.isLoading = false;
-            if (response) {
-                this.data = Object.values(arrayToObject(Object.keys(response.data), {
-                    getItem: key => ({ label: key, value: response.data[ key ] }),
-                }));
-            }
+        methods: {
+            async setup () {
+                this.isLoading = true;
+                const { response } = await apiGet('summary', {
+                    data: {
+                        'start_date': this.start,
+                        'end_date': this.end,
+                        type: this.type,
+                        'room_id': this.roomId,
+                    },
+                });
+                this.isLoading = false;
+                if (response) {
+                    this.data = Object.values(arrayToObject(Object.keys(response.data), {
+                        getItem: key => ({ label: key, value: response.data[ key ] }),
+                    }));
+                }
+            },
         },
     };
 </script>

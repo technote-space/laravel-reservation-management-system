@@ -201,7 +201,7 @@ export const destroy = async (context, { model, id, check = true }) => {
         return false;
     }
 
-    const { error } =  await access(context, store.getters[ 'crud/getDeleteMethod' ], 'delete', store.getters[ 'crud/getDeleteEntryPoint' ], async () => {
+    const { error } = await access(context, store.getters[ 'crud/getDeleteMethod' ], 'delete', store.getters[ 'crud/getDeleteEntryPoint' ], async () => {
         addSuccessToasted(i18n.t('messages.succeeded.delete'));
         context.commit(CLEAR_CACHE, id);
         await refreshList(context);
@@ -217,6 +217,9 @@ export const destroy = async (context, { model, id, check = true }) => {
  * @returns {Promise<Array>}
  */
 export const search = async (context, { model, query }) => {
+    if ('object' !== typeof query) {
+        query = {};
+    }
     if (!('count' in query)) {
         query.count = 0;
     }

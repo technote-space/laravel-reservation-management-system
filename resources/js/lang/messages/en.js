@@ -67,5 +67,6 @@ export default {
         sales: 'Sales',
         'monthly_sales': 'Monthly sales',
         'daily_sales': 'Daily sales',
+        'all_rooms': 'All rooms',
     },
 };
