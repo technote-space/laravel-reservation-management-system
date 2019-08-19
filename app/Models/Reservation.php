@@ -359,7 +359,8 @@ class Reservation extends Model implements CrudableContract, SearchableContract
             return false;
         }
 
-        if (Setting::getSetting('max_day') <= Carbon::parse($endDate)->diffInDays(Carbon::parse($startDate))) {
+        $maxDay = Setting::getSetting('max_day');
+        if ($maxDay > 0 && $maxDay <= Carbon::parse($endDate)->diffInDays(Carbon::parse($startDate))) {
             return false;
         }
 

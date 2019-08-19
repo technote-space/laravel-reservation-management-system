@@ -84,15 +84,18 @@ class ReservationTest extends BaseTestCase
         Reservation::setNow(null);
     }
 
-    public function testIsTermValid()
+    public function testIsTermValid1()
     {
         Reservation::all()->each(function ($row) {
             /** @var Model $row */
             $row->delete();
         });
-        static::runSeed([
-            '--class' => 'SettingTableSeeder',
+        Setting::create([
+            'key'   => 'max_day',
+            'value' => '4',
+            'type'  => 'int',
         ]);
+        Setting::clearCache();
 
         $day1 = now()->format('Y-m-d');
         $day2 = now()->addDay()->format('Y-m-d');
@@ -113,6 +116,37 @@ class ReservationTest extends BaseTestCase
 
         $this->assertTrue(Reservation::isTermValid(null, $day1));
         $this->assertTrue(Reservation::isTermValid($day1, null));
+    }
+
+    public function testIsTermValid2()
+    {
+        Reservation::all()->each(function ($row) {
+            /** @var Model $row */
+            $row->delete();
+        });
+        Setting::create([
+            'key'   => 'max_day',
+            'value' => '0',
+            'type'  => 'int',
+        ]);
+        Setting::clearCache();
+
+        $day1 = now()->format('Y-m-d');
+        $day2 = now()->addDay()->format('Y-m-d');
+        $day3 = now()->addDays(2)->format('Y-m-d');
+        $day4 = now()->addDays(3)->format('Y-m-d');
+        $day5 = now()->addDays(4)->format('Y-m-d');
+        factory(Reservation::class)->create([
+            'guest_id'   => self::$guest->id,
+            'room_id'    => self::$room->id,
+            'start_date' => $day3,
+            'end_date'   => $day4,
+        ]);
+
+        $this->assertTrue(Reservation::isTermValid($day1, $day1));
+        $this->assertTrue(Reservation::isTermValid($day1, $day4));
+        $this->assertTrue(Reservation::isTermValid($day1, $day5));
+        $this->assertFalse(Reservation::isTermValid($day2, $day1));
     }
 
     public function testIsReservationAvailable()
@@ -167,12 +201,12 @@ class ReservationTest extends BaseTestCase
             $row->delete();
         });
 
-        $day1 = now()->format('Y-m-d');
-        $day2 = now()->addDay()->format('Y-m-d');
-        $day3 = now()->addDays(2)->format('Y-m-d');
-        $day4 = now()->addDays(3)->format('Y-m-d');
-        $day5 = now()->addDays(4)->format('Y-m-d');
-        $day6 = now()->addDays(5)->format('Y-m-d');
+        $day1        = now()->format('Y-m-d');
+        $day2        = now()->addDay()->format('Y-m-d');
+        $day3        = now()->addDays(2)->format('Y-m-d');
+        $day4        = now()->addDays(3)->format('Y-m-d');
+        $day5        = now()->addDays(4)->format('Y-m-d');
+        $day6        = now()->addDays(5)->format('Y-m-d');
         $reservation = factory(Reservation::class)->create([
             'guest_id'   => self::$guest->id,
             'room_id'    => self::$room->id,

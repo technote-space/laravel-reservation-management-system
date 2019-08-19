@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use App\Models\Guest;
 use App\Models\GuestDetail;
 use App\Models\Room;
+use App\Models\Setting;
 use Faker\Factory;
 use Faker\Generator;
 use Illuminate\Support\Collection;
@@ -125,7 +126,7 @@ class ReservationApiTest extends BaseTestCase
                  ]);
     }
 
-    public function testStore()
+    public function testStore1()
     {
         $guest = factory(Guest::class)->create();
         factory(GuestDetail::class)->create([
@@ -161,6 +162,34 @@ class ReservationApiTest extends BaseTestCase
                      'end_date_str'   => $end,
                  ]);
         $this->assertTrue(Reservation::where('number', 2)->exists());
+    }
+
+    public function testStore2()
+    {
+        $guest = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => $guest->id,
+        ]);
+        $room     = factory(Room::class)->create();
+        $response = $this->actingAs($this->admin)->json(
+            'POST',
+            route('reservations.store'),
+            [
+                'reservations' => [
+                    'guest_id'   => $guest->id,
+                    'room_id'    => $room->id,
+                    'number'     => 1,
+                    'start_date' => now()->format('Y-m-d'),
+                    'end_date'   => now()->addDays(5)->format('Y-m-d'),
+                ],
+            ]
+        );
+        $response->assertStatus(201)
+                 ->assertJsonFragment([
+                     'guest_id' => $guest->id,
+                     'room_id'  => $room->id,
+                     'number'   => 1,
+                 ]);
     }
 
     public function testFailStore1()
@@ -277,6 +306,11 @@ class ReservationApiTest extends BaseTestCase
 
     public function testFailStore3()
     {
+        Setting::updateOrCreate([
+            'key' => 'max_day',
+        ], [
+            'value' => 4,
+        ]);
         $guest = factory(Guest::class)->create();
         factory(GuestDetail::class)->create([
             'guest_id' => $guest->id,
