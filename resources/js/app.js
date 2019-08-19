@@ -15,7 +15,7 @@ import App from './components/App';
 Vue.config.devtools = IS_STRICT;
 Vue.config.productionTip = false;
 
-new Vue({
+export default new Vue({
     el: '#app',
     store,
     router,

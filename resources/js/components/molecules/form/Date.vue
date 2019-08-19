@@ -146,7 +146,7 @@
                     start: start.format(this.format),
                     end: end.format(this.format),
                     allDay: true,
-                    color: '#ec6',
+                    color: '#a99',
                     textColor: 'black',
                     rendering: 'background',
                 };
@@ -203,19 +203,3 @@
         },
     };
 </script>
-
-<style lang='scss'>
-
-    @import '~@fullcalendar/core/main.css';
-    @import '~@fullcalendar/daygrid/main.css';
-
-    .fc {
-        background-color: white;
-        padding: 1em;
-
-        .fc-content {
-            text-align: center;
-        }
-    }
-
-</style>
