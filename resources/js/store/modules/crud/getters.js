@@ -1,7 +1,7 @@
 import { get, set } from 'lodash';
 import { STATE_MODE_TARGET, STATE_MODE_CURRENT } from './constant';
 import { getModelListRouter } from '../../../utils/crud';
-import store from '../../../store';
+import store from '../../index';
 
 const getMode = (state, mode) => state[ mode ];
 export const getModel = (state, mode) => getMode(state, mode).model;

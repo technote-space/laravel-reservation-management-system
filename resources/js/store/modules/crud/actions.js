@@ -2,7 +2,7 @@ import VueScrollTo from 'vue-scrollto';
 import { SET_MODEL, SET_PAGE, SET_ID, SET_RESPONSE, ON_REQUIRED_REFRESH, CLEAR_CACHE } from './constant';
 import { apiAccess } from '../../../utils/api';
 import { addErrorToasted, addSuccessToasted } from '../../../utils/toasted';
-import store from '../../../store';
+import store from '../../index';
 import i18n from '../../../plugins/i18n';
 
 const startLoading = (context, name) => {
