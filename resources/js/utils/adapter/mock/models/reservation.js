@@ -4,12 +4,13 @@ import guest from './guest';
 import room from './room';
 import detail from './reservation-detail';
 
-export default item => {
+export default (item, relation = true) => {
     const endDate = moment(item.end_date).add(1, 'days').format('YYYY-MM-DD');
     const checkInTime = store.getters[ 'adapter/getSetting' ]('check_in');
     const checkOutTime = store.getters[ 'adapter/getSetting' ]('check_out');
     const days = moment(item.end_date).diff(moment(item.start_date), 'days') + 1;
-    const roomData = room(store.getters[ 'adapter/search' ]('rooms', room => room.id === item.room_id));
+    const roomRaw = store.getters[ 'adapter/search' ]('rooms', room => room.id === item.room_id);
+    const roomData = relation ? room(roomRaw) : roomRaw;
     return Object.assign({}, item, {
         detail: detail(store.getters[ 'adapter/search' ]('reservationDetails', detail => detail.reservation_id === item.id)),
         guest: guest(store.getters[ 'adapter/search' ]('guests', guest => guest.id === item.guest_id)),
