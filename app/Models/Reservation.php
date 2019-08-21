@@ -110,10 +110,10 @@ class Reservation extends Model implements CrudableContract, SearchableContract
         self::updating(function ($model) {
             /** @var Reservation $model */
             if ($model->isDirty('guest_id')) {
-                $model->detail->copyGuestData($model->guest);
+                $model->detail->copyGuestData(Guest::find($model->guest_id));
             }
             if ($model->isDirty('room_id')) {
-                $model->detail->copyRoomData($model->room);
+                $model->detail->copyRoomData(Room::find($model->room_id));
             }
             $model->detail->save();
         });
