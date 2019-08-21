@@ -91,11 +91,6 @@ class RoomApiTest extends BaseTestCase
                      'name'   => $room->name,
                      'number' => $room->number,
                      'price'  => $room->price,
-                 ])
-                 ->assertJsonStructure([
-                     'latest_reservation',
-                     'latest_usage',
-                     'recent_usages',
                  ]);
     }
 

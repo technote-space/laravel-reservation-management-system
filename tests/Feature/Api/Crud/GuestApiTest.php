@@ -101,11 +101,6 @@ class GuestApiTest extends BaseTestCase
         $response->assertStatus(200)
                  ->assertJsonFragment([
                      'name' => $guest->detail->name,
-                 ])
-                 ->assertJsonStructure([
-                     'latest_reservation',
-                     'latest_usage',
-                     'recent_usages',
                  ]);
     }
 
