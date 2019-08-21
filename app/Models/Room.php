@@ -42,6 +42,7 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @property-read Reservation $latestReservation
  * @property-read Collection|Reservation[] $recentUsages
  * @property-read Reservation $latestUsage
+ * @property-read Collection|Reservation[] $lastYearUsages
  * @mixin Eloquent
  * @mixin Builder
  */
@@ -69,6 +70,7 @@ class Room extends Model implements CrudableContract, SearchableContract
      */
     protected $appends = [
         'is_reserved',
+        'total_sales',
     ];
 
     /**
@@ -76,6 +78,7 @@ class Room extends Model implements CrudableContract, SearchableContract
      */
     protected $hidden = [
         'reservations',
+        'lastYearUsages',
     ];
 
     /**
@@ -83,6 +86,7 @@ class Room extends Model implements CrudableContract, SearchableContract
      */
     protected $with = [
         'reservations',
+        'lastYearUsages',
     ];
 
     /**
@@ -166,6 +170,14 @@ class Room extends Model implements CrudableContract, SearchableContract
     }
 
     /**
+     * @return HasMany
+     */
+    public function lastYearUsages(): HasMany
+    {
+        return $this->reservations()->whereDate('start_date', '>=', now()->subYear())->whereDate('start_date', '<', now());
+    }
+
+    /**
      * @return bool
      * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
@@ -177,5 +189,16 @@ class Room extends Model implements CrudableContract, SearchableContract
                 return ! $row->is_present;
             }
         );
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalSalesAttribute(): int
+    {
+        return $this->lastYearUsages->sum(function ($row) {
+            /** @var Reservation $row */
+            return $row->detail->payment;
+        });
     }
 }
