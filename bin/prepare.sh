@@ -25,7 +25,14 @@ else
   echo ""
   echo ">> Setup"
   if [[ -z "${NO_COMPOSER}" ]]; then
+    rm -f .env
+    cp .env.travis .env
+    ls -la .env
+
     composer install --no-interaction --prefer-dist --no-suggest
+
+    php artisan key:generate
+    php artisan config:cache
   fi
   if [[ -z "${NO_NPM}" ]]; then
     yarn install
@@ -33,12 +40,6 @@ else
 fi
 
 if [[ "${TRAVIS_BUILD_STAGE_NAME}" == "Test" ]] && [[ -z "${NO_COMPOSER}" ]]; then
-  rm -f .env
-  cp .env.travis .env
-  ls -la .env
-  php artisan key:generate
-  php artisan config:cache
-
   if [[ -z "${NO_NPM}" ]]; then
     echo ""
     echo ">> Build JS"

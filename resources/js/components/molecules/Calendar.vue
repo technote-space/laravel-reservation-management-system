@@ -1,15 +1,15 @@
 <template>
     <FullCalendar
         ref="calendar"
-        default-view="dayGridMonth"
         :plugins="calendarPlugins"
         :locale="locale"
         :event-sources="eventSources"
         :valid-range="validRange"
         :default-date="defaultDate"
         :time-zone="timezone"
-        height="parent"
         @dateClick="dateClick"
+        default-view="dayGridMonth"
+        height="parent"
     />
 </template>
 
@@ -30,7 +30,7 @@
         props: {
             value: {
                 type: String,
-                required: true,
+                default: () => '',
             },
             eventCallback: {
                 type: Function,
@@ -38,7 +38,7 @@
             },
             dateClicked: {
                 type: Function,
-                required: true,
+                default: () => () => {},
             },
             resetCalendarCallback: {
                 type: Function,
@@ -103,3 +103,19 @@
         },
     };
 </script>
+
+<style lang='scss'>
+
+    @import '~@fullcalendar/core/main.css';
+    @import '~@fullcalendar/daygrid/main.css';
+
+    .fc {
+        background-color: white;
+        padding: 1em;
+
+        .fc-content {
+            text-align: center;
+        }
+    }
+
+</style>

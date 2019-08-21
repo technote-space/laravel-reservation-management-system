@@ -25,7 +25,7 @@
         "@fullcalendar/interaction": "^4.3.0",
         "@fullcalendar/moment-timezone": "^4.3.0",
         "@fullcalendar/vue": "^4.3.1",
-        "@mdi/font": "^4.0.96",
+        "@mdi/font": "^4.1.95",
         "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
         "@vue/babel-plugin-transform-vue-jsx": "^1.0.0",
         "axios": "^0.19",
@@ -59,12 +59,13 @@
         "vue-scrollto": "^2.15.0",
         "vue-template-compiler": "^2.6.10",
         "vue-toasted": "^1.1.27",
-        "vuetify": "^2.0.7",
+        "vuetify": "^2.0.9",
         "vuex": "^3.1.1",
         "webpack-cli": "^3.3.7"
     },
     "devDependencies": {
         "@vue/test-utils": "^1.0.0-beta.29",
+        "babel-eslint": "^10.0.2",
         "babel-jest": "^24.9.0",
         "coveralls": "^3.0.6",
         "eslint": "^6.2.1",
@@ -77,6 +78,7 @@
         "stylelint-config-standard": "^18.3.0",
         "stylelint-order": "^3.0.1",
         "stylelint-scss": "^3.9.4",
+        "vue-eslint-parser": "^6.0.4",
         "vue-jest": "^3.0.4",
         "vue-server-renderer": "^2.6.10"
     }

@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Models;
 
 use App\Models\Guest;
+use App\Models\GuestDetail;
 use App\Models\Reservation;
+use App\Models\ReservationDetail;
 use App\Models\Room;
 use App\Models\Setting;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +27,9 @@ class ReservationTest extends BaseTestCase
     /** @var Reservation $reservation */
     protected static $reservation;
 
+    /** @var ReservationDetail $detail */
+    protected static $detail;
+
     /** @var Guest $guest */
     protected static $guest;
 
@@ -33,12 +38,26 @@ class ReservationTest extends BaseTestCase
 
     protected static function seeder(): void
     {
-        self::$guest       = factory(Guest::class)->create();
+        self::$guest = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => self::$guest->id,
+        ]);
         self::$room        = factory(Room::class)->create();
         self::$reservation = factory(Reservation::class)->create([
             'guest_id' => self::$guest->id,
             'room_id'  => self::$room->id,
         ]);
+        self::$detail      = factory(ReservationDetail::class)->create([
+            'reservation_id' => self::$reservation->id,
+            'payment'        => self::$reservation->room->price,
+        ]);
+    }
+
+    public function hasOneDataProvider(): array
+    {
+        return [
+            [ReservationDetail::class, 'detail'],
+        ];
     }
 
     public function belongToDataProvider(): array
@@ -84,15 +103,18 @@ class ReservationTest extends BaseTestCase
         Reservation::setNow(null);
     }
 
-    public function testIsTermValid()
+    public function testIsTermValid1()
     {
         Reservation::all()->each(function ($row) {
             /** @var Model $row */
             $row->delete();
         });
-        static::runSeed([
-            '--class' => 'SettingTableSeeder',
+        Setting::create([
+            'key'   => 'max_day',
+            'value' => '4',
+            'type'  => 'int',
         ]);
+        Setting::clearCache();
 
         $day1 = now()->format('Y-m-d');
         $day2 = now()->addDay()->format('Y-m-d');
@@ -113,6 +135,37 @@ class ReservationTest extends BaseTestCase
 
         $this->assertTrue(Reservation::isTermValid(null, $day1));
         $this->assertTrue(Reservation::isTermValid($day1, null));
+    }
+
+    public function testIsTermValid2()
+    {
+        Reservation::all()->each(function ($row) {
+            /** @var Model $row */
+            $row->delete();
+        });
+        Setting::create([
+            'key'   => 'max_day',
+            'value' => '0',
+            'type'  => 'int',
+        ]);
+        Setting::clearCache();
+
+        $day1 = now()->format('Y-m-d');
+        $day2 = now()->addDay()->format('Y-m-d');
+        $day3 = now()->addDays(2)->format('Y-m-d');
+        $day4 = now()->addDays(3)->format('Y-m-d');
+        $day5 = now()->addDays(4)->format('Y-m-d');
+        factory(Reservation::class)->create([
+            'guest_id'   => self::$guest->id,
+            'room_id'    => self::$room->id,
+            'start_date' => $day3,
+            'end_date'   => $day4,
+        ]);
+
+        $this->assertTrue(Reservation::isTermValid($day1, $day1));
+        $this->assertTrue(Reservation::isTermValid($day1, $day4));
+        $this->assertTrue(Reservation::isTermValid($day1, $day5));
+        $this->assertFalse(Reservation::isTermValid($day2, $day1));
     }
 
     public function testIsReservationAvailable()
@@ -167,12 +220,12 @@ class ReservationTest extends BaseTestCase
             $row->delete();
         });
 
-        $day1 = now()->format('Y-m-d');
-        $day2 = now()->addDay()->format('Y-m-d');
-        $day3 = now()->addDays(2)->format('Y-m-d');
-        $day4 = now()->addDays(3)->format('Y-m-d');
-        $day5 = now()->addDays(4)->format('Y-m-d');
-        $day6 = now()->addDays(5)->format('Y-m-d');
+        $day1        = now()->format('Y-m-d');
+        $day2        = now()->addDay()->format('Y-m-d');
+        $day3        = now()->addDays(2)->format('Y-m-d');
+        $day4        = now()->addDays(3)->format('Y-m-d');
+        $day5        = now()->addDays(4)->format('Y-m-d');
+        $day6        = now()->addDays(5)->format('Y-m-d');
         $reservation = factory(Reservation::class)->create([
             'guest_id'   => self::$guest->id,
             'room_id'    => self::$room->id,

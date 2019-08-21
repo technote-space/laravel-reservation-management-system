@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace Tests\Browser;
 
-use App\Models\Admin;
-use Illuminate\Support\Facades\Hash;
 use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
 use Throwable;

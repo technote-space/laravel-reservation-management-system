@@ -13,43 +13,27 @@ use Illuminate\Validation\Validator;
  */
 class CustomValidator extends Validator
 {
-    /**
-     * @param $attribute
-     * @param $value
-     * @param $parameters
-     *
-     * @return bool
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function validateKatakana(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
-    {
-        return (bool) preg_match('/^[ァ-ヾ 　〜ー−]+$/u', $value);
-    }
+    /** @var array $reservation */
+    private $reservation = [];
 
     /**
-     * @param $attribute
-     * @param $value
-     * @param $parameters
-     *
-     * @return bool
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @return array
      */
-    public function validateZipCode(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
+    private function getReservation()
     {
-        return (bool) preg_match('/^\d{3}-\d{4}$|^\d{3}-\d{2}$|^\d{3}$|^\d{5}$|^\d{7}$/u', $value);
-    }
+        $reservationId = request()->route('reservation');
+        if (! array_key_exists($reservationId, $this->reservation)) {
+            $this->reservation[$reservationId] = $reservationId ? Reservation::findOrFail($reservationId) : null;
+        }
 
-    /**
-     * @param $attribute
-     * @param $value
-     * @param $parameters
-     *
-     * @return bool
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    public function validatePhone(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
-    {
-        return (bool) preg_match('/^\d{2,4}-?\d{2,4}-?\d{3,4}$/u', $value);
+        $reservation = $this->reservation[$reservationId];
+        if ($reservation) {
+            $reservationId -= 0;
+        } else {
+            $reservationId = null;
+        }
+
+        return [$reservation, $reservationId];
     }
 
     /**
@@ -62,8 +46,7 @@ class CustomValidator extends Validator
      */
     public function validateReservationTerm(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
-        $reservationId = request()->route('reservation');
-        $reservation   = $reservationId ? Reservation::find($reservationId) : null;
+        list($reservation) = $this->getReservation();
         if ($reservation) {
             $data      = $this->getData();
             $startDate = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
@@ -86,19 +69,16 @@ class CustomValidator extends Validator
      */
     public function validateReservationAvailability(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
-        $reservationId = request()->route('reservation');
-        $reservation   = $reservationId ? Reservation::find($reservationId) : null;
+        list($reservation, $reservationId) = $this->getReservation();
         if ($reservation) {
-            $reservationId -= 0;
-            $data          = $this->getData();
-            $roomId        = Arr::get($data, 'reservations.room_id', $reservation->room_id);
-            $startDate     = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
-            $endDate       = Arr::get($data, 'reservations.end_date', $reservation->end_date_str);
+            $data      = $this->getData();
+            $roomId    = Arr::get($data, 'reservations.room_id', $reservation->room_id);
+            $startDate = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
+            $endDate   = Arr::get($data, 'reservations.end_date', $reservation->end_date_str);
         } else {
-            $reservationId = null;
-            $roomId        = $this->getValue('reservations.room_id');
-            $startDate     = $this->getValue('reservations.start_date');
-            $endDate       = $this->getValue('reservations.end_date');
+            $roomId    = $this->getValue('reservations.room_id');
+            $startDate = $this->getValue('reservations.start_date');
+            $endDate   = $this->getValue('reservations.end_date');
         }
 
         return Reservation::isReservationAvailable($reservationId, $roomId, $startDate, $endDate);
@@ -114,19 +94,16 @@ class CustomValidator extends Validator
      */
     public function validateReservationDuplicate(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
-        $reservationId = request()->route('reservation');
-        $reservation   = $reservationId ? Reservation::find($reservationId) : null;
+        list($reservation, $reservationId) = $this->getReservation();
         if ($reservation) {
-            $reservationId -= 0;
-            $data          = $this->getData();
-            $guestId       = Arr::get($data, 'reservations.guest_id', $reservation->guest_id);
-            $startDate     = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
-            $endDate       = Arr::get($data, 'reservations.end_date', $reservation->end_date_str);
+            $data      = $this->getData();
+            $guestId   = Arr::get($data, 'reservations.guest_id', $reservation->guest_id);
+            $startDate = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
+            $endDate   = Arr::get($data, 'reservations.end_date', $reservation->end_date_str);
         } else {
-            $reservationId = null;
-            $guestId       = $this->getValue('reservations.guest_id');
-            $startDate     = $this->getValue('reservations.start_date');
-            $endDate       = $this->getValue('reservations.end_date');
+            $guestId   = $this->getValue('reservations.guest_id');
+            $startDate = $this->getValue('reservations.start_date');
+            $endDate   = $this->getValue('reservations.end_date');
         }
 
         return Reservation::isNotDuplicated($reservationId, $guestId, $startDate, $endDate);

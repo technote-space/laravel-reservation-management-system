@@ -5,9 +5,9 @@
         z-index="1000"
     >
         <v-progress-circular
+            :color="progressColor"
             indeterminate
             size="64"
-            :color="progressColor"
         />
         <div
             v-if="message"

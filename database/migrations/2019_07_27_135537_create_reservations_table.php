@@ -19,7 +19,6 @@ class CreateReservationsTable extends Migration
             $table->unsignedBigInteger('room_id')->nullable(false)->comment(__('database.reservations.room_id'));
             $table->date('start_date')->nullable(false)->comment(__('database.reservations.start_date'));
             $table->date('end_date')->nullable(false)->comment(__('database.reservations.end_date'));
-            $table->unsignedSmallInteger('number')->nullable(false)->comment(__('database.reservations.number'));
             $table->timestamps();
 
             $table->foreign('guest_id')->references('id')->on('guests')->onUpdate('cascade')->onDelete('cascade');

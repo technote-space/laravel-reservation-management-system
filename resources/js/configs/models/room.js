@@ -1,4 +1,6 @@
-import { number, price } from '../../utils/processor';
+import vm from '../../app';
+import { number, price, generator } from '../../utils/processor';
+import Reservation from '../../components/organisms/Reservation';
 
 export default {
     slug: 'rooms',
@@ -23,6 +25,20 @@ export default {
             text: 'price',
             value: 'price',
             processor: price,
+        },
+        {
+            text: 'last_year_sales',
+            value: 'total_sales',
+            processor: price,
+        },
+        {
+            text: 'status',
+            value: 'status',
+            processor: generator(data => vm.$createElement(Reservation, {
+                props: {
+                    roomId: data.id,
+                },
+            }, null)),
         },
     ],
     forms: [

@@ -1,11 +1,13 @@
-import { pick } from 'lodash';
+import { pick, max, camelCase, map } from 'lodash';
 import { arrayToObject } from '../../../../../utils/misc';
+import store from '../../../../index';
 
 const moment = require('moment');
 const ids = {};
 const getId = model => {
+    model = camelCase(model) + 's';
     if (!(model in ids)) {
-        ids[ model ] = 1;
+        ids[ model ] = store ? max(map(Object.keys(store.getters[ 'adapter/getAll' ](model)).concat(['0']), str => parseInt(str, 10))) + 1 : 1;
     }
     return ids[ model ]++;
 };

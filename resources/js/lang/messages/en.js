@@ -17,6 +17,9 @@ export default {
         email: 'E-Mail',
         password: 'Password',
         price: 'Price',
+        'last_year_sales': 'The last year\'s sales',
+        charge: 'Charge',
+        payment: 'Payment',
         number: 'Number',
         'max_number': 'Max Number',
         'zip_code': 'ZIP Code',
@@ -29,6 +32,7 @@ export default {
         actions: 'Actions',
         guest: 'Guest',
         room: 'Room',
+        status: 'Reservation status',
     },
     loading: {},
     messages: {
@@ -66,5 +70,6 @@ export default {
         sales: 'Sales',
         'monthly_sales': 'Monthly sales',
         'daily_sales': 'Daily sales',
+        'all_rooms': 'All rooms',
     },
 };

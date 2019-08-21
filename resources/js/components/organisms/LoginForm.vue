@@ -1,7 +1,7 @@
 <template>
     <v-form
-        class="text-center"
         @submit.prevent="login"
+        class="text-center"
     >
         <v-text-field
             v-model="loginForm.email"
@@ -19,12 +19,12 @@
             :append-icon="passwordIcon"
             :type="passwordType"
             :label="$t('validations.attributes.password')"
+            :hint="$t('messages.password_hint', {min: 8})"
+            @click:append="passwordVisibility = !passwordVisibility"
             data-vv-name="password"
             data-vv-validate-on="blur"
-            :hint="$t('messages.password_hint', {min: 8})"
             counter
             required
-            @click:append="passwordVisibility = !passwordVisibility"
         />
         <v-btn
             class="mt-4"

@@ -23,16 +23,20 @@ class SummaryService
     public function getSummary(array $conditions)
     {
         $summary = $this->initSummary($conditions);
-        Reservation::join('rooms', 'reservations.room_id', 'rooms.id')
-                   ->whereDate('reservations.start_date', '>=', $conditions['start_date'])
-                   ->whereDate('reservations.start_date', '<', $conditions['end_date'])
-                   ->select('reservations.start_date', 'reservations.end_date', 'rooms.price')
-                   ->orderBy('reservations.id')
-                   ->chunk(1000, function (Collection $records) use ($conditions, &$summary) {
-                       $records->each(function ($record) use ($conditions, &$summary) {
-                           $summary[$this->getKey($conditions, $record)] += $this->getPrice($record);
-                       });
-                   });
+        $builder = Reservation::query()
+                              ->with('detail')
+                              ->whereDate('start_date', '>=', $conditions['start_date'])
+                              ->whereDate('start_date', '<', $conditions['end_date']);
+
+        if (! empty($conditions['room_id'])) {
+            $builder->where('room_id', $conditions['room_id']);
+        }
+
+        $builder->chunk(1000, function (Collection $records) use ($conditions, &$summary) {
+            $records->each(function (Reservation $record) use ($conditions, &$summary) {
+                $summary[$this->getKey($conditions, $record)] += $record->detail->payment ?? 0;
+            });
+        });
 
         return $summary;
     }
@@ -72,7 +76,7 @@ class SummaryService
      */
     private function getKey(array $conditions, Reservation $record)
     {
-        return $record['start_date']->format($this->getFormat($conditions));
+        return $record->start_date->format($this->getFormat($conditions));
     }
 
     /**
@@ -87,25 +91,5 @@ class SummaryService
         }
 
         return 'Y-m';
-    }
-
-    /**
-     * @param  ArrayAccess  $record
-     *
-     * @return int
-     */
-    private function getPrice(ArrayAccess $record)
-    {
-        return $record['price'] * $this->getDays($record);
-    }
-
-    /**
-     * @param  ArrayAccess  $record
-     *
-     * @return int
-     */
-    private function getDays(ArrayAccess $record)
-    {
-        return Carbon::parse($record['start_date'])->diffInDays(Carbon::parse($record['end_date'])) + 1;
     }
 }

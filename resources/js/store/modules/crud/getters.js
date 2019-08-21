@@ -1,7 +1,7 @@
 import { get, set } from 'lodash';
 import { STATE_MODE_TARGET, STATE_MODE_CURRENT } from './constant';
 import { getModelListRouter } from '../../../utils/crud';
-import store from '../../../store';
+import store from '../../index';
 
 const getMode = (state, mode) => state[ mode ];
 export const getModel = (state, mode) => getMode(state, mode).model;
@@ -23,7 +23,7 @@ const process = (headers, data) => {
             return;
         }
         if (headers[ key ].processor && 'function' === typeof headers[ key ].processor) {
-            set(target, path, headers[ key ].processor(get(data, path)));
+            set(target, path, headers[ key ].processor(get(data, path), path, data));
         } else {
             set(target, path, get(data, path));
         }

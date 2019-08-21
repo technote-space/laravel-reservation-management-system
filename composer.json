@@ -24,7 +24,9 @@
         "fzaninotto/faker": "^1.4",
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
-        "staudenmeir/eloquent-eager-limit": "^1.0"
+        "staudenmeir/eloquent-eager-limit": "^1.0",
+        "technote/laravel-crud-helper": "^0.0.6",
+        "technote/laravel-search-helper": "^0.0.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
@@ -47,13 +49,6 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "process-timeout": 1200
-    },
-    "extra": {
-        "laravel": {
-            "dont-discover": [
-                "laravel/dusk"
-            ]
-        }
     },
     "autoload": {
         "psr-4": {

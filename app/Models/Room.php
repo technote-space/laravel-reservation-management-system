@@ -4,16 +4,20 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Helpers\Traits\TimeHelper;
-use App\Models\Traits\Searchable;
-use App\Models\Contracts\Searchable as SearchableContract;
+use Doctrine\DBAL\Schema\Column;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
+use Technote\CrudHelper\Models\Contracts\Crudable as CrudableContract;
+use Technote\CrudHelper\Models\Traits\Crudable;
+use Technote\SearchHelper\Models\Contracts\Searchable as SearchableContract;
+use Technote\SearchHelper\Models\Traits\Searchable;
 
 /**
  * App\Models\Room
@@ -38,12 +42,13 @@ use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
  * @property-read Reservation $latestReservation
  * @property-read Collection|Reservation[] $recentUsages
  * @property-read Reservation $latestUsage
+ * @property-read Collection|Reservation[] $lastYearUsages
  * @mixin Eloquent
  * @mixin Builder
  */
-class Room extends Model implements SearchableContract
+class Room extends Model implements CrudableContract, SearchableContract
 {
-    use HasEagerLimit, TimeHelper, Searchable;
+    use HasEagerLimit, TimeHelper, Crudable, Searchable;
 
     /**
      * @var array
@@ -65,6 +70,7 @@ class Room extends Model implements SearchableContract
      */
     protected $appends = [
         'is_reserved',
+        'total_sales',
     ];
 
     /**
@@ -72,6 +78,7 @@ class Room extends Model implements SearchableContract
      */
     protected $hidden = [
         'reservations',
+        'lastYearUsages',
     ];
 
     /**
@@ -79,6 +86,7 @@ class Room extends Model implements SearchableContract
      */
     protected $with = [
         'reservations',
+        'lastYearUsages',
     ];
 
     /**
@@ -90,7 +98,7 @@ class Room extends Model implements SearchableContract
      * @param  Builder  $query
      * @param  array  $conditions
      */
-    protected function setConditions(Builder $query, array $conditions)
+    protected static function setConditions(Builder $query, array $conditions)
     {
         if (! empty($conditions['s'])) {
             collect($conditions['s'])->each(function ($search) use ($query) {
@@ -102,7 +110,7 @@ class Room extends Model implements SearchableContract
     /**
      * @return array
      */
-    protected function getOrderBy(): array
+    protected static function getSearchOrderBy(): array
     {
         return [
             'rooms.id' => 'desc',
@@ -110,11 +118,31 @@ class Room extends Model implements SearchableContract
     }
 
     /**
+     * @param  array  $rules
+     * @param  string  $name
+     * @param  Column  $column
+     * @param  bool  $isUpdate
+     * @param  int|null  $primaryId
+     * @param  FormRequest  $request
+     *
+     * @return array
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    public static function filterCrudRules(/** @noinspection PhpUnusedParameterInspection */ array $rules, string $name, Column $column, bool $isUpdate, ?int $primaryId, FormRequest $request): array
+    {
+        if ('rooms.number' === $name) {
+            $rules[] = 'min:1';
+        }
+
+        return $rules;
+    }
+
+    /**
      * @return HasMany
      */
     public function reservations(): HasMany
     {
-        return $this->hasMany(Reservation::class);
+        return $this->hasMany(Reservation::class)->without('room');
     }
 
     /**
@@ -130,7 +158,7 @@ class Room extends Model implements SearchableContract
      */
     public function latestUsage(): HasOne
     {
-        return $this->hasOne(Reservation::class)->where('start_date', '<=', $this->getCheckInThresholdDay()->format('Y-m-d'))->latest('start_date')->limit(1);
+        return $this->hasOne(Reservation::class)->whereDate('start_date', '<=', $this->getCheckInThresholdDay())->latest('start_date')->limit(1);
     }
 
     /**
@@ -138,7 +166,15 @@ class Room extends Model implements SearchableContract
      */
     public function recentUsages(): HasMany
     {
-        return $this->reservations()->where('start_date', '<=', $this->getCheckInThresholdDay()->format('Y-m-d'))->latest('start_date')->limit(5);
+        return $this->reservations()->whereDate('start_date', '<=', $this->getCheckInThresholdDay())->latest('start_date')->limit(5);
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function lastYearUsages(): HasMany
+    {
+        return $this->reservations()->whereDate('start_date', '>=', now()->subYear())->whereDate('start_date', '<', now());
     }
 
     /**
@@ -153,5 +189,16 @@ class Room extends Model implements SearchableContract
                 return ! $row->is_present;
             }
         );
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalSalesAttribute(): int
+    {
+        return $this->lastYearUsages->sum(function ($row) {
+            /** @var Reservation $row */
+            return $row->detail->payment;
+        });
     }
 }

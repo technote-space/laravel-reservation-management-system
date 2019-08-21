@@ -17,6 +17,9 @@ export default {
         email: 'メールアドレス',
         password: 'パスワード',
         price: '料金',
+        'last_year_sales': '去年の総売上',
+        charge: '請求金額',
+        payment: '支払金額',
         number: '人数',
         'max_number': '最大人数',
         'zip_code': '郵便番号',
@@ -29,6 +32,7 @@ export default {
         actions: 'アクション',
         guest: '利用者',
         room: '部屋',
+        status: '予約状況',
     },
     loading: {},
     messages: {
@@ -66,5 +70,6 @@ export default {
         sales: '売上',
         'monthly_sales': '月別売上',
         'daily_sales': '日別売上',
+        'all_rooms': '全部屋',
     },
 };

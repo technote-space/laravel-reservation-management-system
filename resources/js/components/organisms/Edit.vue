@@ -36,16 +36,16 @@
             <v-card-actions>
                 <v-spacer />
                 <v-btn
+                    @click="close"
                     color="blue darken-1"
                     text
-                    @click="close"
                 >
                     {{ $t('misc.cancel') }}
                 </v-btn>
                 <v-btn
+                    @click="save"
                     color="blue darken-1"
                     text
-                    @click="save"
                 >
                     {{ $t('misc.save') }}
                 </v-btn>

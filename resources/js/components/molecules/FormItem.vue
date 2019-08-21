@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- eslint-disable-next-line vue/require-component-is -->
         <component
             :is="componentIs"
             :form="form"
@@ -20,11 +21,6 @@
     import SearchForm from './form/Search';
 
     export default {
-        components: {
-            TextForm,
-            DateForm,
-            SearchForm,
-        },
         props: {
             detail: {
                 type: Object,
@@ -39,7 +35,7 @@
                 required: true,
             },
             value: {
-                type: [String, Number],
+                validator: prop => null === prop || 'string' === typeof prop || 'number' === typeof prop,
                 required: true,
             },
             validateErrors: {

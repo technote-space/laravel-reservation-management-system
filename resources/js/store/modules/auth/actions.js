@@ -1,6 +1,6 @@
 import { SET_INIT, SET_USER, SET_BACK_TO } from './constant';
 import { apiAccess, refreshRoute } from '../../../utils/api';
-import store from '../../../store';
+import store from '../../index';
 
 /**
  * @param context

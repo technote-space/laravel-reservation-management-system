@@ -28,6 +28,7 @@ class SummaryRequest extends FormRequest
             'start_date' => 'required|filled|date',
             'end_date'   => 'required|filled|date',
             'type'       => 'nullable|string',
+            'room_id'    => 'nullable|integer|exists:rooms,id',
         ];
     }
 
@@ -40,6 +41,7 @@ class SummaryRequest extends FormRequest
             'start_date' => __('request.summary.start_date'),
             'end_date'   => __('request.summary.end_date'),
             'type'       => __('request.summary.type'),
+            'room_id'    => __('request.summary.room_id'),
         ];
     }
 

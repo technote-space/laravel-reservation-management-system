@@ -6,8 +6,8 @@ namespace Tests\Unit\Models;
 use App\Models\Guest;
 use App\Models\GuestDetail;
 use App\Models\Reservation;
+use App\Models\ReservationDetail;
 use App\Models\Room;
-use App\Models\Setting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
@@ -44,6 +44,12 @@ class GuestTest extends BaseTestCase
             'guest_id' => self::$guest->id,
             'room_id'  => $room->id,
         ]);
+        self::$reservations->each(function ($reservation) {
+            ReservationDetail::create([
+                'reservation_id' => $reservation->id,
+                'payment'        => $reservation->room->price,
+            ]);
+        });
     }
 
     public function hasOneDataProvider(): array
