@@ -17,7 +17,7 @@ export default {
         email: 'メールアドレス',
         password: 'パスワード',
         price: '料金',
-        last_year_sales: '去年の総売上',
+        'last_year_sales': '去年の総売上',
         charge: '請求金額',
         payment: '支払金額',
         number: '人数',
