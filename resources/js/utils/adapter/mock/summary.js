@@ -3,7 +3,7 @@ import store from '../../../store';
 import models from './models';
 import { arrayToObject } from '../../misc';
 
-const getPrice = item => item.detail.payment;
+const getPrice = item => item.detail.payment - 0;
 const getBy = type => {
     if ('daily' === type) {
         return 'days';
