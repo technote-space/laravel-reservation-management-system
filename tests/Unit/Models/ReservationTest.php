@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace Tests\Unit\Models;
 
 use App\Models\Guest;
+use App\Models\GuestDetail;
 use App\Models\Reservation;
+use App\Models\ReservationDetail;
 use App\Models\Room;
 use App\Models\Setting;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +27,9 @@ class ReservationTest extends BaseTestCase
     /** @var Reservation $reservation */
     protected static $reservation;
 
+    /** @var ReservationDetail $detail */
+    protected static $detail;
+
     /** @var Guest $guest */
     protected static $guest;
 
@@ -33,12 +38,26 @@ class ReservationTest extends BaseTestCase
 
     protected static function seeder(): void
     {
-        self::$guest       = factory(Guest::class)->create();
+        self::$guest = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => self::$guest->id,
+        ]);
         self::$room        = factory(Room::class)->create();
         self::$reservation = factory(Reservation::class)->create([
             'guest_id' => self::$guest->id,
             'room_id'  => self::$room->id,
         ]);
+        self::$detail      = factory(ReservationDetail::class)->create([
+            'reservation_id' => self::$reservation->id,
+            'payment'        => self::$reservation->room->price,
+        ]);
+    }
+
+    public function hasOneDataProvider(): array
+    {
+        return [
+            [ReservationDetail::class, 'detail'],
+        ];
     }
 
     public function belongToDataProvider(): array

@@ -129,7 +129,7 @@ class GuestApiTest extends BaseTestCase
             ]
         );
 
-        $response->assertStatus(201)
+        $response->assertStatus(200)
                  ->assertJsonStructure([
                      'id',
                      'created_at',

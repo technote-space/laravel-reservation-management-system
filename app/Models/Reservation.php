@@ -9,6 +9,7 @@ use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Carbon;
 use Staudenmeir\EloquentEagerLimit\HasEagerLimit;
@@ -25,11 +26,8 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @property int $room_id 部屋ID
  * @property Carbon $start_date 利用開始日
  * @property Carbon $end_date 利用終了日
- * @property int $number 利用人数
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Guest $guest
- * @property-read Room $room
  * @method static Builder|Reservation newModelQuery()
  * @method static Builder|Reservation newQuery()
  * @method static Builder|Reservation query()
@@ -48,6 +46,11 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @property-read Carbon $end_datetime
  * @property-read string $end_date_str
  * @property-read string $start_date_str
+ * @property-read ReservationDetail $detail
+ * @property-read int $charge
+ * @property-read int $days
+ * @property-read Guest $guest
+ * @property-read Room $room
  * @mixin Eloquent
  * @mixin Builder
  */
@@ -70,7 +73,6 @@ class Reservation extends Model implements CrudableContract, SearchableContract
         'room_id'    => 'int',
         'start_date' => 'date',
         'end_date'   => 'date',
-        'number'     => 'int',
     ];
 
     /**
@@ -84,12 +86,37 @@ class Reservation extends Model implements CrudableContract, SearchableContract
         'is_past',
         'is_present',
         'is_future',
+        'days',
+        'charge',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $with = [
+        'detail',
     ];
 
     /**
      * @var int
      */
     protected $perPage = 10;
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        self::updating(function ($model) {
+            /** @var Reservation $model */
+            if ($model->isDirty('guest_id')) {
+                $model->detail->copyGuestData($model->guest);
+            }
+            if ($model->isDirty('room_id')) {
+                $model->detail->copyRoomData($model->room);
+            }
+            $model->detail->save();
+        });
+    }
 
     /**
      * @return array
@@ -125,10 +152,10 @@ class Reservation extends Model implements CrudableContract, SearchableContract
             collect($conditions['s'])->each(function ($search) use ($query) {
                 $query->where(function ($builder) use ($search) {
                     /** @var Builder $builder */
-                    $builder->where('guest_details.name', 'like', "%{$search}%")
-                            ->orWhere('guest_details.name_kana', 'like', "%{$search}%")
-                            ->orWhere('guest_details.address', 'like', "%{$search}%")
-                            ->orWhere('rooms.name', 'like', "%{$search}%");
+                    $builder->where('reservation_details.guest_name', 'like', "%{$search}%")
+                            ->orWhere('reservation_details.guest_name_kana', 'like', "%{$search}%")
+                            ->orWhere('reservation_details.guest_address', 'like', "%{$search}%")
+                            ->orWhere('reservation_details.room_name', 'like', "%{$search}%");
                 });
             });
         }
@@ -151,17 +178,9 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     protected static function getSearchJoins(): array
     {
         return [
-            'rooms'         => [
-                'first'  => 'rooms.id',
-                'second' => 'reservations.room_id',
-            ],
-            'guests'        => [
-                'first'  => 'guests.id',
-                'second' => 'reservations.guest_id',
-            ],
-            'guest_details' => [
-                'first'  => 'guest_details.guest_id',
-                'second' => 'guests.id',
+            'reservation_details' => [
+                'first'  => 'reservation_details.reservation_id',
+                'second' => 'reservations.id',
             ],
         ];
     }
@@ -180,7 +199,29 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     /**
      * @return array
      */
+    public static function getCrudAppends(): array
+    {
+        return [
+            'charge',
+        ];
+    }
+
+    /**
+     * @return array
+     */
     public static function getCrudListRelations(): array
+    {
+        return [
+            'guest',
+            'room',
+        ];
+    }
+
+
+    /**
+     * @return array
+     */
+    public static function getCrudDetailRelations(): array
     {
         return [
             'guest',
@@ -191,11 +232,10 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     /**
      * @return array
      */
-    public static function getCrudDetailRelations(): array
+    public static function getCrudUpdateRelations(): array
     {
         return [
-            'guest',
-            'room',
+            'detail' => ReservationDetail::class,
         ];
     }
 
@@ -215,7 +255,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
         if ('reservations.end_date' === $name) {
             $rules[] = 'after_or_equal:reservations.start_date';
         }
-        if ('reservations.number' === $name) {
+        if ('reservation_details.number' === $name) {
             $rules['min'] = 'min:1';
 
             if ($isUpdate) {
@@ -229,6 +269,19 @@ class Reservation extends Model implements CrudableContract, SearchableContract
                     $rules['max'] = 'max:'.$room->number;
                 }
             }
+        }
+        if (in_array($name, [
+            'reservation_details.number',
+            'reservation_details.room_name',
+            'reservation_details.guest_name',
+            'reservation_details.guest_name_kana',
+            'reservation_details.guest_zip_code',
+            'reservation_details.guest_address',
+            'reservation_details.guest_phone',
+        ])) {
+            unset($rules['filled']);
+            unset($rules['required']);
+            $rules['nullable'] = 'nullable';
         }
 
         return self::addReservationRule($rules, $name, $request);
@@ -266,6 +319,14 @@ class Reservation extends Model implements CrudableContract, SearchableContract
         }
 
         return $rules;
+    }
+
+    /**
+     * @return HasOne
+     */
+    public function detail(): HasOne
+    {
+        return $this->hasOne(ReservationDetail::class);
     }
 
     /**
@@ -341,6 +402,22 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     public function getIsFutureAttribute(): bool
     {
         return $this->start_datetime->timestamp > $this->now();
+    }
+
+    /**
+     * @return int
+     */
+    public function getDaysAttribute(): int
+    {
+        return $this->end_date->diffInDays($this->start_date) + 1;
+    }
+
+    /**
+     * @return int
+     */
+    public function getChargeAttribute(): int
+    {
+        return $this->days * $this->room->price;
     }
 
     /**

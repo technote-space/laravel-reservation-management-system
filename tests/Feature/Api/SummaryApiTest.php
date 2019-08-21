@@ -5,7 +5,9 @@ namespace Tests\Feature\Api;
 
 use App\Models\Admin;
 use App\Models\Guest;
+use App\Models\GuestDetail;
 use App\Models\Reservation;
+use App\Models\ReservationDetail;
 use App\Models\Room;
 use Tests\BaseTestCase;
 
@@ -26,12 +28,19 @@ class SummaryApiTest extends BaseTestCase
                 'price' => $price,
             ]);
         }
-        factory(Reservation::class)->create([
-            'guest_id'   => factory(Guest::class)->create(),
-            'room_id'    => $room->id,
-            'start_date' => $start,
-            'end_date'   => $end,
+        $guest = factory(Guest::class)->create();
+        factory(GuestDetail::class)->create([
+            'guest_id' => $guest->id,
         ]);
+        $detail = factory(ReservationDetail::class)->create([
+            'reservation_id' => factory(Reservation::class)->create([
+                'guest_id'   => $guest->id,
+                'room_id'    => $room->id,
+                'start_date' => $start,
+                'end_date'   => $end,
+            ])->id,
+        ]);
+        $detail->paid();
     }
 
     public function testSummaryMonthly()

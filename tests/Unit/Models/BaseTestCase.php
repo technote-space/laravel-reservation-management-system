@@ -144,6 +144,8 @@ abstract class BaseTestCase extends \Tests\BaseTestCase
         }
 
         $class::find($pid)->delete();
+        $this->assertEmpty($class::find($pid));
+
         $deleted = array_merge(
             Arr::pluck($this->hasManyDataProvider(), 1),
             Arr::pluck($this->hasOneDataProvider(), 1)

@@ -115,7 +115,7 @@ class RoomApiTest extends BaseTestCase
             ]
         );
 
-        $response->assertStatus(201)
+        $response->assertStatus(200)
                  ->assertJsonFragment([
                      'name'   => 'abc',
                      'number' => 3,
