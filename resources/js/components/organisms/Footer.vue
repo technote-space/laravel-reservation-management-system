@@ -13,9 +13,9 @@
             <v-btn
                 v-for="item in sns"
                 :key="item.icon"
+                :href="item.url"
                 class="mx-4 white--text"
                 icon
-                :href="item.url"
                 target="_blank"
             >
                 <v-icon size="24px">

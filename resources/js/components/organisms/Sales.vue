@@ -12,9 +12,9 @@
                 :dataset="data"
             />
             <v-overlay
+                :value="isLoading"
                 absolute
                 class="text-center"
-                :value="isLoading"
             >
                 <v-progress-circular
                     indeterminate

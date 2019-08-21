@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- eslint-disable-next-line vue/require-component-is -->
         <component
             :is="componentIs"
             :form="form"
@@ -20,11 +21,6 @@
     import SearchForm from './form/Search';
 
     export default {
-        components: {
-            TextForm,
-            DateForm,
-            SearchForm,
-        },
         props: {
             detail: {
                 type: Object,

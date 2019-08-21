@@ -4,9 +4,9 @@
         class="text-center"
     >
         <v-progress-circular
+            :color="progressColor"
             indeterminate
             size="64"
-            :color="progressColor"
         />
         <div
             v-if="message"

@@ -1,15 +1,15 @@
 <template>
     <FullCalendar
         ref="calendar"
-        default-view="dayGridMonth"
         :plugins="calendarPlugins"
         :locale="locale"
         :event-sources="eventSources"
         :valid-range="validRange"
         :default-date="defaultDate"
         :time-zone="timezone"
-        height="parent"
         @dateClick="dateClick"
+        default-view="dayGridMonth"
+        height="parent"
     />
 </template>
 
