@@ -1,8 +1,10 @@
+import { getSetting } from '../../../../utils/env';
 import { camelCase } from 'lodash';
 import { CREATE, UPDATE, DELETE, LOGIN, LOGOUT } from './constant';
 
 const saveLocalStorage = state => {
     localStorage.setItem('items', JSON.stringify(state.items));
+    localStorage.setItem('version', getSetting('version'));
 };
 
 const mutations = {

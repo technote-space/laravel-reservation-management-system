@@ -17,6 +17,8 @@ export default {
         email: 'E-Mail',
         password: 'Password',
         price: 'Price',
+        charge: 'Charge',
+        payment: 'Payment',
         number: 'Number',
         'max_number': 'Max Number',
         'zip_code': 'ZIP Code',
