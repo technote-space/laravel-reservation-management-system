@@ -114,18 +114,6 @@ class Room extends Model implements CrudableContract, SearchableContract
     }
 
     /**
-     * @return array
-     */
-    public static function getCrudDetailRelations(): array
-    {
-        return [
-            'latestReservation',
-            'latestUsage',
-            'recentUsages',
-        ];
-    }
-
-    /**
      * @param  array  $rules
      * @param  string  $name
      * @param  Column  $column

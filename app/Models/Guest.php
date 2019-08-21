@@ -113,18 +113,6 @@ class Guest extends Model implements CrudableContract, SearchableContract
     /**
      * @return array
      */
-    public static function getCrudDetailRelations(): array
-    {
-        return [
-            'latestReservation',
-            'latestUsage',
-            'recentUsages',
-        ];
-    }
-
-    /**
-     * @return array
-     */
     public static function getCrudUpdateRelations(): array
     {
         return [
