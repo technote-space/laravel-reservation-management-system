@@ -27,6 +27,11 @@ export default {
             processor: price,
         },
         {
+            text: 'last_year_sales',
+            value: 'total_sales',
+            processor: price,
+        },
+        {
             text: 'status',
             value: 'status',
             processor: generator(data => vm.$createElement(Reservation, {

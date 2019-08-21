@@ -17,6 +17,7 @@ export default {
         email: 'E-Mail',
         password: 'Password',
         price: 'Price',
+        last_year_sales: 'The last year\'s sales',
         charge: 'Charge',
         payment: 'Payment',
         number: 'Number',
