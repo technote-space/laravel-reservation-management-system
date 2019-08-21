@@ -40,10 +40,13 @@ class ReservationApiTest extends BaseTestCase
             factory(GuestDetail::class)->create([
                 'guest_id' => $guest->id,
             ]);
-            $room = factory(Room::class)->create();
-            factory(Reservation::class)->create([
+            $room        = factory(Room::class)->create();
+            $reservation = factory(Reservation::class)->create([
                 'guest_id' => $guest->id,
                 'room_id'  => $room->id,
+            ]);
+            factory(ReservationDetail::class)->create([
+                'reservation_id' => $reservation->id,
             ]);
         });
 
