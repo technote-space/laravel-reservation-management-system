@@ -95,6 +95,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     protected $with = [
         'detail',
+        'room',
     ];
 
     /**
@@ -199,21 +200,10 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     /**
      * @return array
      */
-    public static function getCrudAppends(): array
-    {
-        return [
-            'charge',
-        ];
-    }
-
-    /**
-     * @return array
-     */
     public static function getCrudListRelations(): array
     {
         return [
             'guest',
-            'room',
         ];
     }
 
@@ -225,7 +215,6 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     {
         return [
             'guest',
-            'room',
         ];
     }
 
@@ -334,7 +323,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function guest(): BelongsTo
     {
-        return $this->belongsTo(Guest::class);
+        return $this->belongsTo(Guest::class)->without('reservations');
     }
 
     /**
@@ -342,7 +331,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function room(): BelongsTo
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsTo(Room::class)->without('reservations');
     }
 
     /**
@@ -366,7 +355,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getStartDatetimeAttribute(): Carbon
     {
-        return $this->getCheckInDatetime($this->start_date->format('Y-m-d'));
+        return $this->getCheckInDatetime($this->start_date_str);
     }
 
     /**
@@ -374,7 +363,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getEndDatetimeAttribute(): Carbon
     {
-        return $this->getCheckOutDatetime($this->end_date->format('Y-m-d'))->addDay();
+        return $this->getCheckOutDatetime($this->end_date_str)->addDay();
     }
 
     /**
