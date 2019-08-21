@@ -22,19 +22,17 @@
 <img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/edit.png" width="500px"/>
 
 ## 要件
-- 現在の予約状況の確認
+- 部屋の管理
+- 各部屋の現在の予約状況の確認
 - 予約登録
 - 利用者の管理
   - 名前/住所/電話番号
 - 月毎の売り上げ金額の確認
 
 ## 仕様
-- 最大4泊5日
-- 1部屋に最大2人
 - 貸出単位は部屋毎
 - 1予約者につき1部屋
 - 支払いは利用当日に前払い
-  - 2000円/1部屋1泊
 
 ## データ設計
 ### 部屋 (rooms)
@@ -55,7 +53,15 @@
 - 部屋ID (room_id)
 - 利用開始日 (start_date)
 - 利用終了日(1泊の場合 = 利用開始日) (end_date)
+### 予約詳細 (reservation_details)
 - 利用人数 (number)
+- 支払金額 (payment)
+- 部屋名 (room_name)
+- 利用者名 (guest_name)
+- 利用者カナ名 (guest_name_kana)
+- 利用者郵便番号 (guest_zip_code)
+- 利用者住所 (guest_address)
+- 利用者電話番号 (guest_phone)
 ### 管理者 (admins)
 - 名前 (name)
 - メールアドレス (email)
