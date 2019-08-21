@@ -14,15 +14,18 @@ trait TestHelper
             'password_resets',
             'settings',
             'admins',
+            'reservation_details',
             'reservations',
             'guest_details',
             'guests',
             'rooms',
+            'migrations',
         ];
     }
 
     protected static function dropTables()
     {
+        DB::getSchemaBuilder()->disableForeignKeyConstraints();
         collect(static::getTables())->each(function ($table) {
             DB::statement('DROP TABLE IF EXISTS `'.$table.'`');
         });
@@ -36,6 +39,7 @@ trait TestHelper
 
     protected static function runMigrate()
     {
+        DB::getSchemaBuilder()->enableForeignKeyConstraints();
         Artisan::call('migrate:refresh');
     }
 
