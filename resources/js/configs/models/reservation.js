@@ -22,24 +22,29 @@ export default {
         },
         {
             text: 'number',
-            value: 'number',
+            value: 'detail.number',
             processor: number,
         },
         {
             text: 'name',
-            value: 'guest.detail.name',
+            value: 'detail.guest_name',
         },
         {
             text: 'phone',
-            value: 'guest.detail.phone',
+            value: 'detail.guest_phone',
         },
         {
             text: 'room_name',
-            value: 'room.name',
+            value: 'detail.room_name',
         },
         {
-            text: 'price',
-            value: 'room.price',
+            text: 'charge',
+            value: 'charge',
+            processor: price,
+        },
+        {
+            text: 'payment',
+            value: 'detail.payment',
             processor: price,
         },
     ],
@@ -48,7 +53,7 @@ export default {
             name: 'reservations.guest_id',
             text: 'guest',
             value: 'guest_id',
-            display: 'guest.detail.name',
+            display: 'detail.guest_name',
             validate: {
                 required: true,
                 numeric: true,
@@ -91,16 +96,25 @@ export default {
             checkKey: 'endDate',
         },
         {
-            name: 'reservations.number',
+            name: 'reservation_details.number',
             text: 'number',
-            value: 'number',
+            value: 'detail.number',
             validate: {
                 required: true,
                 numeric: true,
                 max: 999,
                 min: 1,
             },
-            default: 1,
+        },
+        {
+            name: 'reservation_details.payment',
+            text: 'payment',
+            value: 'detail.payment',
+            validate: {
+                required: false,
+                numeric: true,
+                min: 0,
+            },
         },
     ],
 };

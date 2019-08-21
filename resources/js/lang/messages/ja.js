@@ -17,6 +17,8 @@ export default {
         email: 'メールアドレス',
         password: 'パスワード',
         price: '料金',
+        charge: '請求金額',
+        payment: '支払金額',
         number: '人数',
         'max_number': '最大人数',
         'zip_code': '郵便番号',

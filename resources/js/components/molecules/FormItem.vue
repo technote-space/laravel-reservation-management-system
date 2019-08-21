@@ -39,7 +39,7 @@
                 required: true,
             },
             value: {
-                type: [String, Number],
+                validator: prop => null === prop || 'string' === typeof prop || 'number' === typeof prop,
                 required: true,
             },
             validateErrors: {

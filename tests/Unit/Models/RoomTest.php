@@ -62,7 +62,6 @@ class RoomTest extends BaseTestCase
             'room_id'    => $room->id,
             'start_date' => date('Y-m-d'),
             'end_date'   => now()->addDays(2)->format('Y-m-d'),
-            'number'     => 1,
         ]);
         static::runSeed([
             '--class' => 'SettingTableSeeder',

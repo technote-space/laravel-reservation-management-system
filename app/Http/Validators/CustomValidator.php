@@ -13,6 +13,29 @@ use Illuminate\Validation\Validator;
  */
 class CustomValidator extends Validator
 {
+    /** @var array $reservation */
+    private $reservation = [];
+
+    /**
+     * @return array
+     */
+    private function getReservation()
+    {
+        $reservationId = request()->route('reservation');
+        if (! array_key_exists($reservationId, $this->reservation)) {
+            $this->reservation[$reservationId] = $reservationId ? Reservation::findOrFail($reservationId) : null;
+        }
+
+        $reservation = $this->reservation[$reservationId];
+        if ($reservation) {
+            $reservationId -= 0;
+        } else {
+            $reservationId = null;
+        }
+
+        return [$reservation, $reservationId];
+    }
+
     /**
      * @param $attribute
      * @param $value
@@ -23,8 +46,7 @@ class CustomValidator extends Validator
      */
     public function validateReservationTerm(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
-        $reservationId = request()->route('reservation');
-        $reservation   = $reservationId ? Reservation::findOrFail($reservationId) : null;
+        list($reservation) = $this->getReservation();
         if ($reservation) {
             $data      = $this->getData();
             $startDate = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
@@ -47,19 +69,16 @@ class CustomValidator extends Validator
      */
     public function validateReservationAvailability(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
-        $reservationId = request()->route('reservation');
-        $reservation   = $reservationId ? Reservation::findOrFail($reservationId) : null;
+        list($reservation, $reservationId) = $this->getReservation();
         if ($reservation) {
-            $reservationId -= 0;
-            $data          = $this->getData();
-            $roomId        = Arr::get($data, 'reservations.room_id', $reservation->room_id);
-            $startDate     = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
-            $endDate       = Arr::get($data, 'reservations.end_date', $reservation->end_date_str);
+            $data      = $this->getData();
+            $roomId    = Arr::get($data, 'reservations.room_id', $reservation->room_id);
+            $startDate = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
+            $endDate   = Arr::get($data, 'reservations.end_date', $reservation->end_date_str);
         } else {
-            $reservationId = null;
-            $roomId        = $this->getValue('reservations.room_id');
-            $startDate     = $this->getValue('reservations.start_date');
-            $endDate       = $this->getValue('reservations.end_date');
+            $roomId    = $this->getValue('reservations.room_id');
+            $startDate = $this->getValue('reservations.start_date');
+            $endDate   = $this->getValue('reservations.end_date');
         }
 
         return Reservation::isReservationAvailable($reservationId, $roomId, $startDate, $endDate);
@@ -75,19 +94,16 @@ class CustomValidator extends Validator
      */
     public function validateReservationDuplicate(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
-        $reservationId = request()->route('reservation');
-        $reservation   = $reservationId ? Reservation::findOrFail($reservationId) : null;
+        list($reservation, $reservationId) = $this->getReservation();
         if ($reservation) {
-            $reservationId -= 0;
-            $data          = $this->getData();
-            $guestId       = Arr::get($data, 'reservations.guest_id', $reservation->guest_id);
-            $startDate     = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
-            $endDate       = Arr::get($data, 'reservations.end_date', $reservation->end_date_str);
+            $data      = $this->getData();
+            $guestId   = Arr::get($data, 'reservations.guest_id', $reservation->guest_id);
+            $startDate = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
+            $endDate   = Arr::get($data, 'reservations.end_date', $reservation->end_date_str);
         } else {
-            $reservationId = null;
-            $guestId       = $this->getValue('reservations.guest_id');
-            $startDate     = $this->getValue('reservations.start_date');
-            $endDate       = $this->getValue('reservations.end_date');
+            $guestId   = $this->getValue('reservations.guest_id');
+            $startDate = $this->getValue('reservations.start_date');
+            $endDate   = $this->getValue('reservations.end_date');
         }
 
         return Reservation::isNotDuplicated($reservationId, $guestId, $startDate, $endDate);

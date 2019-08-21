@@ -1,11 +1,13 @@
+const moment = require('moment');
 import faker from './faker';
 import adminFactory from './factories/admin';
 import guestFactory from './factories/guest';
 import guestDetailFactory from './factories/guest-detail';
 import roomFactory from './factories/room';
 import reservationFactory from './factories/reservation';
+import reservationDetailFactory from './factories/reservation-detail';
 import settingFactory from './factories/setting';
-import { getEnv } from '../../../../utils/env';
+import { getEnv, getSetting } from '../../../../utils/env';
 import adminSeeder from './seeds/admin';
 import roomSeeder from './seeds/room';
 import settingSeeder from './seeds/setting';
@@ -18,12 +20,14 @@ state.factories = {
     guestDetails: guestDetailFactory,
     rooms: roomFactory,
     reservations: reservationFactory,
+    reservationDetails: reservationDetailFactory,
     settings: settingFactory,
 };
 state.user = null;
 
 const store = localStorage.getItem('items');
-if (store) {
+const version = localStorage.getItem('version');
+if (store && version && version === getSetting('version')) {
     state.items = JSON.parse(store);
 } else {
     state.items = {};
@@ -43,6 +47,10 @@ if (store) {
             room_id: Object.keys(state.items.rooms)[ faker.random.number({ min: 0, max: Object.keys(state.items.rooms).length - 1 }) ] - 0,
         })),
         isMultiple: true,
+    });
+    state.items.reservationDetails = arrayToObject(Object.keys(state.items.reservations), {
+        getKey: ({ value }) => value.id,
+        getItem: reservation_id => reservationDetailFactory().create(),
     });
     state.items.settings = settingSeeder(state.factories);
 }

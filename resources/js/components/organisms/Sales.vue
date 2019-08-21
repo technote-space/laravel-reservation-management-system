@@ -56,17 +56,17 @@
                 required: true,
             },
         },
-        watch: {
-            roomId: {
-                handler: 'setup',
-                immediate: true,
-            },
-        },
         data () {
             return {
                 data: [],
                 isLoading: false,
             };
+        },
+        watch: {
+            roomId: {
+                handler: 'setup',
+                immediate: true,
+            },
         },
         methods: {
             async setup () {
