@@ -10,9 +10,9 @@
         >
             <v-flex sm12>
                 <v-select
+                    v-model="roomId"
                     :disabled="isLoading"
                     :items="rooms"
-                    v-model="roomId"
                     class="d-inline-block float-right"
                 />
             </v-flex>
