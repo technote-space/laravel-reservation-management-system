@@ -57,13 +57,13 @@
                     {
                         label: this.$t('misc.monthly_sales'),
                         start: moment().subtract(11, 'months').startOf('month').format('YYYY-MM-DD'),
-                        end: moment().add(1, 'days').format('YYYY-MM-DD'),
+                        end: moment().add(1, 'months').startOf('month').format('YYYY-MM-DD'),
                         type: 'monthly',
                     },
                     {
                         label: this.$t('misc.daily_sales'),
                         start: moment().startOf('month').format('YYYY-MM-DD'),
-                        end: moment().add(1, 'days').format('YYYY-MM-DD'),
+                        end: moment().add(1, 'months').startOf('month').format('YYYY-MM-DD'),
                         type: 'daily',
                     },
                 ],
