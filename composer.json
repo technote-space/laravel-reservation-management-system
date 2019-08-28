@@ -25,7 +25,7 @@
         "laravel/framework": "5.8.*",
         "laravel/tinker": "^1.0",
         "staudenmeir/eloquent-eager-limit": "^1.0",
-        "technote/laravel-crud-helper": "^0.0.6",
+        "technote/laravel-crud-helper": "^0.0.7",
         "technote/laravel-search-helper": "^0.0.5"
     },
     "require-dev": {
