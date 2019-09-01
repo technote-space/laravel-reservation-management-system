@@ -3992,10 +3992,10 @@ eslint-visitor-keys@^1.0.0, eslint-visitor-keys@^1.1.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.1.0.tgz#e2a82cea84ff246ad6fb57f9bde5b46621459ec2"
   integrity sha512-8y9YjtM1JBJU/A9Kc+SbaOV4y29sSWckBwMHa+FGtVj5gN/sbnKDf6xJUl+8g7FAij9LVaP8C24DUiH/f/2Z9A==
 
-eslint@^6.2.2:
-  version "6.2.2"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.2.2.tgz#03298280e7750d81fcd31431f3d333e43d93f24f"
-  integrity sha512-mf0elOkxHbdyGX1IJEUsNBzCDdyoUgljF3rRlgfyYh0pwGnreLc0jjD6ZuleOibjmnUWZLY2eXwSooeOgGJ2jw==
+eslint@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-6.3.0.tgz#1f1a902f67bfd4c354e7288b81e40654d927eb6a"
+  integrity sha512-ZvZTKaqDue+N8Y9g0kp6UPZtS4FSY3qARxBs7p4f0H0iof381XHduqVerFWtK8DPtKmemqbqCFENWSQgPR/Gow==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.10.0"
@@ -10193,12 +10193,12 @@ stylelint-config-standard@^18.3.0:
   dependencies:
     stylelint-config-recommended "^2.2.0"
 
-stylelint-order@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-3.0.1.tgz#f1dd5e39345d04b684a6f04f1133cafa28606175"
-  integrity sha512-isVEJ1oUoVB7bb5pYop96KYOac4c+tLOqa5dPtAEwAwQUVSbi7OPFbfaCclcTjOlXicymasLpwhRirhFWh93yw==
+stylelint-order@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-3.1.0.tgz#e35fce453ae9ed71a2185af36b2bb45e62a9ce75"
+  integrity sha512-0BGQhRWOcdPi4oDVuInOHiXWzgCB9vEwJt5fvBre/I/brXLIumC9uiiAc3E6xUiUdWEmU2OLzAop8LK8UY0X0A==
   dependencies:
-    lodash "^4.17.14"
+    lodash "^4.17.15"
     postcss "^7.0.17"
     postcss-sorting "^5.0.1"
 
@@ -11041,10 +11041,10 @@ vue-loader@^15.4.2, vue-loader@^15.7.1:
     vue-hot-reload-api "^2.3.0"
     vue-style-loader "^4.1.0"
 
-vue-meta@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/vue-meta/-/vue-meta-2.2.1.tgz#30c2ff8b806f67eb2079734883c586295761b086"
-  integrity sha512-S0setu909L+jQNI4wa/WUMMJQSHIOU13eQZVIIBT1sCEH7g91AWwNA347//5lbWoNvyr3EQPk/kPMuPnhEbL1w==
+vue-meta@^2.2.1, vue-meta@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/vue-meta/-/vue-meta-2.2.2.tgz#ec6be76d75b7d6e4abb6d995d92245487081428b"
+  integrity sha512-aSzjfc5xV3szxPZMsSk6JeoHUqwrVHNPzpMciTCek56LDd2xKWCv+Ch4IGWL5EIxVyfxA+krsD7T11PTyLY4TQ==
   dependencies:
     deepmerge "^4.0.0"
 
