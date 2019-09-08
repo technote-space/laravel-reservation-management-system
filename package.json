@@ -19,7 +19,7 @@
     "dependencies": {
         "@babel/core": "^7.5.5",
         "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
-        "@babel/preset-env": "^7.5.5",
+        "@babel/preset-env": "^7.6.0",
         "@fullcalendar/core": "^4.3.1",
         "@fullcalendar/daygrid": "^4.3.0",
         "@fullcalendar/interaction": "^4.3.0",
