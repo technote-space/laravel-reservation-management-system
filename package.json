@@ -79,7 +79,7 @@
         "stylelint-order": "^3.1.0",
         "stylelint-scss": "^3.10.1",
         "vue-eslint-parser": "^6.0.4",
-        "vue-jest": "^3.0.4",
+        "vue-jest": "^3.0.5",
         "vue-server-renderer": "^2.6.10"
     }
 }
