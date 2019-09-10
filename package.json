@@ -25,7 +25,7 @@
         "@fullcalendar/interaction": "^4.3.0",
         "@fullcalendar/moment-timezone": "^4.3.0",
         "@fullcalendar/vue": "^4.3.1",
-        "@mdi/font": "^4.3.95",
+        "@mdi/font": "^4.4.95",
         "@vue/babel-helper-vue-jsx-merge-props": "^1.0.0",
         "@vue/babel-plugin-transform-vue-jsx": "^1.0.0",
         "axios": "^0.19",
