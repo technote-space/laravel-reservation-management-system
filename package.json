@@ -17,7 +17,7 @@
         "coveralls": "cat ./coverage/js/lcov.info | coveralls"
     },
     "dependencies": {
-        "@babel/core": "^7.6.0",
+        "@babel/core": "^7.6.3",
         "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
         "@babel/preset-env": "^7.6.0",
         "@fullcalendar/core": "^4.3.1",
