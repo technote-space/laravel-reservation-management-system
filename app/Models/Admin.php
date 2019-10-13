@@ -35,6 +35,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Admin whereRememberToken($value)
  * @method static Builder|Admin whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property-read int|null $notifications_count
  */
 class Admin extends Authenticatable
 {
