@@ -46,7 +46,7 @@ class IndexTest extends DuskTestCase
                         ->type('form input[type="text"]', 'test')
                         ->type('form input[type="password"]', 'pass')
                         ->click('.v-input__icon--append i')
-                        ->press('LOGIN')
+                        ->assertDisabled('form button')
                         ->assertSee('The E-Mail field must be a valid email')
                         ->assertSee('The Password field must be at least 8 characters')
                         ->screenshot('index/validation');
@@ -68,7 +68,7 @@ class IndexTest extends DuskTestCase
                         ->click('.v-input__icon--append i')
                         ->press('LOGIN')
                         ->waitUntilMissing('.v-overlay--active', 10)
-                        ->assertSee('ログインに失敗しました')
+                        ->assertSee('ログインに失敗しました。')
                         ->screenshot('index/fail-login');
             }
         );

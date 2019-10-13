@@ -25,7 +25,6 @@ describe('LoginForm', () => {
         expect(wrapper.element).toMatchSnapshot();
 
         expect(wrapper.isVueInstance()).toBeTruthy();
-        expect(wrapper.findAll('form')).toHaveLength(1);
         expect(wrapper.findAll('input')).toHaveLength(2);
         expect(wrapper.findAll('input[type="text"]')).toHaveLength(1);
         expect(wrapper.findAll('input[type="password"]')).toHaveLength(1);
@@ -45,7 +44,9 @@ describe('LoginForm', () => {
         password.setValue('12345');
         expect(email.element.value).toBe('123');
         expect(password.element.value).toBe('12345');
-        wrapper.find('form').trigger('submit.prevent');
+        await flushPromises();
+        expect(wrapper.find('button').is('[disabled]')).toBe(true);
+        wrapper.find('button').trigger('click');
         await flushPromises();
         expect(wrapper.element).toMatchSnapshot();
         expect(wrapper.find('.v-counter').text()).toBe('5');
@@ -55,8 +56,10 @@ describe('LoginForm', () => {
         password.setValue('password');
         expect(email.element.value).toBe('test@example.com');
         expect(password.element.value).toBe('password');
-        wrapper.find('form').trigger('submit.prevent');
-        wrapper.find('form').trigger('submit.prevent');
+        await flushPromises();
+        expect(wrapper.find('button').is('[disabled]')).toBe(false);
+        wrapper.find('button').trigger('click');
+        wrapper.find('button').trigger('click');
         await flushPromises();
         expect(wrapper.element).toMatchSnapshot();
         expect(wrapper.find('.v-counter').text()).toBe('8');
