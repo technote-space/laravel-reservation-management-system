@@ -2,17 +2,19 @@ import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
-import { ValidationProvider } from 'vee-validate';
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import VueI18n from 'vue-i18n';
 import options from '../../lang';
+
+require('../../plugins/validate/extend');
 
 const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(Vuetify);
 localVue.use(VueRouter);
 localVue.use(VueI18n);
-
 localVue.component('ValidationProvider', ValidationProvider);
+localVue.component('ValidationObserver', ValidationObserver);
 
 export default (overwrite) => Object.assign({}, {
     localVue,
