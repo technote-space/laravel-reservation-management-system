@@ -1,38 +1,46 @@
 <template>
-    <v-form
-        @submit.prevent="login"
+    <ValidationObserver
         class="text-center"
+        v-slot="{ invalid }"
     >
-        <v-text-field
-            v-model="loginForm.email"
-            v-validate="'required|email'"
-            :error-messages="errors.collect('email')"
-            :label="$t('validations.attributes.email')"
-            data-vv-name="email"
-            data-vv-validate-on="blur"
-            required
-        />
-        <v-text-field
-            v-model="loginForm.password"
-            v-validate="'required|min:8'"
-            :error-messages="errors.collect('password')"
-            :append-icon="passwordIcon"
-            :type="passwordType"
-            :label="$t('validations.attributes.password')"
-            :hint="$t('messages.password_hint', {min: 8})"
-            @click:append="passwordVisibility = !passwordVisibility"
-            data-vv-name="password"
-            data-vv-validate-on="blur"
-            counter
-            required
-        />
+        <ValidationProvider
+            v-slot="{ errors }"
+            rules="required|email"
+            name="email"
+        >
+            <v-text-field
+                v-model="loginForm.email"
+                :error-messages="errors"
+                :label="$t('validations.attributes.email')"
+                required
+            />
+        </ValidationProvider>
+        <ValidationProvider
+            v-slot="{ errors }"
+            rules="required|min:8"
+            name="password"
+        >
+            <v-text-field
+                v-model="loginForm.password"
+                :error-messages="errors"
+                :append-icon="passwordIcon"
+                :type="passwordType"
+                :label="$t('validations.attributes.password')"
+                :hint="$t('messages.password_hint', {min: 8})"
+                @click:append="passwordVisibility = !passwordVisibility"
+                counter
+                required
+            />
+        </ValidationProvider>
         <v-btn
             class="mt-4"
             type="submit"
+            :disabled="invalid && !submitting"
+            @click="login"
         >
             {{ $t('pages.login') }}
         </v-btn>
-    </v-form>
+    </ValidationObserver>
 </template>
 
 <script>
@@ -61,14 +69,8 @@
                     return;
                 }
                 this.submitting = true;
-                this.$validator.validateAll().then(async result => {
-                    if (!result) {
-                        return;
-                    }
-                    await this.$store.dispatch('auth/login', this.loginForm);
-                }).finally(() => {
-                    this.submitting = false;
-                });
+                await this.$store.dispatch('auth/login', this.loginForm);
+                this.submitting = false;
             },
         },
     };

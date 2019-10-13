@@ -2,7 +2,7 @@ import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
-import VeeValidate from 'vee-validate';
+import { ValidationProvider } from 'vee-validate';
 import VueI18n from 'vue-i18n';
 import options from '../../lang';
 
@@ -10,8 +10,9 @@ const localVue = createLocalVue();
 localVue.use(Vuex);
 localVue.use(Vuetify);
 localVue.use(VueRouter);
-localVue.use(VeeValidate);
 localVue.use(VueI18n);
+
+localVue.component('ValidationProvider', ValidationProvider);
 
 export default (overwrite) => Object.assign({}, {
     localVue,
