@@ -198,12 +198,6 @@
         "bin:dusk": [
             "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/test/dusk.sh"
         ],
-        "coveralls-php": [
-            "php-coveralls -v"
-        ],
-        "coveralls-js": [
-            "yarn coveralls"
-        ],
         "m": [
             "@da",
             "@migrate",
