@@ -1,31 +1,31 @@
 <template>
     <ValidationObserver
-        class="text-center"
+        @submit.prevent="login"
         v-slot="{ invalid }"
+        class="text-center"
+        tag="form"
     >
         <ValidationProvider
             v-slot="{ errors }"
+            :name="$t('validations.attributes.email')"
             rules="required|email"
-            name="email"
         >
             <v-text-field
                 v-model="loginForm.email"
                 :error-messages="errors"
-                :label="$t('validations.attributes.email')"
                 required
             />
         </ValidationProvider>
         <ValidationProvider
             v-slot="{ errors }"
             rules="required|min:8"
-            name="password"
+            :name="$t('validations.attributes.password')"
         >
             <v-text-field
                 v-model="loginForm.password"
                 :error-messages="errors"
                 :append-icon="passwordIcon"
                 :type="passwordType"
-                :label="$t('validations.attributes.password')"
                 :hint="$t('messages.password_hint', {min: 8})"
                 @click:append="passwordVisibility = !passwordVisibility"
                 counter
@@ -33,10 +33,10 @@
             />
         </ValidationProvider>
         <v-btn
+            @click="login"
+            :disabled="invalid && !submitting"
             class="mt-4"
             type="submit"
-            :disabled="invalid && !submitting"
-            @click="login"
         >
             {{ $t('pages.login') }}
         </v-btn>

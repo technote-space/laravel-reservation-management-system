@@ -1,7 +1,9 @@
 <template>
     <v-card>
         <ValidationObserver
+            @submit.prevent="save"
             v-slot="{ invalid }"
+            tag="form"
         >
             <v-card-title>
                 <span class="headline">{{ $t(formTitle) }}</span>
@@ -50,10 +52,10 @@
                 </v-btn>
                 <v-btn
                     @click="save"
+                    :disabled="invalid"
                     color="blue darken-1"
                     text
                     type="submit"
-                    :disabled="invalid"
                 >
                     {{ $t('misc.save') }}
                 </v-btn>

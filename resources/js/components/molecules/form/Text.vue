@@ -4,7 +4,6 @@
         :value="value"
         :hint="hint"
         persistent-hint
-        required
         @input="val => $emit('input', val)"
         :error-messages="validateErrors"
     />
