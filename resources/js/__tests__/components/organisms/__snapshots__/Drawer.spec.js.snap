@@ -93,6 +93,7 @@ exports[`Drawer should not render drawer if not opened: not opened 1`] = `
               <a
                 class="v-list-item v-list-item--link theme--dark"
                 href="#/test1"
+                role="listitem"
                 tabindex="0"
               >
                 <div
@@ -117,6 +118,7 @@ exports[`Drawer should not render drawer if not opened: not opened 1`] = `
               <a
                 class="v-list-item v-list-item--link theme--dark"
                 href="#/test2"
+                role="listitem"
                 tabindex="0"
               >
                 <div
@@ -243,6 +245,7 @@ exports[`Drawer should render drawer: opened 1`] = `
               <a
                 class="v-list-item v-list-item--link theme--dark"
                 href="#/test1"
+                role="listitem"
                 tabindex="0"
               >
                 <div
@@ -267,6 +270,7 @@ exports[`Drawer should render drawer: opened 1`] = `
               <a
                 class="v-list-item v-list-item--link theme--dark"
                 href="#/test2"
+                role="listitem"
                 tabindex="0"
               >
                 <div
