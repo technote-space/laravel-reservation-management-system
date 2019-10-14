@@ -65,10 +65,12 @@ jobs:
     - stage: test
       language: php
       php: '7.3'
+      env: UPGRADE_NODE=true
       script: bash bin/test/phpunit.sh
     - stage: test
       language: php
       php: '7.3'
+      env: UPGRADE_NODE=true
       script: bash bin/test/dusk.sh
     - stage: test
       language: node_js

@@ -2,6 +2,10 @@
 
 set -e
 
+if [[ -z "${UPGRADE_NODE}" ]]; then
+  exit
+fi
+
 #NODE_JS_VERSION=${NODE_JS_VERSION:-node}
 NODE_JS_VERSION=${NODE_JS_VERSION:-11}
 
@@ -15,3 +19,4 @@ curl -o "${NVM_DIR}"/nvm.sh https://raw.githubusercontent.com/nvm-sh/nvm/master/
 
 nvm install "${NODE_JS_VERSION}"
 nvm alias default "${NODE_JS_VERSION}"
+node -v
