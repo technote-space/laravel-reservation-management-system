@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: 1
+      APP_ENV: testing
       TRAVIS_BUILD_DIR: ${{ github.workspace }}
       NO_COMPOSER: 1
     steps:
@@ -34,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: 1
+      APP_ENV: testing
       TRAVIS_BUILD_DIR: ${{ github.workspace }}
       NO_COMPOSER: 1
     steps:
@@ -54,6 +56,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: 1
+      APP_ENV: testing
       TRAVIS_BUILD_DIR: ${{ github.workspace }}
       NO_NPM: 1
     steps:
@@ -74,6 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: 1
+      APP_ENV: testing
       TRAVIS_BUILD_DIR: ${{ github.workspace }}
       NO_NPM: 1
     steps:
@@ -99,6 +103,7 @@ jobs:
         node: ['8', '10', '11', '12']
     env:
       CI: 1
+      APP_ENV: testing
       TRAVIS_BUILD_DIR: ${{ github.workspace }}
       NO_COMPOSER: 1
     steps:
