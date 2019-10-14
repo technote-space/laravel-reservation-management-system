@@ -19,7 +19,7 @@ fi
 
 composer install --no-interaction --prefer-dist --no-suggest
 
-bash "${current}"/prepare/install-chrome.sh
+bash "${current}"/prepare/install-chrome-driver.sh
 
 if [[ ! -f "${current}"/../.env ]]; then
   cp "${current}"/../.env.sample "${current}"/../.env

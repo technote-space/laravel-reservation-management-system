@@ -15,6 +15,8 @@ if [[ -z "${RELEASE_FILE}" ]]; then
   exit 1
 fi
 
+bash "${current}"/../build.sh
+
 echo ""
 echo ">> Prepare release files"
 rm -rdf ${PACKAGE_DIR}
@@ -49,6 +51,7 @@ done
 rm -rdf ${PACKAGE_DIR}/vendor/bin
 rm -rdf ${PACKAGE_DIR}/resources/js
 rm -rdf ${PACKAGE_DIR}/resources/sass
+rm -rdf ${PACKAGE_DIR}/public/gh-pages
 
 pushd ${PACKAGE_DIR}
 echo ""
