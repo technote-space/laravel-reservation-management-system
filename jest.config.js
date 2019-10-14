@@ -1,6 +1,6 @@
 module.exports = {
     verbose: false,
-    testRegex: 'resources/js/__tests__/.*\.spec\.js$',
+    testRegex: 'resources/js/__tests__/.*\\.spec\\.js$',
     transform: {
         '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
         '.*\\.(vue)$': '<rootDir>/node_modules/vue-jest',
