@@ -45,6 +45,10 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @property-read Collection|Reservation[] $lastYearUsages
  * @mixin Eloquent
  * @mixin Builder
+ * @property-read int $total_sales
+ * @property-read int|null $last_year_usages_count
+ * @property-read int|null $recent_usages_count
+ * @property-read int|null $reservations_count
  */
 class Room extends Model implements CrudableContract, SearchableContract
 {

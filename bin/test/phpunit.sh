@@ -11,12 +11,22 @@ current=$(
 source "${current}"/../variables.sh
 
 echo ""
+echo ">> Setup"
+rm -f .env
+cp .env.travis .env
+ls -la .env
+composer install --no-interaction --prefer-dist --no-suggest
+php artisan key:generate
+php artisan config:cache
+
+echo ""
+echo ">> Build JS"
+# shellcheck disable=SC1090
+source "${current}"/../prepare/install-latest-node.sh
+node -v
+yarn install
+composer build:js
+
+echo ""
 echo ">> Run composer phpunit"
 composer phpunit
-
-if [[ -n "${CI}" ]]; then
-  ls -la "${TRAVIS_BUILD_DIR}"/coverage/php/clover.xml
-  echo ""
-  echo ">> Run composer coveralls"
-  composer coveralls-php
-fi

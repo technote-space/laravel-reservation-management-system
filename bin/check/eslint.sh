@@ -11,5 +11,9 @@ current=$(
 source "${current}"/../variables.sh
 
 echo ""
+echo ">> Setup"
+yarn install
+
+echo ""
 echo ">> Run composer eslint"
 composer eslint

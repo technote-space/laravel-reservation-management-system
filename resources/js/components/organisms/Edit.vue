@@ -1,6 +1,10 @@
 <template>
     <v-card>
-        <v-form @submit.prevent="save">
+        <ValidationObserver
+            @submit.prevent="save"
+            v-slot="{ invalid }"
+            tag="form"
+        >
             <v-card-title>
                 <span class="headline">{{ $t(formTitle) }}</span>
             </v-card-title>
@@ -18,16 +22,20 @@
                             sm6
                             md4
                         >
-                            <FormItem
-                                v-model="formInputs[form.name]"
-                                v-validate="form.validate"
-                                :form="form"
-                                :detail="detail"
-                                :form-inputs="formInputs"
-                                :data-vv-name="form.text"
-                                :validate-errors="errors.collect(form.text)"
-                                :increment="increment"
-                            />
+                            <ValidationProvider
+                                v-slot="{ errors }"
+                                :rules="form.validate"
+                                :name="form.text"
+                            >
+                                <FormItem
+                                    v-model="formInputs[form.name]"
+                                    :form="form"
+                                    :detail="detail"
+                                    :form-inputs="formInputs"
+                                    :validate-errors="errors"
+                                    :increment="increment"
+                                />
+                            </ValidationProvider>
                         </v-flex>
                     </v-layout>
                 </v-container>
@@ -44,13 +52,15 @@
                 </v-btn>
                 <v-btn
                     @click="save"
+                    :disabled="invalid"
                     color="blue darken-1"
                     text
+                    type="submit"
                 >
                     {{ $t('misc.save') }}
                 </v-btn>
             </v-card-actions>
-        </v-form>
+        </ValidationObserver>
     </v-card>
 </template>
 
@@ -75,6 +85,7 @@
             increment: {
                 type: Number,
                 required: true,
+                submitting: false,
             },
         },
         data () {
@@ -123,7 +134,6 @@
                 edit: 'crud/edit',
             }),
             async setup () {
-                this.errors.clear();
                 this.clearForm();
                 if (!await this.getDetail()) {
                     return;
@@ -159,21 +169,21 @@
             update (form, value) {
                 this.formInputs[ form.name ] = value;
             },
-            save () {
-                this.$validator.validateAll().then(async result => {
-                    if (!result) {
-                        return;
+            async save () {
+                if (this.submitting) {
+                    return;
+                }
+                this.submitting = true;
+                if (this.targetId) {
+                    if (await this.edit({ model: this.model, id: this.targetId, data: this.sendInputs })) {
+                        this.close();
                     }
-                    if (this.targetId) {
-                        if (await this.edit({ model: this.model, id: this.targetId, data: this.sendInputs })) {
-                            this.close();
-                        }
-                    } else {
-                        if (await this.create({ model: this.model, data: this.sendInputs })) {
-                            this.close();
-                        }
+                } else {
+                    if (await this.create({ model: this.model, data: this.sendInputs })) {
+                        this.close();
                     }
-                });
+                }
+                this.submitting = false;
             },
             close () {
                 this.$emit('close-edit');

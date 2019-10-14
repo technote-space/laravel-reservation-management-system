@@ -11,5 +11,9 @@ current=$(
 source "${current}"/../variables.sh
 
 echo ""
+echo ">> Setup"
+composer install --no-interaction --prefer-dist --no-suggest
+
+echo ""
 echo ">> Run composer phpcs"
 composer phpcs
