@@ -18,6 +18,11 @@ ls -la .env
 composer install --no-interaction --prefer-dist --no-suggest
 php artisan key:generate
 php artisan config:cache
+yarn install
+
+echo ""
+echo ">> Build JS"
+composer build:js
 
 echo ""
 echo ">> Run composer phpunit"
