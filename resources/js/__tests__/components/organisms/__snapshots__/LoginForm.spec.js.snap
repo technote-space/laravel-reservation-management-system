@@ -34,6 +34,13 @@ exports[`LoginForm should render login form 1`] = `
                   <div
                     class="v-text-field__slot"
                   >
+                    <label
+                      class="v-label theme--light"
+                      for="input-11"
+                      style="left: 0px; position: absolute;"
+                    >
+                      E-Mail
+                    </label>
                     <input
                       id="input-11"
                       required="required"
@@ -71,6 +78,13 @@ exports[`LoginForm should render login form 1`] = `
                   <div
                     class="v-text-field__slot"
                   >
+                    <label
+                      class="v-label theme--light"
+                      for="input-15"
+                      style="left: 0px; position: absolute;"
+                    >
+                      Password
+                    </label>
                     <input
                       id="input-15"
                       required="required"
@@ -173,6 +187,13 @@ exports[`LoginForm should render login form 2`] = `
                   <div
                     class="v-text-field__slot"
                   >
+                    <label
+                      class="v-label v-label--active theme--light error--text"
+                      for="input-11"
+                      style="left: 0px; position: absolute;"
+                    >
+                      E-Mail
+                    </label>
                     <input
                       id="input-11"
                       required="required"
@@ -217,6 +238,13 @@ exports[`LoginForm should render login form 2`] = `
                   <div
                     class="v-text-field__slot"
                   >
+                    <label
+                      class="v-label v-label--active theme--light error--text"
+                      for="input-15"
+                      style="left: 0px; position: absolute;"
+                    >
+                      Password
+                    </label>
                     <input
                       id="input-15"
                       required="required"
@@ -327,6 +355,13 @@ exports[`LoginForm should render login form 3`] = `
                   <div
                     class="v-text-field__slot"
                   >
+                    <label
+                      class="v-label v-label--active theme--light"
+                      for="input-11"
+                      style="left: 0px; position: absolute;"
+                    >
+                      E-Mail
+                    </label>
                     <input
                       id="input-11"
                       required="required"
@@ -364,6 +399,13 @@ exports[`LoginForm should render login form 3`] = `
                   <div
                     class="v-text-field__slot"
                   >
+                    <label
+                      class="v-label v-label--active theme--light"
+                      for="input-15"
+                      style="left: 0px; position: absolute;"
+                    >
+                      Password
+                    </label>
                     <input
                       id="input-15"
                       required="required"
