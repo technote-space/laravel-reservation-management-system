@@ -21,7 +21,8 @@ php artisan config:cache
 
 echo ""
 echo ">> Build JS"
-bash "${current}"/../prepare/install-latest-node.sh
+# shellcheck disable=SC1090
+source "${current}"/../prepare/install-latest-node.sh
 node -v
 yarn install
 composer build:js
