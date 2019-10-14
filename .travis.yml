@@ -43,10 +43,12 @@ jobs:
     - stage: check
       language: php
       php: '7.2'
+      env: APP_ENV=testing
       script: bash bin/check/phpcs.sh
     - stage: check
       language: php
       php: '7.2'
+      env: APP_ENV=testing
       script: bash bin/check/phpmd.sh
     - stage: check
       language: node_js
