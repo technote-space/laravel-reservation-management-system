@@ -2,6 +2,7 @@ on:
   push:
     tags:
       - 'v*'
+      - 'release-v*'
 
 name: Release
 
@@ -47,7 +48,7 @@ jobs:
       - name: Upload
         uses: technote-fork/action-gh-release@v1
         with:
-          files: ${{ RELEASE_FILE }}
+          files: release.zip
           draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -81,7 +82,7 @@ jobs:
         env:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: ${{ GH_PAGES_DIR }}
+          FOLDER: public/gh-pages
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
