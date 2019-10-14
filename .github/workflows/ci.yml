@@ -192,6 +192,10 @@ jobs:
         run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
       - name: Run tests
         run: bash bin/test/dusk.sh
+      - uses: actions/upload-artifact@master
+        with:
+          name: screenshots
+          path: tests/Browser/screenshots
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
