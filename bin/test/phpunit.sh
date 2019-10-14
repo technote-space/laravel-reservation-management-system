@@ -18,10 +18,11 @@ ls -la .env
 composer install --no-interaction --prefer-dist --no-suggest
 php artisan key:generate
 php artisan config:cache
-yarn install
 
 echo ""
 echo ">> Build JS"
+bash "${current}"/../prepare/install-latest-node.sh
+yarn install
 composer build:js
 
 echo ""

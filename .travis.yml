@@ -65,11 +65,11 @@ jobs:
     - stage: test
       language: php
       php: '7.3'
-      script: bash bin/prepare/install-latest-node.sh && bash bin/test/phpunit.sh
+      script: bash bin/test/phpunit.sh
     - stage: test
       language: php
       php: '7.3'
-      script: bash bin/prepare/install-latest-node.sh && bash bin/test/dusk.sh
+      script: bash bin/test/dusk.sh
     - stage: test
       language: node_js
       node_js: '11'
