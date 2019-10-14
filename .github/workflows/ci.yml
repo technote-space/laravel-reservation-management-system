@@ -1,0 +1,208 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+    tags:
+      - "!*"
+
+name: Build
+
+jobs:
+  eslint:
+    name: ESLint
+    runs-on: ubuntu-latest
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
+      NO_COMPOSER: 1
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 3
+      - name: Check code style
+        run: bash bin/check/eslint.sh
+      - uses: 8398a7/action-slack@v1
+        with:
+          type: failure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
+  stylelint:
+    name: stylelint
+    runs-on: ubuntu-latest
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
+      NO_COMPOSER: 1
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 3
+      - name: Check code style
+        run: bash bin/check/stylelint.sh
+      - uses: 8398a7/action-slack@v1
+        with:
+          type: failure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
+  phpcs:
+    name: PHP Code Sniffer
+    runs-on: ubuntu-latest
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
+      NO_NPM: 1
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 3
+      - name: Check code style
+        run: bash bin/check/phpcs.sh
+      - uses: 8398a7/action-slack@v1
+        with:
+          type: failure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
+  phpmd:
+    name: PHPMD
+    runs-on: ubuntu-latest
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
+      NO_NPM: 1
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 3
+      - name: Check code style
+        run: bash bin/check/phpmd.sh
+      - uses: 8398a7/action-slack@v1
+        with:
+          type: failure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
+
+  jest:
+    name: Jest
+    needs: eslint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: ['8', '10', '11', '12']
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
+      NO_COMPOSER: 1
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 3
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+      - name: Run tests
+        run: bash bin/test/jest.sh
+      - name: Codecov
+        run: curl -s https://codecov.io/bash | bash -s -- -t $CODECOV_TOKEN -f $COVERAGE_FILE
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          COVERAGE_FILE: ./coverage/js/clover.xml
+        if: matrix.node == '12'
+      - uses: 8398a7/action-slack@v1
+        with:
+          type: failure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
+  phpunit:
+    name: PHPUnit
+    needs: [phpcs, phpmd]
+    runs-on: ubuntu-16.04
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
+    services:
+      mysql:
+        image: mysql
+        ports:
+          - 3306
+    strategy:
+      matrix:
+        php: ['7.2', '7.3']
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 3
+      - name: Switch PHP version
+        env:
+          PHP_VERSION: ${{ matrix.php }}
+        run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
+      - name: Run tests
+        run: bash bin/test/phpunit.sh
+      - name: Codecov
+        run: curl -s https://codecov.io/bash | bash -s -- -t $CODECOV_TOKEN -f $COVERAGE_FILE
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          COVERAGE_FILE: ./coverage/php/clover.xml
+        if: matrix.php == '7.3'
+      - uses: 8398a7/action-slack@v1
+        with:
+          type: failure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
+  dusk:
+    name: Laravel Dusk
+    needs: [phpcs, phpmd]
+    runs-on: ubuntu-16.04
+    env:
+      CI: 1
+      TRAVIS_BUILD_DIR: ${{ github.workspace }}
+    services:
+      mysql:
+        image: mysql
+        ports:
+          - 3306
+    strategy:
+      matrix:
+        php: ['7.2', '7.3']
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 3
+      - name: Switch PHP version
+        env:
+          PHP_VERSION: ${{ matrix.php }}
+        run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
+      - name: Run tests
+        run: bash bin/test/dusk.sh
+      - uses: 8398a7/action-slack@v1
+        with:
+          type: failure
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
+
+  slack:
+    name: Slack
+    needs: [stylelint, jest, phpunit, dusk]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: 8398a7/action-slack@v1
+        with:
+          type: success
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

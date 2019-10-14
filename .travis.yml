@@ -30,18 +30,12 @@ cache:
   directories:
     - "${HOME}/.composer/cache"
     - node_modules
-    - "${TRAVIS_BUILD_DIR}/.work/cache"
 
 stages:
   - name: check
     if: branch = master and tag IS blank and type IN (pull_request, api)
   - name: test
     if: branch = master and tag IS blank and type IN (pull_request, api)
-  - name: deploy
-    if: tag IS present
-
-before_script:
-  - bash bin/prepare.sh
 
 jobs:
   fast_finish: true
@@ -49,24 +43,20 @@ jobs:
     - stage: check
       language: php
       php: '7.2'
-      env: NO_NPM=1
       script: bash bin/check/phpcs.sh
     - stage: check
       language: php
       php: '7.2'
-      env: NO_NPM=1
       script: bash bin/check/phpmd.sh
     - stage: check
       language: node_js
       node_js: '11'
       dist: trusty
-      env: NO_COMPOSER=1
       script: bash bin/check/stylelint.sh
     - stage: check
       language: node_js
       node_js: '11'
       dist: trusty
-      env: NO_COMPOSER=1
       script: bash bin/check/eslint.sh
 
 
@@ -77,40 +67,16 @@ jobs:
     - stage: test
       language: php
       php: '7.3'
-      env: LARAVEL_DUSK=1
-      script: bash bin/test/dusk.sh
-    - stage: test
-      language: php
-      php: '7.2'
-      env: LARAVEL_DUSK=1
       script: bash bin/test/dusk.sh
     - stage: test
       language: node_js
       node_js: '11'
       dist: trusty
-      env: NO_COMPOSER=1
-      script: bash bin/test/jest.sh
+      script:
+        - bash bin/prepare/install-latest-node.sh
+        - bash bin/test/jest.sh
 
 
-    - stage: deploy
-      language: php
-      php: '7.2'
-      script: skip
-      before_deploy:
-        - source bin/deploy/env.sh
-        - bash bin/deploy/gh-releases.sh
-      deploy:
-        provider: releases
-        skip_cleanup: true
-        name: ${RELEASE_TITLE}
-        tag_name: ${RELEASE_TAG}
-        file: ${RELEASE_FILE}
-        body: ${RELEASE_BODY}
-        api_key:
-          secure: nuzz0iq0mIfnlDmTeUkqwEFToa+AW7LIXUO9wLh1UpMz8tGuQ85RoQ/fjezz5k2nPcvfEJpND6h+S0FPtr7vzcFNFNjRYx3fNs7CFyFXRFLGxzKDRTXXmPy/zo//iA5OUP2YdlfgQve3EAo5O/Wz4gFGPZF+r3a/fKAacEm/UjoYi09B+w+8/E/4byGmEbvWAcjNejupr5ByidHMl5EQy1KbYZtXmDtMnzIpPNZSL24RoEfS3Qp723r51fV1v4sbqBwAMN0QEYtLLqK6M6cTVJ2hPSKuUNr6C18XBr1Lr/XliaYBWtoOaKrZZXzQIsQu2gKDJa0H0QwqcJFyo3doXQ2KEg3mzhzDo1AzB3ygqd+ESnjcxv1yyWy/t3JoX79LBDHhRSzaCm5KcJavg12UcNxksCB/Wre/pIqt+iuXfPZphMxgC6cBx1eBY67iNhYMpbUbddLlch8Bw7QfFFBY3qfTzVINfBvbsC9qDPygEnfkcvaUmv38CPIxPP5/ZW/vJjCbGxCNrjq9bjn5qmgts/Fw2D9c29RVzodD0rzzqFltN66cb9AfV101epB1jjtvI8rV7sXQTF0GWlFYSjmphHueB+IxAs0TIB6WyC0I5kxt+iN746wclWxiKPf9rR/G9yRnsFoyJ0Teh4JMWf6vDbhUYyf5h/V5SOI+DXr/he4=
-        overwrite: true
-        on:
-          tags: true
 
     - stage: deploy
       language: php
