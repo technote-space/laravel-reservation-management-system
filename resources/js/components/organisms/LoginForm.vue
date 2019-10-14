@@ -13,6 +13,7 @@
             <v-text-field
                 v-model="loginForm.email"
                 :error-messages="errors"
+                :label="$t('validations.attributes.email')"
                 required
             />
         </ValidationProvider>
@@ -23,10 +24,11 @@
         >
             <v-text-field
                 v-model="loginForm.password"
-                :error-messages="errors"
                 :append-icon="passwordIcon"
-                :type="passwordType"
+                :error-messages="errors"
                 :hint="$t('messages.password_hint', {min: 8})"
+                :label="$t('validations.attributes.password')"
+                :type="passwordType"
                 @click:append="passwordVisibility = !passwordVisibility"
                 counter
                 required
