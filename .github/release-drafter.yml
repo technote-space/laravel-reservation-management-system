@@ -6,11 +6,14 @@ categories:
     labels:
       - 'Type: Feature'
       - 'Type: Refactoring'
+      - 'Type: CI/CD'
   - title: ':bug: Bug Fixes'
     labels:
       - 'Type: Bug'
-      - 'Type: Maintenance'
       - 'Type: Security'
+  - title: ':wrench: Maintenance'
+    labels:
+      - 'Type: Maintenance'
   - title: ':green_book: Docs'
     labels:
       - 'Type: Documentation'
@@ -20,6 +23,8 @@ categories:
   - title: ':sparkles: All Changes'
     labels:
       - 'Type: Release'
+exclude-lables:
+  - 'dependencies'
 template: |
   ## What’s Changed
 
