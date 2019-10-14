@@ -15,6 +15,7 @@ echo ">> Prepare files"
 rm -rdf ${GH_PAGES_DIR}
 mkdir -p ${GH_PAGES_DIR}
 
+yarn install
 yarn local
 
 cp -a ${TRAVIS_BUILD_DIR}/public/css ${GH_PAGES_DIR}/css

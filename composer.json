@@ -221,26 +221,27 @@
             "bash bin/upgrade.sh"
         ],
         "gh-prepare": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) TRAVIS_BUILD_STAGE_NAME=Deploy CI=1 bash bin/prepare.sh"
+            "bash bin/build.sh"
         ],
         "gh-releases": [
             "@gh-prepare",
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && bash bin/deploy/gh-releases.sh"
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) RELEASE_FILE=release.zip bin/deploy/gh-releases.sh"
         ],
         "gh-pages": [
             "@gh-prepare",
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) source bin/deploy/env.sh && GH_PAGES_BASE=/gh-pages bash bin/deploy/gh-pages.sh"
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_DIR=public/gh-pages GH_PAGES_BASE=/gh-pages bin/deploy/gh-pages.sh"
         ],
         "gh-pages:ga": [
             "@gh-prepare",
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_TRACKING_ID=TEST source bin/deploy/env.sh && GH_PAGES_BASE=/gh-pages bash bin/deploy/gh-pages.sh"
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_TRACKING_ID=TEST GH_PAGES_DIR=public/gh-pages GH_PAGES_BASE=/gh-pages bin/deploy/gh-pages.sh"
         ],
         "routes": [
             "php artisan route:clear --ansi",
             "php artisan route:list --ansi"
         ],
         "chrome": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/prepare/install-chrome.sh"
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/prepare/install-google-chrome.sh",
+            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/prepare/install-chrome-driver.sh"
         ]
     }
 }
