@@ -61,7 +61,7 @@
         "stylelint-config-standard": "^19.0.0",
         "stylelint-order": "^3.1.1",
         "stylelint-scss": "^3.12.1",
-        "vee-validate": "^3.0.11",
+        "vee-validate": "^3.2.1",
         "vue": "^2.6.10",
         "vue-chartjs": "^3.5.0",
         "vue-eslint-parser": "^6.0.4",
