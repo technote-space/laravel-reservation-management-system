@@ -239,7 +239,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public static function filterCrudRules(/** @noinspection PhpUnusedParameterInspection */ array $rules, string $name, Column $column, bool $isUpdate, ?int $primaryId, FormRequest $request): array
+    public static function filterCrudRules(array $rules, string $name, Column $column, bool $isUpdate, ?int $primaryId, FormRequest $request): array
     {
         if ('reservations.end_date' === $name) {
             $rules[] = 'after_or_equal:reservations.start_date';
@@ -359,7 +359,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     }
 
     /**
-     * @return Carbon
+     * @return Carbon|\Carbon\Carbon
      */
     public function getEndDatetimeAttribute(): Carbon
     {

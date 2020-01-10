@@ -132,7 +132,7 @@ class Room extends Model implements CrudableContract, SearchableContract
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public static function filterCrudRules(/** @noinspection PhpUnusedParameterInspection */ array $rules, string $name, Column $column, bool $isUpdate, ?int $primaryId, FormRequest $request): array
+    public static function filterCrudRules(array $rules, string $name, Column $column, bool $isUpdate, ?int $primaryId, FormRequest $request): array
     {
         if ('rooms.number' === $name) {
             $rules[] = 'min:1';
