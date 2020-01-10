@@ -120,6 +120,9 @@
 - [Travis CI](https://travis-ci.com/)
   - Lint
   - テスト
+- [GitHub Actions](https://help.github.com/ja/actions)
+  - Lint
+  - テスト
   - Deploy
     - GitHub Pages
 ### デザインフレームワーク
