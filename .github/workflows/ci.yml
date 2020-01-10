@@ -6,15 +6,17 @@ on:
     tags:
       - "!*"
 
-name: Build
+name: CI
+
+env:
+  CI: 1
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
 
 jobs:
   eslint:
     name: ESLint
     runs-on: ubuntu-latest
     env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
       NO_COMPOSER: 1
     steps:
       - uses: actions/checkout@v1
@@ -33,8 +35,6 @@ jobs:
     name: stylelint
     runs-on: ubuntu-latest
     env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
       NO_COMPOSER: 1
     steps:
       - uses: actions/checkout@v1
@@ -53,9 +53,7 @@ jobs:
     name: PHP Code Sniffer
     runs-on: ubuntu-latest
     env:
-      CI: 1
       APP_ENV: testing
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
       NO_NPM: 1
     steps:
       - uses: actions/checkout@v1
@@ -74,9 +72,7 @@ jobs:
     name: PHPMD
     runs-on: ubuntu-latest
     env:
-      CI: 1
       APP_ENV: testing
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
       NO_NPM: 1
     steps:
       - uses: actions/checkout@v1
@@ -98,10 +94,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['8', '10', '11', '12']
+        node: ['10', '11', '12']
     env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
       NO_COMPOSER: 1
     steps:
       - uses: actions/checkout@v1
@@ -130,9 +124,6 @@ jobs:
     name: PHPUnit
     needs: [phpcs, phpmd]
     runs-on: ubuntu-16.04
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     services:
       mysql:
         image: mysql
@@ -168,9 +159,6 @@ jobs:
     name: Laravel Dusk
     needs: [phpcs, phpmd]
     runs-on: ubuntu-16.04
-    env:
-      CI: 1
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
     services:
       mysql:
         image: mysql

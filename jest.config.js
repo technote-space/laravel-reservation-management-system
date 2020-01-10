@@ -9,7 +9,7 @@ module.exports = {
         'js',
         'vue',
     ],
-    setupFiles: ['<rootDir>/jest.setup.js'],
+    setupFiles: ['<rootDir>/resources/js/__tests__/jest.setup.js'],
     coverageDirectory: '<rootDir>/coverage/js',
     snapshotSerializers: [
         '<rootDir>/node_modules/jest-serializer-vue',
