@@ -22,6 +22,16 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - name: Get Yarn Cache Directory
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache node dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Check code style
         run: bash bin/check/eslint.sh
       - uses: 8398a7/action-slack@v1
@@ -40,6 +50,16 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - name: Get Yarn Cache Directory
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache node dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Check code style
         run: bash bin/check/stylelint.sh
       - uses: 8398a7/action-slack@v1
@@ -59,6 +79,17 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer modules
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
       - name: Check code style
         run: bash bin/check/phpcs.sh
       - uses: 8398a7/action-slack@v1
@@ -78,6 +109,17 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer modules
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
       - name: Check code style
         run: bash bin/check/phpmd.sh
       - uses: 8398a7/action-slack@v1
@@ -105,6 +147,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+      - name: Get Yarn Cache Directory
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache node dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
       - name: Run tests
         run: bash bin/test/jest.sh
       - name: Codecov
@@ -140,6 +192,17 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.php }}
         run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer modules
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
       - name: Run tests
         run: bash bin/test/phpunit.sh
       - name: Codecov
@@ -175,6 +238,17 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.php }}
         run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - name: Cache composer modules
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
       - name: Run tests
         run: bash bin/test/dusk.sh
       - uses: actions/upload-artifact@master
