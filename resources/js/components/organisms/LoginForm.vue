@@ -35,7 +35,7 @@
             />
         </ValidationProvider>
         <v-btn
-            :disabled="invalid && !submitting"
+            :disabled="invalid || submitting"
             class="mt-4"
             type="submit"
             @click="login"
