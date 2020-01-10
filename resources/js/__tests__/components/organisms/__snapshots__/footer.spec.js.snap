@@ -67,7 +67,7 @@ exports[`Footer should render footer 1`] = `
           class="flex secondary lighten-2 py-4 text-center white--text xs12"
         >
           
-            2019 — 
+            2020 — 
           <strong>
             Reservation System
           </strong>

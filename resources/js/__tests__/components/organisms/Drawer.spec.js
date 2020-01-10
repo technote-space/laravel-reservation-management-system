@@ -3,6 +3,9 @@ import Vuex from 'vuex';
 import Drawer from '../../../components/organisms/Drawer';
 import app from '../app';
 import setupLocalVue from '../setupLocalVue';
+import { flush } from '../../utils';
+
+jest.useFakeTimers();
 
 describe('Drawer', () => {
     it('should not render drawer if not authenticated', () => {
@@ -18,8 +21,10 @@ describe('Drawer', () => {
                     'auth/getUserName': () => 'テスト',
                 },
                 actions: {
-                    'common/setDrawerOpen': () => {},
-                    'auth/logout': () => {},
+                    'common/setDrawerOpen': () => {
+                    },
+                    'auth/logout': () => {
+                    },
                 },
             }),
         }));
@@ -42,8 +47,10 @@ describe('Drawer', () => {
                     'auth/getUserName': () => 'テスト',
                 },
                 actions: {
-                    'common/setDrawerOpen': () => {},
-                    'auth/logout': () => {},
+                    'common/setDrawerOpen': () => {
+                    },
+                    'auth/logout': () => {
+                    },
                 },
             }),
         }));
@@ -55,7 +62,7 @@ describe('Drawer', () => {
         expect(wrapper.findAll('.v-navigation-drawer.v-navigation-drawer--close')).toHaveLength(1);
     });
 
-    it('should render drawer', () => {
+    it('should render drawer', async() => {
         const setDrawerOpen = jest.fn();
         const logout = jest.fn();
         const wrapper = mount(app(Drawer, 'inner'), setupLocalVue({
@@ -86,10 +93,11 @@ describe('Drawer', () => {
         expect(wrapper.findAll('.v-list-item__title').at(1).text()).toBe('Test1');
         expect(wrapper.findAll('.v-list-item__title').at(2).text()).toBe('Test2');
         expect(wrapper.findAll('.v-list-item__title').at(3).text()).toBe('Logout');
+        expect(wrapper.findAll('#test-contents')).toHaveLength(1);
 
         wrapper.find('#test-contents').trigger('click');
+        await flush();
         expect(setDrawerOpen).toBeCalled();
-
         wrapper.findAll('.v-list-item__title').at(3).trigger('click');
         expect(logout).toBeCalled();
     });

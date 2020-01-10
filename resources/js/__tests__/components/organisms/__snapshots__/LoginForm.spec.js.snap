@@ -36,13 +36,13 @@ exports[`LoginForm should render login form 1`] = `
                   >
                     <label
                       class="v-label theme--light"
-                      for="input-11"
+                      for="input-12"
                       style="left: 0px; position: absolute;"
                     >
                       E-Mail
                     </label>
                     <input
-                      id="input-11"
+                      id="input-12"
                       required="required"
                       type="text"
                     />
@@ -54,10 +54,8 @@ exports[`LoginForm should render login form 1`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <span
+                    <div
                       class="v-messages__wrapper"
-                      name="message-transition"
-                      tag="div"
                     />
                   </div>
                 </div>
@@ -80,13 +78,13 @@ exports[`LoginForm should render login form 1`] = `
                   >
                     <label
                       class="v-label theme--light"
-                      for="input-15"
+                      for="input-16"
                       style="left: 0px; position: absolute;"
                     >
                       Password
                     </label>
                     <input
-                      id="input-15"
+                      id="input-16"
                       required="required"
                       type="password"
                     />
@@ -112,10 +110,8 @@ exports[`LoginForm should render login form 1`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <span
+                    <div
                       class="v-messages__wrapper"
-                      name="message-transition"
-                      tag="div"
                     />
                   </div>
                   <div
@@ -189,13 +185,13 @@ exports[`LoginForm should render login form 2`] = `
                   >
                     <label
                       class="v-label v-label--active theme--light error--text"
-                      for="input-11"
+                      for="input-12"
                       style="left: 0px; position: absolute;"
                     >
                       E-Mail
                     </label>
                     <input
-                      id="input-11"
+                      id="input-12"
                       required="required"
                       type="text"
                     />
@@ -208,17 +204,15 @@ exports[`LoginForm should render login form 2`] = `
                     class="v-messages theme--light error--text"
                     role="alert"
                   >
-                    <span
+                    <div
                       class="v-messages__wrapper"
-                      name="message-transition"
-                      tag="div"
                     >
                       <div
                         class="v-messages__message"
                       >
                         E-Mail is not valid.
                       </div>
-                    </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -240,13 +234,13 @@ exports[`LoginForm should render login form 2`] = `
                   >
                     <label
                       class="v-label v-label--active theme--light error--text"
-                      for="input-15"
+                      for="input-16"
                       style="left: 0px; position: absolute;"
                     >
                       Password
                     </label>
                     <input
-                      id="input-15"
+                      id="input-16"
                       required="required"
                       type="password"
                     />
@@ -273,17 +267,15 @@ exports[`LoginForm should render login form 2`] = `
                     class="v-messages theme--light error--text"
                     role="alert"
                   >
-                    <span
+                    <div
                       class="v-messages__wrapper"
-                      name="message-transition"
-                      tag="div"
                     >
                       <div
                         class="v-messages__message"
                       >
                         Password is not valid.
                       </div>
-                    </span>
+                    </div>
                   </div>
                   <div
                     class="v-counter theme--light"
@@ -357,13 +349,13 @@ exports[`LoginForm should render login form 3`] = `
                   >
                     <label
                       class="v-label v-label--active theme--light"
-                      for="input-11"
+                      for="input-12"
                       style="left: 0px; position: absolute;"
                     >
                       E-Mail
                     </label>
                     <input
-                      id="input-11"
+                      id="input-12"
                       required="required"
                       type="text"
                     />
@@ -375,10 +367,8 @@ exports[`LoginForm should render login form 3`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <span
+                    <div
                       class="v-messages__wrapper"
-                      name="message-transition"
-                      tag="div"
                     />
                   </div>
                 </div>
@@ -401,13 +391,13 @@ exports[`LoginForm should render login form 3`] = `
                   >
                     <label
                       class="v-label v-label--active theme--light"
-                      for="input-15"
+                      for="input-16"
                       style="left: 0px; position: absolute;"
                     >
                       Password
                     </label>
                     <input
-                      id="input-15"
+                      id="input-16"
                       required="required"
                       type="password"
                     />
@@ -433,10 +423,8 @@ exports[`LoginForm should render login form 3`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <span
+                    <div
                       class="v-messages__wrapper"
-                      name="message-transition"
-                      tag="div"
                     />
                   </div>
                   <div
