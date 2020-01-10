@@ -121,7 +121,6 @@
   - Lint
   - テスト
   - Deploy
-    - GitHub Releases
     - GitHub Pages
 ### デザインフレームワーク
 - [Vuetify](https://vuetifyjs.com/)

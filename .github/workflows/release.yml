@@ -31,35 +31,6 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: failure()
 
-  releases:
-    name: Upload build files
-    needs: test
-    runs-on: ubuntu-latest
-    env:
-      TRAVIS_BUILD_DIR: ${{ github.workspace }}
-      RELEASE_FILE: release.zip
-    steps:
-      - name: Checkout
-        uses: actions/checkout@master
-        with:
-          fetch-depth: 3
-      - name: Build
-        run: bash bin/deploy/gh-releases.sh
-      - name: Upload
-        uses: technote-fork/action-gh-release@v1
-        with:
-          files: release.zip
-          draft: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - uses: 8398a7/action-slack@v1
-        with:
-          type: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
-
   pages:
     name: Publish GitHub Pages
     needs: test
@@ -93,7 +64,7 @@ jobs:
 
   slack:
     name: Slack
-    needs: [pages, releases]
+    needs: [pages]
     runs-on: ubuntu-latest
     steps:
       - uses: 8398a7/action-slack@v1

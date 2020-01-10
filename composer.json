@@ -85,6 +85,10 @@
         "setup": [
             "bash bin/setup.sh"
         ],
+        "prepare": [
+            "php -d memory_limit=2G $(which composer) install --no-interaction --prefer-dist --no-suggest",
+            "yarn install"
+        ],
         "deploy": [
             "bash bin/deploy.sh"
         ],
@@ -93,7 +97,7 @@
             "@build:js"
         ],
         "build:php": [
-            "composer install --no-dev --no-interaction --prefer-dist --no-suggest"
+            "php -d memory_limit=2G $(which composer) install --no-dev --no-interaction --prefer-dist --no-suggest"
         ],
         "build:js": [
             "yarn prod"
@@ -101,6 +105,11 @@
         "test": [
             "@stage-lint",
             "@stage-test"
+        ],
+        "fix": [
+            "@eslint:fix",
+            "@stylelint:fix",
+            "@phpcs:fix"
         ],
         "stage-lint": [
             "@bin:phpcs",
@@ -129,8 +138,11 @@
         "phpcs": [
             "phpcs --standard=./phpcs.xml"
         ],
+        "phpcs:fix": [
+            "phpcbf --standard=./phpcs.xml"
+        ],
         "phpmd": [
-            "phpmd ./app/,./config,./database/factories,./database/seeds,./routes/,./tests/ text phpmd.xml"
+            "phpmd ./app/,./config,./database/factories,./database/seeds,./routes/,./tests/ ansi phpmd.xml"
         ],
         "phpunit": [
             "phpunit --stop-on-failure --colors=always"
@@ -166,7 +178,10 @@
             "php artisan dusk --env=dusk"
         ],
         "eslint": [
-            "yarn lint"
+            "yarn eslint"
+        ],
+        "eslint:fix": [
+            "yarn eslint:fix"
         ],
         "jest": [
             "yarn cover"
@@ -176,6 +191,9 @@
         ],
         "stylelint": [
             "yarn stylelint"
+        ],
+        "stylelint:fix": [
+            "yarn stylelint:fix"
         ],
         "bin:phpcs": [
             "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/check/phpcs.sh"
@@ -222,10 +240,6 @@
         ],
         "gh-prepare": [
             "bash bin/build.sh"
-        ],
-        "gh-releases": [
-            "@gh-prepare",
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) RELEASE_FILE=release.zip bin/deploy/gh-releases.sh"
         ],
         "gh-pages": [
             "@gh-prepare",
