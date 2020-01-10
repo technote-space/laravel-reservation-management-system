@@ -1,9 +1,9 @@
 <template>
     <ValidationObserver
-        @submit.prevent="login"
         v-slot="{ invalid }"
         class="text-center"
         tag="form"
+        @submit.prevent="login"
     >
         <ValidationProvider
             v-slot="{ errors }"
@@ -29,16 +29,16 @@
                 :hint="$t('messages.password_hint', {min: 8})"
                 :label="$t('validations.attributes.password')"
                 :type="passwordType"
-                @click:append="passwordVisibility = !passwordVisibility"
                 counter
                 required
+                @click:append="passwordVisibility = !passwordVisibility"
             />
         </ValidationProvider>
         <v-btn
-            @click="login"
             :disabled="invalid && !submitting"
             class="mt-4"
             type="submit"
+            @click="login"
         >
             {{ $t('pages.login') }}
         </v-btn>

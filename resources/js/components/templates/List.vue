@@ -34,10 +34,10 @@
                         />
                         <v-spacer />
                         <v-btn
-                            @click.stop="createItem"
                             color="primary"
                             dark
                             class="mb-2"
+                            @click.stop="createItem"
                         >
                             {{ $t('misc.new_item') }}
                         </v-btn>
@@ -55,23 +55,23 @@
                         </v-dialog>
                         <YesCancel
                             :dialog="deleteDialog"
+                            message="messages.delete_item"
                             @yes="deleteItem"
                             @cancel="deleteTargetId = null"
-                            message="messages.delete_item"
                         />
                     </v-toolbar>
                 </template>
                 <template v-slot:item.action="{ item }">
                     <v-icon
-                        @click="editItem(item)"
                         small
                         class="mr-2"
+                        @click="editItem(item)"
                     >
                         edit
                     </v-icon>
                     <v-icon
-                        @click="deleteItemConfirm(item)"
                         small
+                        @click="deleteItemConfirm(item)"
                     >
                         delete
                     </v-icon>
