@@ -53,6 +53,7 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @property-read Room $room
  * @mixin Eloquent
  * @mixin Builder
+ * @property-read int $payment
  */
 class Reservation extends Model implements CrudableContract, SearchableContract
 {
@@ -96,6 +97,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     protected $with = [
         'detail',
         'room',
+        'room.reservations',
     ];
 
     /**
@@ -407,6 +409,14 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     public function getChargeAttribute(): int
     {
         return $this->days * $this->room->price;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaymentAttribute(): int
+    {
+        return $this->detail->payment ?? 0;
     }
 
     /**

@@ -202,7 +202,7 @@ class Room extends Model implements CrudableContract, SearchableContract
     {
         return $this->lastYearUsages->sum(function ($row) {
             /** @var Reservation $row */
-            return $row->detail->payment;
+            return $row->payment;
         });
     }
 }
