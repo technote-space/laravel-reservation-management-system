@@ -79,11 +79,15 @@
         "post-update-cmd": [
             "if [[ -n $(php artisan list --raw | grep 'ide-helper:generate') ]] && [[ -f .env ]]; then composer ide; fi",
             "php artisan optimize --ansi",
-            "php artisan cache:clear --ansi",
-            "php artisan config:clear --ansi"
+            "@cache",
+            "php artisan config:cache --ansi"
         ],
         "setup": [
             "bash bin/setup.sh"
+        ],
+        "cache": [
+            "php artisan cache:clear --ansi",
+            "php artisan config:clear --ansi"
         ],
         "prepare": [
             "php -d memory_limit=2G $(which composer) install --no-interaction --prefer-dist --no-suggest",
@@ -196,25 +200,25 @@
             "yarn stylelint:fix"
         ],
         "bin:phpcs": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/check/phpcs.sh"
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash bin/check/phpcs.sh"
         ],
         "bin:phpmd": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/check/phpmd.sh"
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash bin/check/phpmd.sh"
         ],
         "bin:eslint": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/check/eslint.sh"
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash bin/check/eslint.sh"
         ],
         "bin:stylelint": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/check/stylelint.sh"
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash bin/check/stylelint.sh"
         ],
         "bin:jest": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/test/jest.sh"
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash bin/test/jest.sh"
         ],
         "bin:phpunit": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/test/phpunit.sh"
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash bin/test/phpunit.sh"
         ],
         "bin:dusk": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/test/dusk.sh"
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash bin/test/dusk.sh"
         ],
         "m": [
             "@da",
@@ -243,19 +247,19 @@
         ],
         "gh-pages": [
             "@gh-prepare",
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_DIR=public/gh-pages GH_PAGES_BASE=/gh-pages bin/deploy/gh-pages.sh"
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} GH_PAGES_DIR=public/gh-pages GH_PAGES_BASE=/gh-pages bin/deploy/gh-pages.sh"
         ],
         "gh-pages:ga": [
             "@gh-prepare",
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) GH_PAGES_TRACKING_ID=TEST GH_PAGES_DIR=public/gh-pages GH_PAGES_BASE=/gh-pages bin/deploy/gh-pages.sh"
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} GH_PAGES_TRACKING_ID=TEST GH_PAGES_DIR=public/gh-pages GH_PAGES_BASE=/gh-pages bin/deploy/gh-pages.sh"
         ],
         "routes": [
             "php artisan route:clear --ansi",
             "php artisan route:list --ansi"
         ],
         "chrome": [
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/prepare/install-google-chrome.sh",
-            "TRAVIS_BUILD_DIR=$(cd $(dirname $0); pwd) bash bin/prepare/install-chrome-driver.sh"
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash bin/prepare/install-google-chrome.sh",
+            "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} bash bin/prepare/install-chrome-driver.sh"
         ]
     }
 }

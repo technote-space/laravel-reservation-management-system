@@ -12,21 +12,19 @@ source "${current}"/../variables.sh
 
 echo ""
 echo ">> Setup"
-rm -f .env
+if [[ -f .env ]]; then
+    mv -f .env .env.phpunit.backup
+fi
 cp .env.travis .env
 ls -la .env
 composer install --no-interaction --prefer-dist --no-suggest
 php artisan key:generate
-php artisan config:cache
-
-echo ""
-echo ">> Build JS"
-# shellcheck disable=SC1090
-source "${current}"/../prepare/install-latest-node.sh
-node -v
-yarn install
-composer build:js
+composer cache
 
 echo ""
 echo ">> Run composer phpunit"
 composer phpunit
+
+if [[ -f .env.phpunit.backup ]]; then
+    mv -f .env.phpunit.backup .env
+fi
