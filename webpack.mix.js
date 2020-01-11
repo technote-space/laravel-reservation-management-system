@@ -11,4 +11,8 @@ mix.webpackConfig(webpack => {
             }),
         ],
     };
-}).js('resources/js/app.js', 'public/js').sass('resources/sass/app.scss', 'public/css').setResourceRoot(base).version();
+})
+    .js('resources/js/app.js', 'public/js')
+    .sass('resources/sass/app.scss', 'public/css')
+    .setResourceRoot(base)
+    .version();
