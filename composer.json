@@ -186,11 +186,9 @@
             "bash bin/build.sh"
         ],
         "gh-pages": [
-            "@gh-prepare",
             "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} GH_PAGES_DIR=public/gh-pages GH_PAGES_BASE=/gh-pages bash bin/deploy/gh-pages.sh"
         ],
         "gh-pages:ga": [
-            "@gh-prepare",
             "TRAVIS_BUILD_DIR=${TRAVIS_BUILD_DIR:-$(cd $(dirname $0); pwd)} GH_PAGES_DIR=public/gh-pages GH_PAGES_BASE=/gh-pages GH_PAGES_TRACKING_ID=TEST bash bin/deploy/gh-pages.sh"
         ],
         "routes": [
