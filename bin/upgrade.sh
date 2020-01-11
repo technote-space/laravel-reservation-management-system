@@ -7,6 +7,7 @@ yarn update
 
 rm -rdf vendor
 rm -f composer.lock
+rm -rdf bootstrap/cache
 
 packages=()
 packages+=( "composer/composer" )
@@ -18,7 +19,7 @@ packages+=( "staudenmeir/eloquent-eager-limit" )
 packages+=( "technote/laravel-crud-helper" )
 packages+=( "technote/laravel-search-helper" )
 # shellcheck disable=SC2068
-php -d memory_limit=2G "$(command -v composer)" require ${packages[@]}
+php -d memory_limit=2G "$(command -v composer)" require --prefer-dist ${packages[@]}
 
 packages=()
 packages+=( "barryvdh/laravel-debugbar" )
@@ -36,4 +37,4 @@ packages+=( "phpunit/phpunit" )
 packages+=( "phpmd/phpmd" )
 packages+=( "squizlabs/php_codesniffer" )
 # shellcheck disable=SC2068
-php -d memory_limit=2G "$(command -v composer)" require --dev ${packages[@]}
+php -d memory_limit=2G "$(command -v composer)" require --dev --prefer-dist ${packages[@]}

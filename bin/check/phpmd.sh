@@ -12,7 +12,7 @@ source "${current}"/../variables.sh
 
 echo ""
 echo ">> Setup"
-composer install --no-interaction --prefer-dist --no-suggest
+composer prepare:php
 
 echo ""
 echo ">> Run composer phpmd"

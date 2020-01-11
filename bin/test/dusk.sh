@@ -17,8 +17,8 @@ if [[ -f .env ]]; then
 fi
 cp .env.travis .env
 ls -la .env
-composer install --no-interaction --prefer-dist --no-suggest
 php artisan key:generate
+composer prepare:php
 composer cache
 
 echo ""
@@ -26,7 +26,7 @@ echo ">> Build JS"
 # shellcheck disable=SC1090
 source "${current}"/../prepare/install-latest-node.sh
 node -v
-yarn install
+composer prepare:js
 composer build:js
 
 echo ""

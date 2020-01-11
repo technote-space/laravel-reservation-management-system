@@ -17,7 +17,7 @@ else
   exit 1
 fi
 
-composer install --no-interaction --prefer-dist --no-suggest
+composer prepare:php
 
 bash "${current}"/prepare/install-chrome-driver.sh
 

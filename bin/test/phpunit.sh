@@ -17,8 +17,8 @@ if [[ -f .env ]]; then
 fi
 cp .env.travis .env
 ls -la .env
-composer install --no-interaction --prefer-dist --no-suggest
 php artisan key:generate
+composer prepare:php
 composer cache
 
 echo ""
