@@ -8,7 +8,7 @@
             child-flex
         >
             <v-data-table
-                :headers="headers"
+                :headers="tableHeaders"
                 :items="items"
                 :page.sync="page"
                 :items-per-page="perPage"
@@ -140,7 +140,7 @@
             icon () {
                 return this.getModelIcon(this.model);
             },
-            headers () {
+            tableHeaders () {
                 return this.getListHeaders.map(item => {
                     return Object.assign({}, item, {
                         text: this.$t('column.' + item.text),
