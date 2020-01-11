@@ -6,4 +6,3 @@ echo ""
 echo ">> Build"
 yarn install
 composer build
-yarn --prod install

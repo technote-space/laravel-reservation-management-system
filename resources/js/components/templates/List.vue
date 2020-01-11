@@ -8,7 +8,7 @@
             child-flex
         >
             <v-data-table
-                :headers="headers"
+                :headers="tableHeaders"
                 :items="items"
                 :page.sync="page"
                 :items-per-page="perPage"
@@ -34,10 +34,10 @@
                         />
                         <v-spacer />
                         <v-btn
-                            @click.stop="createItem"
                             color="primary"
                             dark
                             class="mb-2"
+                            @click.stop="createItem"
                         >
                             {{ $t('misc.new_item') }}
                         </v-btn>
@@ -55,26 +55,19 @@
                         </v-dialog>
                         <YesCancel
                             :dialog="deleteDialog"
+                            message="messages.delete_item"
                             @yes="deleteItem"
                             @cancel="deleteTargetId = null"
-                            message="messages.delete_item"
                         />
                     </v-toolbar>
                 </template>
-                <template v-slot:item.action="{ item }">
-                    <v-icon
-                        @click="editItem(item)"
-                        small
-                        class="mr-2"
-                    >
-                        edit
-                    </v-icon>
-                    <v-icon
-                        @click="deleteItemConfirm(item)"
-                        small
-                    >
-                        delete
-                    </v-icon>
+                <template v-slot:item="{ item, headers }">
+                    <ListRow
+                        :item="item"
+                        :headers="headers"
+                        @edit-item="editItem(item)"
+                        @delete-item="deleteItemConfirm(item)"
+                    />
                 </template>
                 <template v-slot:footer>
                     <div class="text-center">
@@ -94,11 +87,13 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import ListRow from '../molecules/ListRow';
     import Edit from '../organisms/Edit';
     import YesCancel from '../organisms/confirm/YesCancelDialog';
 
     export default {
         components: {
+            ListRow,
             Edit,
             YesCancel,
         },
@@ -145,7 +140,7 @@
             icon () {
                 return this.getModelIcon(this.model);
             },
-            headers () {
+            tableHeaders () {
                 return this.getListHeaders.map(item => {
                     return Object.assign({}, item, {
                         text: this.$t('column.' + item.text),
@@ -181,7 +176,7 @@
                 this.dialog = true;
             },
             deleteItemConfirm (item) {
-                this.deleteTargetId = item.id;
+                this.deleteTargetId = item ? item.id - 0 : null;
             },
             deleteItem () {
                 this.destroy({ model: this.model, id: this.deleteTargetId });

@@ -12,7 +12,7 @@ source "${current}"/../variables.sh
 
 echo ""
 echo ">> Setup"
-yarn install
+composer prepare:js
 
 echo ""
 echo ">> Run composer eslint"

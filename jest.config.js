@@ -1,5 +1,5 @@
 module.exports = {
-    verbose: false,
+    verbose: true,
     testRegex: 'resources/js/__tests__/.*\\.spec\\.js$',
     transform: {
         '^.+\\.js$': '<rootDir>/node_modules/babel-jest',
@@ -9,7 +9,7 @@ module.exports = {
         'js',
         'vue',
     ],
-    setupFiles: ['<rootDir>/jest.setup.js'],
+    setupFiles: ['<rootDir>/resources/js/__tests__/jest.setup.js'],
     coverageDirectory: '<rootDir>/coverage/js',
     snapshotSerializers: [
         '<rootDir>/node_modules/jest-serializer-vue',

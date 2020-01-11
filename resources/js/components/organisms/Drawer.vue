@@ -2,11 +2,11 @@
     <v-navigation-drawer
         v-if="isAuthenticated"
         :value="isOpenDrawer"
-        @input="setDrawerOpen"
         color="secondary"
         fixed
         temporary
         dark
+        @input="setDrawerOpen"
     >
         <v-list
             dense

@@ -7,7 +7,7 @@
 .env.dusk
 .env.dusk.dusk
 .env.testing
-.env.backup
+.env*.backup
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -17,7 +17,6 @@ yarn-error.log
 /coverage
 /.idea
 /.work
-composer.lock
 /public/css
 /public/js
 /release.zip

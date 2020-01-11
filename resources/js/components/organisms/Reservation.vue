@@ -5,15 +5,15 @@
     >
         <template v-slot:activator="{ on: { click } }">
             <v-btn
-                @click="click"
                 icon
+                @click="click"
             >
                 <v-icon>mdi-calendar-month</v-icon>
             </v-btn>
         </template>
         <Calendar
-            ref="calendar"
             v-if="dialog"
+            ref="calendar"
             :event-callback="eventCallback"
             :reset-calendar-callback="resetCalendarCallback"
             :dialog="dialog"

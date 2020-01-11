@@ -53,6 +53,7 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @property-read Room $room
  * @mixin Eloquent
  * @mixin Builder
+ * @property-read int $payment
  */
 class Reservation extends Model implements CrudableContract, SearchableContract
 {
@@ -96,6 +97,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     protected $with = [
         'detail',
         'room',
+        'room.reservations',
     ];
 
     /**
@@ -239,7 +241,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public static function filterCrudRules(/** @noinspection PhpUnusedParameterInspection */ array $rules, string $name, Column $column, bool $isUpdate, ?int $primaryId, FormRequest $request): array
+    public static function filterCrudRules(array $rules, string $name, Column $column, bool $isUpdate, ?int $primaryId, FormRequest $request): array
     {
         if ('reservations.end_date' === $name) {
             $rules[] = 'after_or_equal:reservations.start_date';
@@ -359,7 +361,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     }
 
     /**
-     * @return Carbon
+     * @return Carbon|\Carbon\Carbon
      */
     public function getEndDatetimeAttribute(): Carbon
     {
@@ -407,6 +409,14 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     public function getChargeAttribute(): int
     {
         return $this->days * $this->room->price;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPaymentAttribute(): int
+    {
+        return $this->detail->payment ?? 0;
     }
 
     /**

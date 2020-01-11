@@ -7,9 +7,9 @@
         :valid-range="validRange"
         :default-date="defaultDate"
         :time-zone="timezone"
-        @dateClick="dateClick"
         default-view="dayGridMonth"
         height="parent"
+        @dateClick="dateClick"
     />
 </template>
 
@@ -38,7 +38,8 @@
             },
             dateClicked: {
                 type: Function,
-                default: () => () => {},
+                default: () => () => {
+                },
             },
             resetCalendarCallback: {
                 type: Function,
@@ -46,7 +47,8 @@
             },
             validRange: {
                 type: Object,
-                default: () => {},
+                default: () => {
+                },
             },
             dialog: {
                 type: Boolean,

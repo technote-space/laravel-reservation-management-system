@@ -12,19 +12,22 @@ source "${current}"/../variables.sh
 
 echo ""
 echo ">> Setup"
-rm -f .env
+if [[ -f .env ]]; then
+    mv -f .env .env.dusk.backup
+fi
 cp .env.travis .env
 ls -la .env
-composer install --no-interaction --prefer-dist --no-suggest
+
+composer prepare:php
 php artisan key:generate
-php artisan config:cache
+composer cache
 
 echo ""
 echo ">> Build JS"
 # shellcheck disable=SC1090
 source "${current}"/../prepare/install-latest-node.sh
 node -v
-yarn install
+composer prepare:js
 composer build:js
 
 echo ""
@@ -37,3 +40,10 @@ php artisan serve &
 echo ""
 echo ">> Run composer dusk"
 composer dusk
+
+if [[ -f .env.dusk.backup ]]; then
+    mv -f .env.dusk.backup .env
+fi
+
+sudo kill "$(pgrep -f "artisan serve")"
+sudo kill "$(sudo lsof -t -i:8000)"

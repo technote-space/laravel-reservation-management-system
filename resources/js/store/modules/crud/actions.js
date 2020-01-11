@@ -26,7 +26,7 @@ const scrollToTop = () => VueScrollTo.scrollTo('body', 600);
  * @param data
  * @returns {Promise<{response, error}>}
  */
-const access = async (context, method, name, url, succeeded, data = undefined) => {
+const access = async(context, method, name, url, succeeded, data = undefined) => {
     startLoading(context, name);
     return await apiAccess(method, url, {
         succeeded,
@@ -44,7 +44,7 @@ const access = async (context, method, name, url, succeeded, data = undefined) =
  * @param succeeded
  * @returns {Promise<{response, error}>}
  */
-const getAccess = async (context, name, url, succeeded) => {
+const getAccess = async(context, name, url, succeeded) => {
     const model = store.getters[ 'crud/getTargetModel' ];
     return await access(context, 'get', name, url, response => {
         succeeded(response, model);
@@ -62,7 +62,7 @@ const fetchList = async context => {
         return;
     }
 
-    await getAccess(context, 'fetchList', store.getters[ 'crud/getListEntryPoint' ], async (response, model) => {
+    await getAccess(context, 'fetchList', store.getters[ 'crud/getListEntryPoint' ], async(response, model) => {
         setResponse(context, response, model);
         if (store.getters[ 'crud/getPage' ] > store.getters[ 'crud/getTotalPage' ]) {
             await setPage(context, store.getters[ 'crud/getTotalPage' ]);
@@ -73,7 +73,7 @@ const fetchList = async context => {
 /**
  * @returns {Promise<void>}
  */
-const refreshList = async (context) => {
+const refreshList = async(context) => {
     context.commit(ON_REQUIRED_REFRESH);
     await fetchList(context);
 };
@@ -83,7 +83,7 @@ const refreshList = async (context) => {
  * @param id
  * @returns {Promise<void>}
  */
-const fetchDetail = async (context, id) => {
+const fetchDetail = async(context, id) => {
     if (!store.getters[ 'crud/isRequiredFetchDetail' ]) {
         scrollToTop();
         return;
@@ -107,7 +107,7 @@ export const setModel = (context, model) => {
  * @param page
  * @returns {Promise<void>}
  */
-export const setPage = async (context, page) => {
+export const setPage = async(context, page) => {
     context.commit(SET_PAGE, page);
     await fetchList(context);
 };
@@ -117,7 +117,7 @@ export const setPage = async (context, page) => {
  * @param id
  * @returns {Promise<void>}
  */
-export const setDetail = async (context, id) => {
+export const setDetail = async(context, id) => {
     context.commit(SET_ID, id);
     await fetchDetail(context, id);
     if (!store.getters[ 'crud/hasDetailCache' ]) {
@@ -132,7 +132,7 @@ export const setDetail = async (context, id) => {
  * @param check
  * @returns {Promise<boolean>}
  */
-export const create = async (context, { model, data, check = true }) => {
+export const create = async(context, { model, data, check = true }) => {
     if (check && !store.getters[ 'crud/isCreatable' ](model)) {
         setModel(context, model);
         return await create(context, { model, data, check: false });
@@ -143,7 +143,7 @@ export const create = async (context, { model, data, check = true }) => {
         return false;
     }
 
-    const { error } = await access(context, store.getters[ 'crud/getCreateMethod' ], 'create', store.getters[ 'crud/getCreateEntryPoint' ], async () => {
+    const { error } = await access(context, store.getters[ 'crud/getCreateMethod' ], 'create', store.getters[ 'crud/getCreateEntryPoint' ], async() => {
         addSuccessToasted(i18n.t('messages.succeeded.create'));
         await refreshList(context);
     }, data);
@@ -159,7 +159,7 @@ export const create = async (context, { model, data, check = true }) => {
  * @param check
  * @returns {Promise<boolean>}
  */
-export const edit = async (context, { model, id, data, check = true }) => {
+export const edit = async(context, { model, id, data, check = true }) => {
     if (check && !store.getters[ 'crud/isEditable' ](model, id)) {
         setModel(context, model);
         await setDetail(context, id);
@@ -172,7 +172,7 @@ export const edit = async (context, { model, id, data, check = true }) => {
         return false;
     }
 
-    const { error } = await access(context, store.getters[ 'crud/getEditMethod' ], 'edit', store.getters[ 'crud/getEditEntryPoint' ], async () => {
+    const { error } = await access(context, store.getters[ 'crud/getEditMethod' ], 'edit', store.getters[ 'crud/getEditEntryPoint' ], async() => {
         addSuccessToasted(i18n.t('messages.succeeded.edit'));
         context.commit(CLEAR_CACHE, id);
         await refreshList(context);
@@ -188,7 +188,7 @@ export const edit = async (context, { model, id, data, check = true }) => {
  * @param check
  * @returns {Promise<boolean>}
  */
-export const destroy = async (context, { model, id, check = true }) => {
+export const destroy = async(context, { model, id, check = true }) => {
     if (check && !store.getters[ 'crud/isDeletable' ](model, id)) {
         setModel(context, model);
         await setDetail(context, id);
@@ -201,7 +201,7 @@ export const destroy = async (context, { model, id, check = true }) => {
         return false;
     }
 
-    const { error } = await access(context, store.getters[ 'crud/getDeleteMethod' ], 'delete', store.getters[ 'crud/getDeleteEntryPoint' ], async () => {
+    const { error } = await access(context, store.getters[ 'crud/getDeleteMethod' ], 'delete', store.getters[ 'crud/getDeleteEntryPoint' ], async() => {
         addSuccessToasted(i18n.t('messages.succeeded.delete'));
         context.commit(CLEAR_CACHE, id);
         await refreshList(context);
@@ -216,7 +216,7 @@ export const destroy = async (context, { model, id, check = true }) => {
  * @param query
  * @returns {Promise<Array>}
  */
-export const search = async (context, { model, query }) => {
+export const search = async(context, { model, query }) => {
     if ('object' !== typeof query) {
         query = {};
     }
@@ -239,7 +239,7 @@ export const search = async (context, { model, query }) => {
  * @param endDate
  * @returns {Promise<boolean>}
  */
-export const checkReservation = async (context, { reservationId, roomId, guestId, startDate, endDate }) => {
+export const checkReservation = async(context, { reservationId, roomId, guestId, startDate, endDate }) => {
     const { response, error } = await access(context, 'post', 'check', store.getters[ 'crud/getReservationCheckEntryPoint' ], undefined, {
         'reservation_id': reservationId,
         'room_id': roomId,

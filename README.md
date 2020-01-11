@@ -1,5 +1,6 @@
 # Reservation Management System
 
+[![CI Status](https://github.com/technote-space/laravel-reservation-management-system/workflows/CI/badge.svg)](https://github.com/technote-space/laravel-reservation-management-system/actions)
 [![Build Status](https://travis-ci.com/technote-space/laravel-reservation-management-system.svg?branch=master)](https://travis-ci.com/technote-space/laravel-reservation-management-system)
 [![codecov](https://codecov.io/gh/technote-space/laravel-reservation-management-system/branch/master/graph/badge.svg)](https://codecov.io/gh/technote-space/laravel-reservation-management-system)
 [![CodeFactor](https://www.codefactor.io/repository/github/technote-space/laravel-reservation-management-system/badge)](https://www.codefactor.io/repository/github/technote-space/laravel-reservation-management-system)
@@ -119,8 +120,10 @@
 - [Travis CI](https://travis-ci.com/)
   - Lint
   - テスト
+- [GitHub Actions](https://help.github.com/ja/actions)
+  - Lint
+  - テスト
   - Deploy
-    - GitHub Releases
     - GitHub Pages
 ### デザインフレームワーク
 - [Vuetify](https://vuetifyjs.com/)

@@ -64,19 +64,24 @@ class ValueHelperTest extends TestCase
      */
     public function testGetDate(string $expected, string $time)
     {
-        $this->assertEquals($expected, self::$helper->getDate($time));
+        $this->assertTrue(1 === preg_match("/\A{$expected}\z/", self::$helper->getDate($time)));
     }
 
     public function getDateTestDataProvider()
     {
+        $year1 = date('Y');
+        $year2 = date('Y', strtotime('+1 year'));
+        $year3 = date('Y', strtotime('-1 year'));
+        $week  = '(日|月|火|水|木|金|土)';
+
         return [
-            ['7月1日(月)', '2019-07-1'],
-            ['7月2日(火)', '2019-7-2'],
-            ['7月3日(水)', '2019-07-03'],
-            ['7月4日(木)', '2019-07-04 12:00'],
-            ['7月5日(金)', '2019-07-05 15:00:00'],
-            ['2020年7月6日(月)', '2020-07-06'],
-            ['2018年7月6日(金)', '2018-07-06'],
+            ["7月1日\({$week}\)", "{$year1}-07-1"],
+            ["7月2日\({$week}\)", "{$year1}-7-2"],
+            ["7月3日\({$week}\)", "{$year1}-07-03"],
+            ["7月4日\({$week}\)", "{$year1}-07-04 12:00"],
+            ["7月5日\({$week}\)", "{$year1}-07-05 15:00:00"],
+            ["{$year2}年7月6日\({$week}\)", "{$year2}-07-06"],
+            ["{$year3}年7月6日\({$week}\)", "{$year3}-07-06"],
         ];
     }
 

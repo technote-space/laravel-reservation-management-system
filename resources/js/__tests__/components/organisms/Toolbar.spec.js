@@ -14,7 +14,8 @@ describe('Toolbar', () => {
                     'auth/isAuthenticated': () => false,
                 },
                 actions: {
-                    'common/openDrawer': () => {},
+                    'common/openDrawer': () => {
+                    },
                 },
             }),
         }));
@@ -33,7 +34,8 @@ describe('Toolbar', () => {
                     'auth/isAuthenticated': () => true,
                 },
                 actions: {
-                    'common/openDrawer': () => {},
+                    'common/openDrawer': () => {
+                    },
                 },
             }),
         }));
@@ -54,7 +56,8 @@ describe('Toolbar', () => {
                     'auth/isAuthenticated': () => false,
                 },
                 actions: {
-                    'common/openDrawer': () => {},
+                    'common/openDrawer': () => {
+                    },
                 },
             }),
         }));

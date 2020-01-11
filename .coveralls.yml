@@ -1,2 +1,0 @@
-coverage_clover: coverage/php/clover.xml
-json_path: coverage/php/coveralls-upload.json

@@ -5,7 +5,7 @@ import pagination from './pagination';
 import summary from './summary';
 import { arrayToObject } from '../../misc';
 
-export default async (method, url, data = undefined) => {
+export default async(method, url, data = undefined) => {
     const split = url.split('?');
     const matches = split[ 0 ].match(/^(.+?)(\/(\d+))?$/);
     if (matches) {
