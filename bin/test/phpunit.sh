@@ -17,9 +17,20 @@ if [[ -f .env ]]; then
 fi
 cp .env.travis .env
 ls -la .env
+sed -i -e 's/APP_ENV=testing/APP_ENV=development/' .env
+
 composer prepare:php
 php artisan key:generate
 composer cache
+
+# for Feature\IndexTest
+echo ""
+echo ">> Build JS"
+# shellcheck disable=SC1090
+source "${current}"/../prepare/install-latest-node.sh
+node -v
+composer prepare:js
+composer build:js
 
 echo ""
 echo ">> Run composer phpunit"

@@ -17,6 +17,7 @@ if [[ -f .env ]]; then
 fi
 cp .env.travis .env
 ls -la .env
+
 composer prepare:php
 php artisan key:generate
 composer cache

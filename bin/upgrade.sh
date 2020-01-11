@@ -14,6 +14,7 @@ ls -la .env
 rm -rdf vendor
 rm -f composer.lock
 rm -rdf bootstrap/cache
+mkdir -p bootstrap/cache
 
 packages=()
 packages+=( "composer/composer" )
