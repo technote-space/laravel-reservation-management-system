@@ -61,20 +61,13 @@
                         />
                     </v-toolbar>
                 </template>
-                <template v-slot:item.action="{ item }">
-                    <v-icon
-                        small
-                        class="mr-2"
-                        @click="editItem(item)"
-                    >
-                        edit
-                    </v-icon>
-                    <v-icon
-                        small
-                        @click="deleteItemConfirm(item)"
-                    >
-                        delete
-                    </v-icon>
+                <template v-slot:item="{ item, headers }">
+                    <ListRow
+                        :item="item"
+                        :headers="headers"
+                        @edit-item="editItem(item)"
+                        @delete-item="deleteItemConfirm(item)"
+                    />
                 </template>
                 <template v-slot:footer>
                     <div class="text-center">
@@ -94,11 +87,13 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex';
+    import ListRow from '../molecules/ListRow';
     import Edit from '../organisms/Edit';
     import YesCancel from '../organisms/confirm/YesCancelDialog';
 
     export default {
         components: {
+            ListRow,
             Edit,
             YesCancel,
         },
@@ -181,7 +176,7 @@
                 this.dialog = true;
             },
             deleteItemConfirm (item) {
-                this.deleteTargetId = item.id;
+                this.deleteTargetId = item ? item.id - 0 : null;
             },
             deleteItem () {
                 this.destroy({ model: this.model, id: this.deleteTargetId });
