@@ -16,6 +16,7 @@ finally() {
     fi
     pgrep -f "artisan serve" | xargs --no-run-if-empty kill -9
     pgrep -f "server.php" | xargs --no-run-if-empty kill -9
+    pgrep -f "google-chrome-stable" | xargs --no-run-if-empty kill -9
 }
 trap finally EXIT
 
