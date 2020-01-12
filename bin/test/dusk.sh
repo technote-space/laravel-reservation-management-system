@@ -10,6 +10,15 @@ current=$(
 # shellcheck disable=SC1090
 source "${current}"/../variables.sh
 
+finally() {
+    if [[ -f .env.dusk.backup ]]; then
+        mv -f .env.dusk.backup .env
+    fi
+    pgrep -f "artisan serve" | xargs --no-run-if-empty kill -9
+    pgrep -f "server.php" | xargs --no-run-if-empty kill -9
+}
+trap finally EXIT
+
 echo ""
 echo ">> Setup"
 if [[ -f .env ]]; then
@@ -40,10 +49,3 @@ php artisan serve &
 echo ""
 echo ">> Run composer dusk"
 composer dusk
-
-if [[ -f .env.dusk.backup ]]; then
-    mv -f .env.dusk.backup .env
-fi
-
-sudo kill "$(pgrep -f "artisan serve")"
-sudo kill "$(sudo lsof -t -i:8000)"

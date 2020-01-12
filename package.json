@@ -19,9 +19,9 @@
         "update": "ncu -u && yarn install && yarn upgrade && yarn audit"
     },
     "devDependencies": {
-        "@babel/core": "^7.7.7",
-        "@babel/plugin-proposal-object-rest-spread": "^7.7.7",
-        "@babel/preset-env": "^7.7.7",
+        "@babel/core": "^7.8.0",
+        "@babel/plugin-proposal-object-rest-spread": "^7.8.0",
+        "@babel/preset-env": "^7.8.0",
         "@fullcalendar/core": "^4.3.1",
         "@fullcalendar/daygrid": "^4.3.0",
         "@fullcalendar/interaction": "^4.3.0",
