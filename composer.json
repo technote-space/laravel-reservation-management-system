@@ -85,7 +85,9 @@
         "setup": "bash bin/setup.sh",
         "cache": [
             "php artisan cache:clear --ansi",
-            "php artisan config:clear --ansi"
+            "php artisan config:clear --ansi",
+            "php artisan route:clear --ansi",
+            "php artisan view:clear --ansi"
         ],
         "prepare": [
             "@prepare:php",
