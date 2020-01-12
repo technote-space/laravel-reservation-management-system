@@ -10,6 +10,13 @@ current=$(
 # shellcheck disable=SC1090
 source "${current}"/../variables.sh
 
+finally() {
+    if [[ -f .env.phpunit.backup ]]; then
+        mv -f .env.phpunit.backup .env
+    fi
+}
+trap finally EXIT
+
 echo ""
 echo ">> Setup"
 if [[ -f .env ]]; then
@@ -35,7 +42,3 @@ composer build:js
 echo ""
 echo ">> Run composer phpunit"
 composer phpunit
-
-if [[ -f .env.phpunit.backup ]]; then
-    mv -f .env.phpunit.backup .env
-fi
