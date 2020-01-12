@@ -125,7 +125,7 @@ jobs:
       GH_PAGES_DIR: public/gh-pages
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v1
         with:
           fetch-depth: 3
       - name: Get Yarn Cache Directory
