@@ -76,6 +76,17 @@ export default {
             search: 'rooms:id:name',
         },
         {
+            name: 'reservation_details.number',
+            text: 'number',
+            value: 'detail.number',
+            validate: {
+                required: true,
+                numeric: true,
+                max: 999,
+                min: 1,
+            },
+        },
+        {
             name: 'reservations.start_date',
             text: 'start_date',
             value: 'start_date_str',
@@ -84,7 +95,6 @@ export default {
                 'date_format': 'yyyy-MM-dd',
             },
             type: 'date',
-            checkKey: 'startDate',
         },
         {
             name: 'reservations.end_date',
@@ -95,18 +105,16 @@ export default {
                 'date_format': 'yyyy-MM-dd',
             },
             type: 'date',
-            checkKey: 'endDate',
         },
         {
-            name: 'reservation_details.number',
-            text: 'number',
-            value: 'detail.number',
+            name: 'reservations.check_out',
+            text: 'check_out',
+            value: 'check_out',
             validate: {
                 required: true,
-                numeric: true,
-                max: 999,
-                min: 1,
+                'date_format': 'HH:mm',
             },
+            type: 'time',
         },
         {
             name: 'reservation_details.payment',

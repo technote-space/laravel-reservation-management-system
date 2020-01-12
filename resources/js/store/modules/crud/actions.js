@@ -229,32 +229,3 @@ export const search = async(context, { model, query }) => {
     }
     return response.data;
 };
-
-/**
- * @param context
- * @param reservationId
- * @param roomId
- * @param guestId
- * @param startDate
- * @param endDate
- * @returns {Promise<boolean>}
- */
-export const checkReservation = async(context, { reservationId, roomId, guestId, startDate, endDate }) => {
-    const { response, error } = await access(context, 'post', 'check', store.getters[ 'crud/getReservationCheckEntryPoint' ], undefined, {
-        'reservation_id': reservationId,
-        'room_id': roomId,
-        'guest_id': guestId,
-        'start_date': startDate,
-        'end_date': endDate,
-    });
-
-    if (error) {
-        return false;
-    }
-
-    if (!response.data.result) {
-        addErrorToasted(response.data.message);
-    }
-
-    return response.data.result;
-};

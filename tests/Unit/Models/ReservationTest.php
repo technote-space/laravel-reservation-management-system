@@ -68,7 +68,7 @@ class ReservationTest extends BaseTestCase
         ];
     }
 
-    public function testAttributes()
+    public function testAttributes1()
     {
         $reservation = factory(Reservation::class)->create([
             'guest_id'   => self::$guest->id,
@@ -96,6 +96,52 @@ class ReservationTest extends BaseTestCase
         $this->assertFalse(Reservation::find($reservation->id)->is_future);
 
         Reservation::setNow(strtotime(date('Y-m-d 10:00:01').' +1days'));
+        $this->assertTrue(Reservation::find($reservation->id)->is_past);
+        $this->assertFalse(Reservation::find($reservation->id)->is_present);
+        $this->assertFalse(Reservation::find($reservation->id)->is_future);
+
+        Reservation::setNow(null);
+    }
+
+    public function testAttributes2()
+    {
+        $reservation = factory(Reservation::class)->create([
+            'guest_id'   => self::$guest->id,
+            'room_id'    => self::$room->id,
+            'start_date' => date('Y-m-d'),
+            'end_date'   => date('Y-m-d'),
+            'check_out'  => '12:00:00',
+        ]);
+        static::runSeed([
+            '--class' => 'SettingTableSeeder',
+        ]);
+
+        Reservation::setNow(strtotime(date('Y-m-d 14:59:59')));
+        $this->assertFalse(Reservation::find($reservation->id)->is_past);
+        $this->assertFalse(Reservation::find($reservation->id)->is_present);
+        $this->assertTrue(Reservation::find($reservation->id)->is_future);
+
+        Reservation::setNow(strtotime(date('Y-m-d 15:00:00')));
+        $this->assertFalse(Reservation::find($reservation->id)->is_past);
+        $this->assertTrue(Reservation::find($reservation->id)->is_present);
+        $this->assertFalse(Reservation::find($reservation->id)->is_future);
+
+        Reservation::setNow(strtotime(date('Y-m-d 10:00:00').' +1days'));
+        $this->assertFalse(Reservation::find($reservation->id)->is_past);
+        $this->assertTrue(Reservation::find($reservation->id)->is_present);
+        $this->assertFalse(Reservation::find($reservation->id)->is_future);
+
+        Reservation::setNow(strtotime(date('Y-m-d 10:00:01').' +1days'));
+        $this->assertFalse(Reservation::find($reservation->id)->is_past);
+        $this->assertTrue(Reservation::find($reservation->id)->is_present);
+        $this->assertFalse(Reservation::find($reservation->id)->is_future);
+
+        Reservation::setNow(strtotime(date('Y-m-d 12:00:00').' +1days'));
+        $this->assertFalse(Reservation::find($reservation->id)->is_past);
+        $this->assertTrue(Reservation::find($reservation->id)->is_present);
+        $this->assertFalse(Reservation::find($reservation->id)->is_future);
+
+        Reservation::setNow(strtotime(date('Y-m-d 12:00:01').' +1days'));
         $this->assertTrue(Reservation::find($reservation->id)->is_past);
         $this->assertFalse(Reservation::find($reservation->id)->is_present);
         $this->assertFalse(Reservation::find($reservation->id)->is_future);

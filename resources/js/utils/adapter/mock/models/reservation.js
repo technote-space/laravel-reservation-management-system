@@ -15,6 +15,7 @@ export default (item, relation = true) => {
         detail: detail(store.getters[ 'adapter/search' ]('reservationDetails', detail => detail.reservation_id === item.id)),
         guest: guest(store.getters[ 'adapter/search' ]('guests', guest => guest.id === item.guest_id)),
         room: roomData,
+        check_out: checkOutTime,
         start_date_str: item.start_date,
         start_datetime: item.start_date + `T${ checkInTime }:00.000+0900`,
         end_date_str: item.end_date,
