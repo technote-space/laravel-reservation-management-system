@@ -46,4 +46,4 @@ if [[ -f .env.dusk.backup ]]; then
 fi
 
 sudo kill "$(pgrep -f "artisan serve")"
-sudo kill "$(sudo lsof -t -i:8000)"
+sudo kill "$(pgrep -f "server.php")"

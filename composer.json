@@ -165,15 +165,9 @@
             "@migrate",
             "@seed"
         ],
-        "migrate": [
-            "php artisan migrate:refresh --ansi"
-        ],
-        "seed": [
-            "php artisan db:seed --ansi"
-        ],
-        "da": [
-            "composer dump-autoload"
-        ],
+        "migrate": "php artisan migrate:refresh --ansi",
+        "seed": "php artisan db:seed --ansi",
+        "da": "composer dump-autoload",
         "ide": [
             "php artisan ide-helper:generate --ansi",
             "php artisan ide-helper:models --write --ansi",
