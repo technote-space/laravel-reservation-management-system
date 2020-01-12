@@ -71,6 +71,8 @@ export default {
                 numeric: true,
             },
             type: 'search',
+            isAllowedEmptySearch: true,
+            isAutoSearch: true,
             search: 'rooms:id:name',
         },
         {

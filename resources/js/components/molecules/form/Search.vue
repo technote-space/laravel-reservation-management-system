@@ -1,64 +1,64 @@
 <template>
-    <v-dialog
-        v-model="dialog"
-        width="400"
-    >
-        <template v-slot:activator="{ on }">
-            <v-text-field
-                :label="label"
-                :value="display"
-                :prepend-icon="icon"
-                readonly
-                v-on="on"
-                :error-messages="validateErrors"
-            />
-        </template>
-        <v-layout
-            wrap
-            justify-center
+    <div>
+        <v-text-field
+            :label="label"
+            :value="display"
+            :prepend-icon="icon"
+            readonly
+            @click.stop="onClick"
+            :error-messages="validateErrors"
+        />
+        <v-dialog
+            v-model="dialog"
+            width="400"
         >
-            <v-card
-                class="pa-6"
-                width="100%"
+            <v-layout
+                wrap
+                justify-center
             >
-                <v-card-text>
-                    <v-form @submit.prevent="searchItem">
-                        <v-text-field
-                            :disabled="isSearching"
-                            v-model="searchWord"
+                <v-card
+                    class="pa-6"
+                    width="100%"
+                >
+                    <v-card-text>
+                        <v-form @submit.prevent="searchItem">
+                            <v-text-field
+                                :disabled="isSearching"
+                                v-model="searchWord"
+                            />
+                            <div class="text-right">
+                                <v-btn
+                                    :disabled="isDisabledSearchButton"
+                                    type="submit"
+                                >
+                                    {{ $t('misc.search') }}
+                                </v-btn>
+                            </div>
+                        </v-form>
+                    </v-card-text>
+                    <v-card-text>
+                        <v-select
+                            ref="select"
+                            :disabled="isDisabledSelect"
+                            :label="label"
+                            :value="value"
+                            :items="items"
+                            :item-text="searchText"
+                            :item-value="searchValue"
                         />
                         <div class="text-right">
                             <v-btn
-                                :disabled="isDisabledSearchButton"
-                                type="submit"
+                                :disabled="isDisabledSelect"
+                                @click="buttonClicked"
                             >
-                                {{ $t('misc.search') }}
+                                {{ $t('misc.ok') }}
                             </v-btn>
                         </div>
-                    </v-form>
-                </v-card-text>
-                <v-card-text>
-                    <v-select
-                        ref="select"
-                        :disabled="isDisabledSelect"
-                        :label="label"
-                        :value="value"
-                        :items="items"
-                        :item-text="searchText"
-                        :item-value="searchValue"
-                    />
-                    <div class="text-right">
-                        <v-btn
-                            :disabled="isDisabledSelect"
-                            @click="buttonClicked"
-                        >
-                            {{ $t('misc.ok') }}
-                        </v-btn>
-                    </div>
-                </v-card-text>
-            </v-card>
-        </v-layout>
-    </v-dialog>
+                    </v-card-text>
+                </v-card>
+            </v-layout>
+        </v-dialog>
+    </div>
 </template>
 
 <script>
@@ -124,7 +124,7 @@
                 return this.searchSettings[ 2 ];
             },
             isDisabledSearchButton () {
-                return this.isSearching || !this.searchWord.trim();
+                return this.isSearching || (!this.form.isAllowedEmptySearch && !this.searchWord.trim());
             },
             isDisabledSelect () {
                 return this.isSearching || !this.items.length;
@@ -142,9 +142,6 @@
             }),
             async searchItem () {
                 if (this.isSearching) {
-                    return;
-                }
-                if (!this.searchWord.trim()) {
                     return;
                 }
 
@@ -165,6 +162,12 @@
                     this.$emit('input', this.selectedId);
                 }
                 this.dialog = false;
+            },
+            async onClick () {
+                this.dialog = true;
+                if (this.form.isAutoSearch) {
+                    this.searchItem();
+                }
             },
         },
     };
