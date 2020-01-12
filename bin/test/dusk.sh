@@ -14,8 +14,8 @@ finally() {
     if [[ -f .env.dusk.backup ]]; then
         mv -f .env.dusk.backup .env
     fi
-    sudo kill "$(pgrep -f "artisan serve")"
-    sudo kill "$(pgrep -f "server.php")"
+    pgrep -f "artisan serve" | xargs --no-run-if-empty kill -9
+    pgrep -f "server.php" | xargs --no-run-if-empty kill -9
 }
 trap finally EXIT
 
