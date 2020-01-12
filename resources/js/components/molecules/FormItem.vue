@@ -60,9 +60,6 @@
             hint () {
                 return this.form.hint ? this.$t(this.form.hint) : '';
             },
-            search () {
-                return this.form.search || '';
-            },
             componentIs () {
                 if ('date' === this.type) {
                     return DateForm;
