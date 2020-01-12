@@ -16,10 +16,9 @@ jobs:
   eslint:
     name: ESLint
     runs-on: ubuntu-latest
-    env:
-      NO_COMPOSER: 1
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - name: Get Yarn Cache Directory
@@ -44,10 +43,9 @@ jobs:
   stylelint:
     name: stylelint
     runs-on: ubuntu-latest
-    env:
-      NO_COMPOSER: 1
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - name: Get Yarn Cache Directory
@@ -76,7 +74,8 @@ jobs:
       APP_ENV: testing
       NO_NPM: 1
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - name: Get Composer Cache Directory
@@ -106,7 +105,8 @@ jobs:
       APP_ENV: testing
       NO_NPM: 1
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - name: Get Composer Cache Directory
@@ -137,10 +137,9 @@ jobs:
     strategy:
       matrix:
         node: ['10', '11', '12']
-    env:
-      NO_COMPOSER: 1
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - name: Setup node
@@ -185,7 +184,8 @@ jobs:
       matrix:
         php: ['7.2', '7.3']
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - name: Switch PHP version
@@ -231,7 +231,8 @@ jobs:
       matrix:
         php: ['7.2', '7.3']
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - name: Switch PHP version
@@ -251,7 +252,7 @@ jobs:
             ${{ runner.os }}-composer-
       - name: Run tests
         run: bash bin/test/dusk.sh
-      - uses: actions/upload-artifact@master
+      - uses: actions/upload-artifact@v1
         with:
           name: screenshots
           path: tests/Browser/screenshots
