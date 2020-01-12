@@ -250,7 +250,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
             $rules['min'] = 'min:1';
 
             if ($isUpdate) {
-                $roomId = static::findOrFail($primaryId)->room_id;
+                $roomId = request()->input('reservations.room_id', static::findOrFail($primaryId)->room_id);
             } else {
                 $roomId = request()->input('reservations.room_id');
             }
