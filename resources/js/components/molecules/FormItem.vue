@@ -18,6 +18,7 @@
 <script>
     import TextForm from './form/Text';
     import DateForm from './form/Date';
+    import TimeForm from './form/Time';
     import SearchForm from './form/Search';
 
     export default {
@@ -63,6 +64,9 @@
             componentIs () {
                 if ('date' === this.type) {
                     return DateForm;
+                }
+                if ('time' === this.type) {
+                    return TimeForm;
                 }
                 if ('search' === this.type) {
                     return SearchForm;

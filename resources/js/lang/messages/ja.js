@@ -29,6 +29,7 @@ export default {
         'start_datetime': '開始日時',
         'end_date': '終了日',
         'end_datetime': '終了日時',
+        'check_out': 'チェックアウト時間',
         actions: 'アクション',
         guest: '利用者',
         room: '部屋',
