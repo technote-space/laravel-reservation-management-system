@@ -67,7 +67,6 @@ export const getDeleteMethod = () => 'delete';
 export const getDeleteEntryPoint = state => getModel(state, STATE_MODE_TARGET) + '/' + getDetailId(state, STATE_MODE_TARGET);
 
 export const getSearchEntryPoint = () => model => model;
-export const getReservationCheckEntryPoint = () => 'reservations/check';
 
 export const getListRouter = state => getModelListRouter(getModel(state, STATE_MODE_TARGET));
 export const isCreatable = state => model => model === getModel(state, STATE_MODE_CURRENT);

@@ -26,14 +26,6 @@ trait TimeHelper
     }
 
     /**
-     * @return string
-     */
-    protected function getCheckOutTime(): string
-    {
-        return Setting::getSetting('check_out');
-    }
-
-    /**
      * @param  string  $date
      *
      * @return Carbon
@@ -45,12 +37,13 @@ trait TimeHelper
 
     /**
      * @param  string  $date
+     * @param  string  $checkoutTime
      *
      * @return Carbon
      */
-    protected function getCheckOutDatetime(string $date): Carbon
+    protected function getCheckOutDatetime(string $date, string $checkoutTime): Carbon
     {
-        return Carbon::parse($date.' '.$this->getCheckOutTime());
+        return Carbon::parse($date.' '.$checkoutTime);
     }
 
     /**
@@ -62,15 +55,17 @@ trait TimeHelper
     }
 
     /**
+     * @param  string  $checkoutTime
+     *
      * @return bool
      */
-    protected function isBeforeCheckOut(): bool
+    protected function isBeforeCheckOut(string $checkoutTime): bool
     {
-        return $this->now() < $this->getCheckOutDatetime($this->today()->format('Y-m-d'))->timestamp;
+        return $this->now() < $this->getCheckOutDatetime($this->today()->format('Y-m-d'), $checkoutTime)->timestamp;
     }
 
     /**
-     * @return Carbon
+     * @return \Carbon\Carbon|Carbon
      */
     protected function getCheckInThresholdDay()
     {
@@ -98,7 +93,7 @@ trait TimeHelper
     }
 
     /**
-     * @return Carbon
+     * @return \Carbon\Carbon|Carbon
      */
     protected function yesterday()
     {
@@ -106,7 +101,7 @@ trait TimeHelper
     }
 
     /**
-     * @return Carbon
+     * @return \Carbon\Carbon|Carbon
      */
     protected function tomorrow()
     {
