@@ -22,7 +22,7 @@ jobs:
 
             bash .github/workflows/.tmp/workflows/composer/copy.sh test.laravel test-pages
             sed -i "/prepare/d" .github/workflows/update-dependencies.yml
-            sed -i "s/#GLOBAL_INSTALL_PACKAGES/GLOBAL_INSTALL_PACKAGES/" .github/workflows/ci.yml
+            sed -i "s/#GLOBAL_INSTALL_PACKAGES/GLOBAL_INSTALL_PACKAGES/" .github/workflows/update-dependencies.yml
 
             rm -rdf .github/workflows/.tmp
           COMMIT_MESSAGE: 'chore: sync workflows'
