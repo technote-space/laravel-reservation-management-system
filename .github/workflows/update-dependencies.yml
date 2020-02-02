@@ -1,12 +1,20 @@
 on:
   schedule:
-    - cron: 0 17 * * 5
+    - cron: 0 3 * * 6
   pull_request:
     types: [opened, synchronize, reopened, closed]
+  repository_dispatch:
+    types: [update-deps]
 
 name: Update dependencies
+
+env:
+  CI: 1
+  GITHUB_ACTION: 1
+  TRAVIS_BUILD_DIR: ${{ github.workspace }}
+
 jobs:
-  release:
+  update:
     name: Update dependencies
     runs-on: ubuntu-latest
     steps:
