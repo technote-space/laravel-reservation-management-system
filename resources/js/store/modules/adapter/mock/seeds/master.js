@@ -5,4 +5,4 @@ export default (model, factories, map, number) => {
         getItem: item => factories[ model ]().create(map(item)),
         getKey: ({ value }) => value.id,
     }), factories[ model ](number).create());
-}
+};

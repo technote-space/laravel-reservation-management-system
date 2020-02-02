@@ -9,7 +9,7 @@ import store from '../../index';
  * @param options
  * @param options.method
  */
-const access = async(context, name, data = undefined, options = { method: 'post' }) => {
+const access = async (context, name, data = undefined, options = { method: 'post' }) => {
     context.dispatch('loading/onLoading', 'auth/' + name, { root: true });
     const method = options.method || 'post';
     delete options.method;
@@ -43,7 +43,7 @@ export const setUser = (context, userData) => context.commit(SET_USER, userData)
  * @param context
  * @param data
  */
-export const login = async(context, data) => {
+export const login = async (context, data) => {
     await access(context, 'login', data);
 };
 
@@ -79,7 +79,7 @@ export const initialized = context => context.commit(SET_INIT);
  * @param to
  * @param next
  */
-export const checkAuth = async(context, { to, next }) => {
+export const checkAuth = async (context, { to, next }) => {
     if (!store.getters[ 'auth/isInitialized' ]) {
         initialized(context);
         await user(context);

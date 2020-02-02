@@ -9,4 +9,4 @@ export default item => {
             return reservation(item, false).detail.payment - 0;
         }),
     });
-}
+};

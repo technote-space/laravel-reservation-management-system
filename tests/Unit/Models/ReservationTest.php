@@ -110,7 +110,7 @@ class ReservationTest extends BaseTestCase
             'room_id'    => self::$room->id,
             'start_date' => date('Y-m-d'),
             'end_date'   => date('Y-m-d'),
-            'check_out'  => '12:00:00',
+            'checkout'  => '12:00:00',
         ]);
         static::runSeed([
             '--class' => 'SettingTableSeeder',

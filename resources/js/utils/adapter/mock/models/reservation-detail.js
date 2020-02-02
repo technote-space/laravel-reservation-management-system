@@ -13,4 +13,4 @@ export default item => {
         guest_address: guest.address,
         guest_phone: guest.phone,
     });
-}
+};

@@ -22,7 +22,7 @@ trait TimeHelper
      */
     protected function getCheckInTime(): string
     {
-        return Setting::getSetting('check_in');
+        return Setting::getSetting('checkin');
     }
 
     /**

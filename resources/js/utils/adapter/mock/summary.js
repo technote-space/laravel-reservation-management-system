@@ -33,4 +33,4 @@ export default (data) => {
     });
 
     return summary;
-}
+};

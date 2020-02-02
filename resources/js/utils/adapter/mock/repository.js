@@ -5,7 +5,7 @@ import pagination from './pagination';
 import summary from './summary';
 import { arrayToObject } from '../../misc';
 
-export default async(method, url, data = undefined) => {
+export default async (method, url, data = undefined) => {
     const split = url.split('?');
     const matches = split[ 0 ].match(/^(.+?)(\/(\d+))?$/);
     if (matches) {
@@ -45,7 +45,7 @@ export default async(method, url, data = undefined) => {
             }
         } else {
             if ('get' === method) {
-                const params = arrayToObject((split.length > 1 ? split[ 1 ] : '').split('&'), {
+                const params = arrayToObject((1 < split.length ? split[ 1 ] : '').split('&'), {
                     getItem: item => item.split('=')[ 1 ],
                     getKey: ({ item }) => item.split('=')[ 0 ],
                 });

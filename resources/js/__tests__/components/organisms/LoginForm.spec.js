@@ -8,7 +8,7 @@ import { flush } from '../../utils';
 jest.useFakeTimers();
 
 describe('LoginForm', () => {
-    it('should render login form', async() => {
+    it('should render login form', async () => {
         const login = jest.fn(() => setTimeout(() => {
         }, 100));
         const wrapper = mount(app(LoginForm, 'inner'), setupLocalVue({

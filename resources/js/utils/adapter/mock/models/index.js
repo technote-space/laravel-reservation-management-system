@@ -16,4 +16,4 @@ export default (model, item) => {
         rooms: room,
         settings: setting,
     }, model)(item);
-}
+};

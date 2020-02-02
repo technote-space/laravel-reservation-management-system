@@ -5,7 +5,7 @@ export default [
 ].concat(Object.keys(models).map(model => ({
     title: models[ model ].name,
     icon: models[ model ].icon,
-    to: `/${ model }`,
+    to: `/${model}`,
 }))).concat([
     //        { title: 'pages.settings', icon: 'mdi-settings', to: '/settings' },
     //        { title: 'pages.about', icon: 'mdi-help-box', to: '/about' },

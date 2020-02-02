@@ -29,7 +29,7 @@ export default {
         'start_datetime': 'Start Datetime',
         'end_date': 'End Date',
         'end_datetime': 'End Datetime',
-        'check_out': 'Checkout Time',
+        checkout: 'Checkout Time',
         actions: 'Actions',
         guest: 'Guest',
         room: 'Room',

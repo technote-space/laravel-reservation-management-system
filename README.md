@@ -82,7 +82,7 @@
 - 部屋ID (room_id)
 - 利用開始日 (start_date)
 - 利用終了日(1泊の場合 = 利用開始日) (end_date)
-- チェックアウト時間 (check_out)
+- チェックアウト時間 (checkout)
 ### 予約詳細 (reservation_details)
 - 利用人数 (number)
 - 支払金額 (payment)

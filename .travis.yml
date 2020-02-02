@@ -44,36 +44,36 @@ jobs:
       language: php
       php: '7.2'
       env: APP_ENV=testing
-      script: bash bin/check/phpcs.sh
+      script: composer bin:phpcs
     - stage: check
       language: php
       php: '7.2'
       env: APP_ENV=testing
-      script: bash bin/check/phpmd.sh
+      script: composer bin:phpmd
     - stage: check
       language: node_js
       node_js: '11'
       dist: trusty
-      script: bash bin/check/stylelint.sh
+      script: composer bin:stylelint
     - stage: check
       language: node_js
       node_js: '11'
       dist: trusty
-      script: bash bin/check/eslint.sh
+      script: composer bin:eslint
 
 
     - stage: test
       language: php
       php: '7.3'
       env: UPGRADE_NODE=true
-      script: bash bin/test/phpunit.sh
+      script: composer bin:phpunit
     - stage: test
       language: php
       php: '7.3'
       env: UPGRADE_NODE=true
-      script: bash bin/test/dusk.sh
+      script: composer bin:dusk
     - stage: test
       language: node_js
       node_js: '11'
       dist: trusty
-      script: bash bin/test/jest.sh
+      script: composer bin:jest

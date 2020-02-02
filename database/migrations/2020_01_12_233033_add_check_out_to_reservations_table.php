@@ -14,8 +14,8 @@ class AddCheckOutToReservationsTable extends Migration
     public function up()
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->time('check_out')->comment(__('database.reservations.check_out'))->nullable(false)->default(collect(json_decode(file_get_contents(resource_path('config/settings.json')), true))->first(function ($item) {
-                return 'check_out' === $item[0];
+            $table->time('checkout')->comment(__('database.reservations.checkout'))->nullable(false)->default(collect(json_decode(file_get_contents(resource_path('config/settings.json')), true))->first(function ($item) {
+                return 'checkout' === $item[0];
             })[1]);
         });
     }
@@ -28,7 +28,7 @@ class AddCheckOutToReservationsTable extends Migration
     public function down()
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->dropColumn('check_out');
+            $table->dropColumn('checkout');
         });
     }
 }
