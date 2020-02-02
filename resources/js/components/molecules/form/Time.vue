@@ -1,8 +1,8 @@
 <template>
     <v-dialog
-        :disabled="isDisabled"
         v-model="dialog"
-        contentClass="time-picker-dialog"
+        :disabled="isDisabled"
+        content-class="time-picker-dialog"
         max-width="850px"
     >
         <template v-slot:activator="{ on }">
@@ -10,15 +10,15 @@
                 :disabled="isDisabled"
                 :label="label"
                 :value="time"
-                prepend-icon="timer"
+                :prepend-icon="prependIcon"
                 readonly
-                v-on="on"
                 :error-messages="validateErrors"
+                v-on="on"
             />
         </template>
         <v-time-picker
-            :landscape="true"
             v-if="dialog"
+            :landscape="true"
             :value="time"
             :dialog="dialog"
             @input="val => $emit('input', val)"
@@ -32,12 +32,6 @@
     import moment from 'moment';
 
     export default {
-        data () {
-            return {
-                dialog: false,
-                format: 'hh:mm',
-            };
-        },
         props: {
             formInputs: {
                 type: Object,
@@ -51,10 +45,20 @@
                 type: String,
                 required: true,
             },
+            icon: {
+                type: String,
+                default: '',
+            },
             validateErrors: {
                 type: Array,
                 required: true,
             },
+        },
+        data () {
+            return {
+                dialog: false,
+                format: 'hh:mm',
+            };
         },
         computed: {
             ...mapGetters({
@@ -67,10 +71,13 @@
                 return !this.roomId;
             },
             time () {
-                return moment(moment().format('YYYY-MM-DD') + ' ' + this.formInputs[ 'reservations.check_out' ]).format(this.format);
+                return moment(moment().format('YYYY-MM-DD') + ' ' + this.formInputs[ 'reservations.checkout' ]).format(this.format);
             },
             minute () {
-                return moment(moment().format('YYYY-MM-DD') + ' ' + this.formInputs[ 'reservations.check_out' ]).format('mm');
+                return moment(moment().format('YYYY-MM-DD') + ' ' + this.formInputs[ 'reservations.checkout' ]).format('mm');
+            },
+            prependIcon () {
+                return this.icon || 'timer';
             },
         },
         methods: {

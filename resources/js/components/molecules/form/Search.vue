@@ -3,10 +3,10 @@
         <v-text-field
             :label="label"
             :value="display"
-            :prepend-icon="icon"
+            :prepend-icon="prependIcon"
             readonly
-            @click.stop="onClick"
             :error-messages="validateErrors"
+            @click.stop="onClick"
         />
         <v-dialog
             v-model="dialog"
@@ -23,8 +23,8 @@
                     <v-card-text>
                         <v-form @submit.prevent="searchItem">
                             <v-text-field
-                                :disabled="isSearching"
                                 v-model="searchWord"
+                                :disabled="isSearching"
                             />
                             <div class="text-right">
                                 <v-btn
@@ -67,16 +67,6 @@
     import { arrayToObject } from '../../../utils/misc';
 
     export default {
-        data () {
-            return {
-                dialog: false,
-                searchWord: '',
-                isSearching: false,
-                items: [],
-                selectedId: null,
-                selectedItem: null,
-            };
-        },
         props: {
             detail: {
                 type: Object,
@@ -98,18 +88,32 @@
                 type: [String, Number],
                 required: true,
             },
+            icon: {
+                type: String,
+                default: '',
+            },
             validateErrors: {
                 type: Array,
                 required: true,
             },
+        },
+        data () {
+            return {
+                dialog: false,
+                searchWord: '',
+                isSearching: false,
+                items: [],
+                selectedId: null,
+                selectedItem: null,
+            };
         },
         computed: {
             ...mapGetters({
                 model: 'crud/getTargetModel',
                 getModelIcon: 'getModelIcon',
             }),
-            icon () {
-                return this.getModelIcon(this.searchModel);
+            prependIcon () {
+                return this.icon || this.getModelIcon(this.searchModel);
             },
             searchSettings () {
                 return this.form.search.split(':');

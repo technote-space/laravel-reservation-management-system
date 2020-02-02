@@ -9,6 +9,7 @@
             :value="value"
             :label="label"
             :hint="hint"
+            :icon="icon"
             :validate-errors="validateErrors"
             @input="val => $emit('input', val)"
         />
@@ -60,6 +61,9 @@
             },
             hint () {
                 return this.form.hint ? this.$t(this.form.hint) : '';
+            },
+            icon () {
+                return this.form.icon || '';
             },
             componentIs () {
                 if ('date' === this.type) {

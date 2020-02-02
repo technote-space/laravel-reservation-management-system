@@ -85,6 +85,7 @@ export default {
                 max: 999,
                 min: 1,
             },
+            icon: 'mdi-account-multiple',
         },
         {
             name: 'reservations.start_date',
@@ -107,9 +108,9 @@ export default {
             type: 'date',
         },
         {
-            name: 'reservations.check_out',
-            text: 'check_out',
-            value: 'check_out',
+            name: 'reservations.checkout',
+            text: 'checkout',
+            value: 'checkout',
             validate: {
                 required: true,
                 'date_format': 'HH:mm',
@@ -125,6 +126,7 @@ export default {
                 numeric: true,
                 min: 0,
             },
+            icon: 'mdi-cash-usd',
         },
     ],
 };

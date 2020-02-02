@@ -1,7 +1,7 @@
 <template>
     <v-dialog
-        :disabled="isDisabled"
         v-model="dialog"
+        :disabled="isDisabled"
         max-width="850px"
     >
         <template v-slot:activator="{ on }">
@@ -9,10 +9,10 @@
                 :disabled="isDisabled"
                 :label="label"
                 :value="value"
-                prepend-icon="event"
+                :prepend-icon="prependIcon"
                 readonly
-                v-on="on"
                 :error-messages="validateErrors"
+                v-on="on"
             />
         </template>
         <Calendar
@@ -37,12 +37,6 @@
         components: {
             Calendar,
         },
-        data () {
-            return {
-                dialog: false,
-                format: 'YYYY-MM-DD',
-            };
-        },
         props: {
             detail: {
                 type: Object,
@@ -64,10 +58,20 @@
                 type: String,
                 required: true,
             },
+            icon: {
+                type: String,
+                default: '',
+            },
             validateErrors: {
                 type: Array,
                 required: true,
             },
+        },
+        data () {
+            return {
+                dialog: false,
+                format: 'YYYY-MM-DD',
+            };
         },
         computed: {
             ...mapGetters({
@@ -111,6 +115,9 @@
             },
             activeEventEnd () {
                 return moment(this.formInputs[ 'reservations.end_date' ]).add(1, 'days').format(this.format);
+            },
+            prependIcon () {
+                return this.icon || 'event';
             },
         },
         methods: {

@@ -50,6 +50,7 @@ export default {
                 required: true,
                 max: 50,
             },
+            icon: 'mdi-bed-empty',
         },
         {
             name: 'rooms.number',
@@ -62,6 +63,7 @@ export default {
                 min: 1,
             },
             default: 1,
+            icon: 'mdi-account-multiple',
         },
         {
             name: 'rooms.price',
@@ -72,6 +74,7 @@ export default {
                 numeric: true,
                 min: 0,
             },
+            icon: 'mdi-cash-usd',
         },
     ],
 };
