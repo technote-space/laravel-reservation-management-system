@@ -38,27 +38,27 @@ class TimeHelperTest extends TestCase
         ]);
     }
 
-    public function testGetCheckInTime()
+    public function testGetCheckinTime()
     {
-        $this->assertEquals('15:00', self::$helper->getCheckInTime());
+        $this->assertEquals('15:00', self::$helper->getCheckinTime());
     }
 
-    public function testIsBeforeCheckIn()
+    public function testIsBeforeCheckin()
     {
         self::$helper->setNow(today()->setTime(14, 59, 59)->timestamp);
-        $this->assertTrue(self::$helper->isBeforeCheckIn());
+        $this->assertTrue(self::$helper->isBeforeCheckin());
 
         self::$helper->setNow(today()->setTime(15, 0, 0)->timestamp);
-        $this->assertFalse(self::$helper->isBeforeCheckIn());
+        $this->assertFalse(self::$helper->isBeforeCheckin());
     }
 
-    public function testIsBeforeCheckOut()
+    public function testIsBeforeCheckout()
     {
         self::$helper->setNow(today()->setTime(9, 59, 59)->timestamp);
-        $this->assertTrue(self::$helper->isBeforeCheckOut('10:00:00'));
+        $this->assertTrue(self::$helper->isBeforeCheckout('10:00:00'));
 
         self::$helper->setNow(today()->setTime(10, 0, 0)->timestamp);
-        $this->assertFalse(self::$helper->isBeforeCheckOut('10:00:00'));
+        $this->assertFalse(self::$helper->isBeforeCheckout('10:00:00'));
     }
 
     public function testToday()

@@ -40,7 +40,7 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @method static Builder|Reservation whereRoomId($value)
  * @method static Builder|Reservation whereStartDate($value)
  * @method static Builder|Reservation whereUpdatedAt($value)
- * @method static Builder|Reservation whereCheckOut($value)
+ * @method static Builder|Reservation whereCheckout($value)
  * @property-read bool $is_future
  * @property-read bool $is_past
  * @property-read bool $is_present
@@ -359,7 +359,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getStartDatetimeAttribute(): Carbon
     {
-        return $this->getCheckInDatetime($this->start_date_str);
+        return $this->getCheckinDatetime($this->start_date_str);
     }
 
     /**
@@ -367,7 +367,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getEndDatetimeAttribute(): Carbon
     {
-        return $this->getCheckOutDatetime($this->end_date_str, $this->checkout)->addDay();
+        return $this->getCheckoutDatetime($this->end_date_str, $this->checkout)->addDay();
     }
 
     /**

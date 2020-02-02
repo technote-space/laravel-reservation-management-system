@@ -20,7 +20,7 @@ trait TimeHelper
     /**
      * @return string
      */
-    protected function getCheckInTime(): string
+    protected function getCheckinTime(): string
     {
         return Setting::getSetting('checkin');
     }
@@ -30,9 +30,9 @@ trait TimeHelper
      *
      * @return Carbon
      */
-    protected function getCheckInDatetime(string $date): Carbon
+    protected function getCheckinDatetime(string $date): Carbon
     {
-        return Carbon::parse($date.' '.$this->getCheckInTime());
+        return Carbon::parse($date.' '.$this->getCheckinTime());
     }
 
     /**
@@ -41,7 +41,7 @@ trait TimeHelper
      *
      * @return Carbon
      */
-    protected function getCheckOutDatetime(string $date, string $checkoutTime): Carbon
+    protected function getCheckoutDatetime(string $date, string $checkoutTime): Carbon
     {
         return Carbon::parse($date.' '.$checkoutTime);
     }
@@ -49,9 +49,9 @@ trait TimeHelper
     /**
      * @return bool
      */
-    protected function isBeforeCheckIn(): bool
+    protected function isBeforeCheckin(): bool
     {
-        return $this->now() < $this->getCheckInDatetime($this->today()->format('Y-m-d'))->timestamp;
+        return $this->now() < $this->getCheckinDatetime($this->today()->format('Y-m-d'))->timestamp;
     }
 
     /**
@@ -59,17 +59,17 @@ trait TimeHelper
      *
      * @return bool
      */
-    protected function isBeforeCheckOut(string $checkoutTime): bool
+    protected function isBeforeCheckout(string $checkoutTime): bool
     {
-        return $this->now() < $this->getCheckOutDatetime($this->today()->format('Y-m-d'), $checkoutTime)->timestamp;
+        return $this->now() < $this->getCheckoutDatetime($this->today()->format('Y-m-d'), $checkoutTime)->timestamp;
     }
 
     /**
      * @return \Carbon\Carbon|Carbon
      */
-    protected function getCheckInThresholdDay()
+    protected function getCheckinThresholdDay()
     {
-        return $this->isBeforeCheckIn() ? $this->yesterday() : $this->today();
+        return $this->isBeforeCheckin() ? $this->yesterday() : $this->today();
     }
 
     /**

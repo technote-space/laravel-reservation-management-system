@@ -151,7 +151,7 @@ class Guest extends Model implements CrudableContract, SearchableContract
      */
     public function latestUsage(): HasOne
     {
-        return $this->hasOne(Reservation::class)->where('start_date', '<=', $this->getCheckInThresholdDay()->format('Y-m-d'))->latest('start_date')->limit(1);
+        return $this->hasOne(Reservation::class)->where('start_date', '<=', $this->getCheckinThresholdDay()->format('Y-m-d'))->latest('start_date')->limit(1);
     }
 
     /**
@@ -159,6 +159,6 @@ class Guest extends Model implements CrudableContract, SearchableContract
      */
     public function recentUsages(): HasMany
     {
-        return $this->reservations()->where('start_date', '<=', $this->getCheckInThresholdDay()->format('Y-m-d'))->latest('start_date')->limit(5);
+        return $this->reservations()->where('start_date', '<=', $this->getCheckinThresholdDay()->format('Y-m-d'))->latest('start_date')->limit(5);
     }
 }
