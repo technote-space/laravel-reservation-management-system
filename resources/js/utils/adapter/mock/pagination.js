@@ -17,12 +17,12 @@ export default (model, page, count) => {
     const perPage = 10;
     const items = drop(take(all.map(item => models(model, item)), perPage * page), perPage * (page - 1));
     return {
-        current_page: page,
+        'current_page': page,
         data: items,
         from: perPage * (page - 1) + 1,
         to: perPage * page,
         total: all.length,
-        last_page: Math.ceil(all.length / perPage),
-        per_page: perPage,
+        'last_page': Math.ceil(all.length / perPage),
+        'per_page': perPage,
     };
 };

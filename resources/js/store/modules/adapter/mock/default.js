@@ -1,4 +1,3 @@
-const moment = require('moment');
 import faker from './faker';
 import adminFactory from './factories/admin';
 import guestFactory from './factories/guest';
@@ -35,22 +34,22 @@ if (store && version && version === getSetting('version')) {
     state.items.guests = guestFactory(getEnv('number.guest')).create();
     state.items.guestDetails = arrayToObject(Object.keys(state.items.guests), {
         getKey: ({ value }) => value.id,
-        getItem: guest_id => guestDetailFactory().create({
-            guest_id: guest_id - 0,
+        getItem: guestId => guestDetailFactory().create({
+            'guest_id': guestId - 0,
         }),
     });
     state.items.rooms = roomSeeder(state.factories, getEnv('number.room'));
     state.items.reservations = arrayToObject(Object.keys(state.items.guests), {
         getKey: ({ value }) => value.id,
-        getItem: guest_id => [...Array(faker.random.number(getEnv('number.reservation')))].flatMap(() => reservationFactory().create({
-            guest_id: guest_id - 0,
-            room_id: Object.keys(state.items.rooms)[ faker.random.number({ min: 0, max: Object.keys(state.items.rooms).length - 1 }) ] - 0,
+        getItem: guestId => [...Array(faker.random.number(getEnv('number.reservation')))].flatMap(() => reservationFactory().create({
+            'guest_id': guestId - 0,
+            'room_id': Object.keys(state.items.rooms)[ faker.random.number({ min: 0, max: Object.keys(state.items.rooms).length - 1 }) ] - 0,
         })),
         isMultiple: true,
     });
     state.items.reservationDetails = arrayToObject(Object.keys(state.items.reservations), {
         getKey: ({ value }) => value.id,
-        getItem: reservation_id => reservationDetailFactory().create(),
+        getItem: () => reservationDetailFactory().create(),
     });
     state.items.settings = settingSeeder(state.factories);
 }

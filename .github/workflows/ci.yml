@@ -95,6 +95,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       LINT: 1
+      # to suppress error [It is unsafe to run Dusk in production.]
+      APP_ENV: testing
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -131,6 +133,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       LINT: 1
+      # to suppress error [It is unsafe to run Dusk in production.]
+      APP_ENV: testing
     steps:
       - name: Checkout
         uses: actions/checkout@v2
