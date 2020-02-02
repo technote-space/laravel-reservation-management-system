@@ -6,6 +6,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/technote-space/laravel-reservation-management-system/badge)](https://www.codefactor.io/repository/github/technote-space/laravel-reservation-management-system)
 [![License: GPL v2+](https://img.shields.io/badge/License-GPL%20v2%2B-blue.svg)](http://www.gnu.org/licenses/gpl-2.0.html)
 
+## Table of Contents
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 <details>
