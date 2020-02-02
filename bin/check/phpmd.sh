@@ -17,7 +17,7 @@ composer prepare:php
 echo ""
 echo ">> Run composer phpmd"
 if [[ -n "${GIT_DIFF}" ]]; then
-  "${WORKSPACE}"/vendor/bin/phpmd "$(eval echo "${GIT_DIFF}")" ansi "${WORKSPACE}/phpmd.xml --exclude ./database/migrations/*"
+  "${WORKSPACE}"/vendor/bin/phpmd "$(eval echo "${GIT_DIFF}")" ansi "${WORKSPACE}/phpmd.xml" --exclude ./database/migrations/*
 else
   targets="./app/"
   if [[ -d "${WORKSPACE}/configs" ]]; then
@@ -41,5 +41,5 @@ else
   if [[ -d "${WORKSPACE}/database/seeds" ]]; then
     targets="${targets},./database/seeds/"
   fi
-  "${WORKSPACE}"/vendor/bin/phpmd "${targets}" ansi "${WORKSPACE}/phpmd.xml --exclude ./database/migrations/*"
+  "${WORKSPACE}"/vendor/bin/phpmd "${targets}" ansi "${WORKSPACE}/phpmd.xml" --exclude ./database/migrations/*
 fi
