@@ -17,7 +17,8 @@ jobs:
     name: ESLint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - uses: technote-space/get-diff-action@v1
@@ -42,7 +43,7 @@ jobs:
             ${{ runner.os }}-yarn-
         if: env.GIT_DIFF
       - name: Check code style
-        run: bash composer bin:eslint
+        run: composer bin:eslint
         if: env.GIT_DIFF
       - uses: 8398a7/action-slack@v1
         with:
@@ -80,7 +81,7 @@ jobs:
             ${{ runner.os }}-yarn-
         if: env.GIT_DIFF
       - name: Check code style
-        run: bash composer bin:stylelint
+        run: composer bin:stylelint
         if: env.GIT_DIFF
       - uses: 8398a7/action-slack@v1
         with:
@@ -95,7 +96,8 @@ jobs:
     env:
       LINT: 1
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - uses: technote-space/get-diff-action@v1
@@ -115,7 +117,7 @@ jobs:
             ${{ runner.os }}-composer-
         if: env.GIT_DIFF
       - name: Check code style
-        run: bash composer bin:phpcs
+        run: composer bin:phpcs
         if: env.GIT_DIFF
       - uses: 8398a7/action-slack@v1
         with:
@@ -130,7 +132,8 @@ jobs:
     env:
       LINT: 1
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
         with:
           fetch-depth: 3
       - uses: technote-space/get-diff-action@v1
@@ -151,7 +154,7 @@ jobs:
             ${{ runner.os }}-composer-
         if: env.GIT_DIFF
       - name: Check code style
-        run: bash composer bin:phpmd
+        run: composer bin:phpmd
         if: env.GIT_DIFF
       - uses: 8398a7/action-slack@v1
         with:
@@ -202,7 +205,7 @@ jobs:
             ${{ runner.os }}-yarn-
         if: env.GIT_DIFF || github.event_name == 'push'
       - name: Run tests
-        run: bash composer bin:jest
+        run: composer bin:jest
         if: env.GIT_DIFF || github.event_name == 'push'
       - name: Codecov
         run: |
@@ -263,7 +266,7 @@ jobs:
             ${{ runner.os }}-composer-
         if: env.GIT_DIFF || github.event_name == 'push'
       - name: Run tests
-        run: bash composer bin:phpunit
+        run: composer bin:phpunit
         if: env.GIT_DIFF || github.event_name == 'push'
       - name: Codecov
         run: |
@@ -321,7 +324,7 @@ jobs:
             ${{ runner.os }}-composer-
         if: env.GIT_DIFF || github.event_name == 'push'
       - name: Run tests
-        run: bash composer bin:dusk
+        run: composer bin:dusk
         if: env.GIT_DIFF || github.event_name == 'push'
       - uses: actions/upload-artifact@v1
         with:
