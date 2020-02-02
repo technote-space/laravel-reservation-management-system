@@ -10,4 +10,5 @@ Route::group([
     'middleware' => ['auth'],
 ], function (Router $router) {
     $router->get('summary', 'Api\SummaryController@index')->name('summary');
+    $router->get('checkout', 'Api\ReservationController@checkout')->name('checkout');
 });
