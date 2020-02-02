@@ -11,9 +11,14 @@ env:
   TRAVIS_BUILD_DIR: ${{ github.workspace }}
 
 jobs:
-  jest:
-    name: Jest
+  test:
+    name: Test before release
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql
+        ports:
+          - 3306
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,6 +28,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12'
+      - name: Switch PHP version
+        env:
+          PHP_VERSION: '7.3'
+        run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -33,32 +42,6 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - name: Run tests
-        run: bash bin/test/jest.sh
-      - uses: 8398a7/action-slack@v1
-        with:
-          type: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
-  phpunit:
-    name: PHPUnit
-    runs-on: ubuntu-16.04
-    services:
-      mysql:
-        image: mysql
-        ports:
-          - 3306
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
-      - name: Switch PHP version
-        env:
-          PHP_VERSION: '7.3'
-        run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
@@ -71,44 +54,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
       - name: Run tests
-        run: bash bin/test/phpunit.sh
-      - uses: 8398a7/action-slack@v1
-        with:
-          type: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
-  dusk:
-    name: Laravel Dusk
-    runs-on: ubuntu-16.04
-    services:
-      mysql:
-        image: mysql
-        ports:
-          - 3306
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
-      - name: Switch PHP version
-        env:
-          PHP_VERSION: '7.3'
-        run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
-      - name: Get Composer Cache Directory
-        id: composer-cache
         run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer modules
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
-      - name: Run tests
-        run: bash bin/test/dusk.sh
+          composer bin:jest
+          composer bin:phpunit
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -119,7 +67,7 @@ jobs:
 
   pages:
     name: Publish GitHub Pages
-    needs: [jest, phpunit, dusk]
+    needs: [test]
     runs-on: ubuntu-latest
     env:
       GH_PAGES_DIR: public/gh-pages
@@ -139,7 +87,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Build
-        run: bash bin/deploy/gh-pages.sh
+        run: composer bin:gh-pages
         env:
           GH_PAGES_BASE: /laravel-reservation-management-system
           GH_PAGES_TRACKING_ID: UA-78163306-3

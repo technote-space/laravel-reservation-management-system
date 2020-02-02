@@ -10,7 +10,7 @@ name: CI
 
 env:
   CI: 1
-  TRAVIS_BUILD_DIR: ${{ github.workspace }}
+  WORKSPACE: ${{ github.workspace }}
 
 jobs:
   eslint:
@@ -21,9 +21,19 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - uses: technote-space/get-diff-action@v1
+        with:
+          PREFIX_FILTER: |
+            resources/
+          SUFFIX_FILTER: |
+            .js
+            .ts
+            .vue
+          FILES: .eslintrc
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
+        if: env.GIT_DIFF
       - name: Cache node dependencies
         uses: actions/cache@v1
         with:
@@ -31,8 +41,10 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+        if: env.GIT_DIFF
       - name: Check code style
-        run: bash bin/check/eslint.sh
+        run: composer bin:eslint
+        if: env.GIT_DIFF
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -48,9 +60,18 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - uses: technote-space/get-diff-action@v1
+        with:
+          PREFIX_FILTER: |
+            resources/
+          SUFFIX_FILTER: |
+            .scss
+            .css
+          FILES: .stylelintrc.json
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
+        if: env.GIT_DIFF
       - name: Cache node dependencies
         uses: actions/cache@v1
         with:
@@ -58,8 +79,10 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+        if: env.GIT_DIFF
       - name: Check code style
-        run: bash bin/check/stylelint.sh
+        run: composer bin:stylelint
+        if: env.GIT_DIFF
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -71,26 +94,31 @@ jobs:
     name: PHP Code Sniffer
     runs-on: ubuntu-latest
     env:
-      APP_ENV: testing
-      NO_NPM: 1
+      LINT: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - uses: technote-space/get-diff-action@v1
+        with:
+          SUFFIX_FILTER: .php
+          FILES: phpcs.xml
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer modules
-        uses: actions/cache@v1
+        if: env.GIT_DIFF
+      - uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
+        if: env.GIT_DIFF
       - name: Check code style
-        run: bash bin/check/phpcs.sh
+        run: composer bin:phpcs
+        if: env.GIT_DIFF
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -102,26 +130,32 @@ jobs:
     name: PHPMD
     runs-on: ubuntu-latest
     env:
-      APP_ENV: testing
-      NO_NPM: 1
+      LINT: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - uses: technote-space/get-diff-action@v1
+        with:
+          SUFFIX_FILTER: .php
+          SEPARATOR: ','
+          FILES: phpmd.xml
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - name: Cache composer modules
-        uses: actions/cache@v1
+        if: env.GIT_DIFF
+      - uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
+        if: env.GIT_DIFF
       - name: Check code style
-        run: bash bin/check/phpmd.sh
+        run: composer bin:phpmd
+        if: env.GIT_DIFF
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -142,13 +176,26 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - uses: technote-space/get-diff-action@v1
+        with:
+          PREFIX_FILTER: |
+            resources/
+          SUFFIX_FILTER: |
+            .js
+            .ts
+            .vue
+          FILES: |
+            yarn.lock
+            jest.config.js
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Cache node dependencies
         uses: actions/cache@v1
         with:
@@ -156,14 +203,19 @@ jobs:
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Run tests
-        run: bash bin/test/jest.sh
+        run: composer bin:jest
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Codecov
-        run: curl -s https://codecov.io/bash | bash -s -- -t $CODECOV_TOKEN -f $COVERAGE_FILE
+        run: |
+          if [ -n "$CODECOV_TOKEN" ]; then
+            curl -s https://codecov.io/bash | bash -s -- -t $CODECOV_TOKEN -f $COVERAGE_FILE
+          fi
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           COVERAGE_FILE: ./coverage/js/clover.xml
-        if: matrix.node == '12'
+        if: matrix.node == '12' && (env.GIT_DIFF || github.event_name == 'push')
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -174,7 +226,7 @@ jobs:
   phpunit:
     name: PHPUnit
     needs: [phpcs, phpmd]
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     services:
       mysql:
         image: mysql
@@ -183,19 +235,28 @@ jobs:
     strategy:
       matrix:
         php: ['7.2', '7.3']
+        include:
+          - php: '7.3'
+            SEND_CODECOV: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - uses: technote-space/get-diff-action@v1
+        with:
+          SUFFIX_FILTER: .php
+          FILES: composer.lock
       - name: Switch PHP version
         env:
           PHP_VERSION: ${{ matrix.php }}
         run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Cache composer modules
         uses: actions/cache@v1
         with:
@@ -203,14 +264,19 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Run tests
-        run: bash bin/test/phpunit.sh
+        run: composer bin:phpunit
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Codecov
-        run: curl -s https://codecov.io/bash | bash -s -- -t $CODECOV_TOKEN -f $COVERAGE_FILE
+        run: |
+          if [ -n "$CODECOV_TOKEN" ]; then
+            curl -s https://codecov.io/bash | bash -s -- -t $CODECOV_TOKEN -f $COVERAGE_FILE
+          fi
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          COVERAGE_FILE: ./coverage/php/clover.xml
-        if: matrix.php == '7.3'
+          COVERAGE_FILE: ./coverage/clover.xml
+        if: matrix.SEND_CODECOV == 1 && (env.GIT_DIFF || github.event_name == 'push')
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
@@ -221,7 +287,7 @@ jobs:
   dusk:
     name: Laravel Dusk
     needs: [phpcs, phpmd]
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     services:
       mysql:
         image: mysql
@@ -235,14 +301,20 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 3
+      - uses: technote-space/get-diff-action@v1
+        with:
+          SUFFIX_FILTER: .php
+          FILES: composer.lock
       - name: Switch PHP version
         env:
           PHP_VERSION: ${{ matrix.php }}
         run: sudo ln -sf "/usr/bin/php$PHP_VERSION" /etc/alternatives/php
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Cache composer modules
         uses: actions/cache@v1
         with:
@@ -250,12 +322,15 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-composer-
+        if: env.GIT_DIFF || github.event_name == 'push'
       - name: Run tests
-        run: bash bin/test/dusk.sh
+        run: composer bin:dusk
+        if: env.GIT_DIFF || github.event_name == 'push'
       - uses: actions/upload-artifact@v1
         with:
           name: screenshots
           path: tests/Browser/screenshots
+        if: env.GIT_DIFF || github.event_name == 'push'
       - uses: 8398a7/action-slack@v1
         with:
           type: failure
