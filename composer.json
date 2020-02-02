@@ -137,7 +137,7 @@
         ],
         "phpcs": "phpcs --standard=./phpcs.xml --cache",
         "phpcs:fix": "phpcbf --standard=./phpcs.xml",
-        "phpmd": "phpmd ./app/,./config,./database/factories,./database/seeds,./routes/,./tests/ ansi phpmd.xml",
+        "phpmd": "phpmd ./app/,./config,./database,./routes/,./tests/ ansi phpmd.xml --exclude database/migrations/",
         "phpunit": "phpunit --stop-on-failure --colors=always",
         "phpunit:no": "@phpunit --no-coverage",
         "phpunit:feature": "@phpunit:no --group=Feature",
