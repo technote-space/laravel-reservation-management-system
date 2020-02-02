@@ -82,7 +82,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Build
-        run: bash bin/deploy/gh-pages.sh
+        run: composer bin:gh-pages
         env:
           GH_PAGES_BASE: /laravel-reservation-management-system
           GH_PAGES_TRACKING_ID: UA-78163306-3
