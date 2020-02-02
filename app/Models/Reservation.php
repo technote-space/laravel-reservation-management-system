@@ -26,7 +26,7 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @property int $room_id 部屋ID
  * @property Carbon $start_date 利用開始日
  * @property Carbon $end_date 利用終了日
- * @property string $check_out
+ * @property string $check_out チェックアウト時間
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @method static Builder|Reservation newModelQuery()

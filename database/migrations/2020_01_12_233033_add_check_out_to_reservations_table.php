@@ -14,7 +14,7 @@ class AddCheckOutToReservationsTable extends Migration
     public function up()
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->time('check_out')->nullable(false)->default(collect(json_decode(file_get_contents(resource_path('config/settings.json')), true))->first(function ($item) {
+            $table->time('check_out')->comment(__('database.reservations.check_out'))->nullable(false)->default(collect(json_decode(file_get_contents(resource_path('config/settings.json')), true))->first(function ($item) {
                 return 'check_out' === $item[0];
             })[1]);
         });
