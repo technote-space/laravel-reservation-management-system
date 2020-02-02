@@ -33,7 +33,7 @@ export default {
         actions: 'Actions',
         guest: 'Guest',
         room: 'Room',
-        status: 'Reservation status',
+        status: 'Status',
     },
     loading: {},
     messages: {

@@ -27,6 +27,7 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @property Carbon $start_date 利用開始日
  * @property Carbon $end_date 利用終了日
  * @property string $checkout チェックアウト時間
+ * @property string $status ステータス
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @method static Builder|Reservation newModelQuery()
@@ -41,6 +42,7 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @method static Builder|Reservation whereStartDate($value)
  * @method static Builder|Reservation whereUpdatedAt($value)
  * @method static Builder|Reservation whereCheckout($value)
+ * @method static Builder|Reservation whereStatus($value)
  * @property-read bool $is_future
  * @property-read bool $is_past
  * @property-read bool $is_present
@@ -497,6 +499,39 @@ class Reservation extends Model implements CrudableContract, SearchableContract
         }
 
         return ! $builder->exists();
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkin()
+    {
+        $this->status = 'checkin';
+
+        return $this->save();
+    }
+
+    /**
+     * @param  int|null  $payment
+     *
+     * @return bool
+     */
+    public function checkout(?int $payment = null)
+    {
+        $this->detail->paid($payment);
+        $this->status = 'checkout';
+
+        return $this->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function cancel()
+    {
+        $this->status = 'canceled';
+
+        return $this->save();
     }
 
     /**

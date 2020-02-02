@@ -30,6 +30,7 @@
                     :room-id="roomId"
                 />
             </v-flex>
+
         </v-layout>
     </v-container>
 </template>

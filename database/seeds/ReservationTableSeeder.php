@@ -26,7 +26,7 @@ class ReservationTableSeeder extends Seeder
                 ]);
                 factory(ReservationDetail::class)->create([
                     'reservation_id' => $reservation->id,
-                    'payment'        => $reservation->start_date->isBefore(now()) ? $reservation->charge : null,
+                    'payment'        => 'checkout' === $reservation->status ? $reservation->charge : null,
                 ]);
             });
         });

@@ -146,7 +146,7 @@ class Room extends Model implements CrudableContract, SearchableContract
      */
     public function reservations(): HasMany
     {
-        return $this->hasMany(Reservation::class)->without('room');
+        return $this->hasMany(Reservation::class)->where('status', '!=', 'canceled')->without('room');
     }
 
     /**

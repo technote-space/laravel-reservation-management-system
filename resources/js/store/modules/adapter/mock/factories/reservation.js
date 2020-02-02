@@ -11,5 +11,6 @@ export default base('reservation', () => {
         'room_id': null,
         'start_date': format(start),
         'end_date': format(end),
+        status: 'reserved',
     };
 });

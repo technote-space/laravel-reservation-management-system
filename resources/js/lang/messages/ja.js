@@ -33,7 +33,7 @@ export default {
         actions: 'アクション',
         guest: '利用者',
         room: '部屋',
-        status: '予約状況',
+        status: 'ステータス',
     },
     loading: {},
     messages: {
