@@ -82,9 +82,9 @@ class CheckoutApiTest extends BaseTestCase
     public function testCheckoutListToBeEmpty()
     {
         $today = Carbon::today();
-        $this->createReservation($today->copy()->subDays(1)->format('Y-m-d'), $today->copy()->subDay()->format('Y-m-d'), '10:00:00', 1);
-        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->copy()->addDay()->format('Y-m-d'), '09:00:00', 10);
-        $this->createReservation($today->copy()->subDays(2)->format('Y-m-d'), $today->copy()->addDays(2)->format('Y-m-d'), '11:00:00', 100);
+        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->copy()->subDays(2)->format('Y-m-d'), '10:00:00', 1);
+        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->format('Y-m-d'), '09:00:00', 10);
+        $this->createReservation($today->copy()->subDays(2)->format('Y-m-d'), $today->copy()->addDay()->format('Y-m-d'), '11:00:00', 100);
 
         $admin    = factory(Admin::class)->create();
         $response = $this->actingAs($admin)->json('GET', route('reservation.checkout.list', ['date' => '']));
@@ -133,10 +133,10 @@ class CheckoutApiTest extends BaseTestCase
     public function testCheckoutList1()
     {
         $today = Carbon::today();
-        $this->createReservation($today->copy()->subDays(1)->format('Y-m-d'), $today->format('Y-m-d'), '10:00:00', 1);
-        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->format('Y-m-d'), '09:00:00', 10);
-        $this->createReservation($today->copy()->subDays(2)->format('Y-m-d'), $today->format('Y-m-d'), '11:00:00', 100);
-        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->copy()->subDays(1)->format('Y-m-d'), '10:00:00', 1);
+        $this->createReservation($today->copy()->subDays(2)->format('Y-m-d'), $today->copy()->subDay()->format('Y-m-d'), '10:00:00', 1);
+        $this->createReservation($today->copy()->subDays(4)->format('Y-m-d'), $today->copy()->subDay()->format('Y-m-d'), '09:00:00', 10);
+        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->copy()->subDay()->format('Y-m-d'), '11:00:00', 100);
+        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->copy()->subDays(2)->format('Y-m-d'), '10:00:00', 1);
         $this->createReservation($today->copy()->addDays(1)->format('Y-m-d'), $today->copy()->addDays(3)->format('Y-m-d'), '10:00:00', 1);
 
         $admin    = factory(Admin::class)->create();
@@ -145,25 +145,25 @@ class CheckoutApiTest extends BaseTestCase
 
         $json = json_decode($response->content(), true);
         $this->assertCount(3, $json);
-        $this->assertEquals($today->format('Y-m-d 00:00:00'), $json[0]['end_date']);
+        $this->assertEquals($today->copy()->subDay()->format('Y-m-d 00:00:00'), $json[0]['end_date']);
         $this->assertEquals('09:00:00', $json[0]['checkout']);
-        $this->assertEquals($today->format('Y-m-d 00:00:00'), $json[1]['end_date']);
+        $this->assertEquals($today->copy()->subDay()->format('Y-m-d 00:00:00'), $json[1]['end_date']);
         $this->assertEquals('10:00:00', $json[1]['checkout']);
-        $this->assertEquals($today->format('Y-m-d 00:00:00'), $json[2]['end_date']);
+        $this->assertEquals($today->copy()->subDay()->format('Y-m-d 00:00:00'), $json[2]['end_date']);
         $this->assertEquals('11:00:00', $json[2]['checkout']);
     }
 
     public function testCheckoutList2()
     {
         $today = Carbon::today();
-        $this->createReservation($today->copy()->subDays(1)->format('Y-m-d'), $today->format('Y-m-d'), '10:00:00', 1);
-        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->format('Y-m-d'), '09:00:00', 10);
-        $this->createReservation($today->copy()->subDays(2)->format('Y-m-d'), $today->format('Y-m-d'), '11:00:00', 100);
-        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->copy()->subDays(1)->format('Y-m-d'), '10:00:00', 1);
+        $this->createReservation($today->copy()->subDays(2)->format('Y-m-d'), $today->copy()->subDay()->format('Y-m-d'), '10:00:00', 1);
+        $this->createReservation($today->copy()->subDays(4)->format('Y-m-d'), $today->copy()->subDay()->format('Y-m-d'), '09:00:00', 10);
+        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->copy()->subDay()->format('Y-m-d'), '11:00:00', 100);
+        $this->createReservation($today->copy()->subDays(3)->format('Y-m-d'), $today->copy()->subDays(2)->format('Y-m-d'), '10:00:00', 1);
         $this->createReservation($today->copy()->addDays(1)->format('Y-m-d'), $today->copy()->addDays(3)->format('Y-m-d'), '10:00:00', 1);
 
         $admin    = factory(Admin::class)->create();
-        $response = $this->actingAs($admin)->json('GET', route('reservation.checkout.list', ['date' => $today->copy()->addDays(3)->format('Y-m-d')]));
+        $response = $this->actingAs($admin)->json('GET', route('reservation.checkout.list', ['date' => $today->copy()->addDays(4)->format('Y-m-d')]));
         $response->assertStatus(200);
 
         $json = json_decode($response->content(), true);

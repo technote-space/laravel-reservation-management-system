@@ -32,6 +32,7 @@ class ReservationService
         }
 
         return Reservation::whereBetween(DB::raw($concat), [$fromDate, $toDate])
+                          ->where('status', '!=', 'canceled')
                           ->orderBy(DB::raw($concat))
                           ->get();
     }
@@ -59,7 +60,8 @@ class ReservationService
             $concat = 'end_date || " " || checkout';
         }
 
-        return Reservation::whereBetween(DB::raw($concat), [$fromDate, $toDate])
+        return Reservation::whereBetween(DB::raw($concat), [$fromDate->subDay(), $toDate->subDay()])
+                          ->where('status', '!=', 'canceled')
                           ->orderBy(DB::raw($concat))
                           ->get();
     }

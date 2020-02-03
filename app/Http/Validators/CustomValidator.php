@@ -46,17 +46,20 @@ class CustomValidator extends Validator
      */
     public function validateReservationTerm(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
-        list($reservation) = $this->getReservation();
+        /** @var Reservation $reservation */
+        [$reservation] = $this->getReservation();
         if ($reservation) {
-            $data      = $this->getData();
-            $startDate = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
-            $endDate   = Arr::get($data, 'reservations.end_date', $reservation->end_date_str);
+            $data         = $this->getData();
+            $startDate    = Arr::get($data, 'reservations.start_date', $reservation->start_date_str);
+            $endDate      = Arr::get($data, 'reservations.end_date', $reservation->end_date_str);
+            $checkoutTime = Arr::get($data, 'reservations.checkout', $reservation->checkout);
         } else {
-            $startDate = $this->getValue('reservations.start_date');
-            $endDate   = $this->getValue('reservations.end_date');
+            $startDate    = $this->getValue('reservations.start_date');
+            $endDate      = $this->getValue('reservations.end_date');
+            $checkoutTime = $this->getValue('reservations.checkout');
         }
 
-        return Reservation::isTermValid($startDate, $endDate);
+        return Reservation::isTermValid($startDate, $endDate, $checkoutTime);
     }
 
     /**
@@ -69,7 +72,7 @@ class CustomValidator extends Validator
      */
     public function validateReservationAvailability(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
-        list($reservation, $reservationId) = $this->getReservation();
+        [$reservation, $reservationId] = $this->getReservation();
         if ($reservation) {
             $data      = $this->getData();
             $roomId    = Arr::get($data, 'reservations.room_id', $reservation->room_id);
@@ -94,7 +97,7 @@ class CustomValidator extends Validator
      */
     public function validateReservationDuplicate(/** @noinspection PhpUnusedParameterInspection */ $attribute, $value, $parameters)
     {
-        list($reservation, $reservationId) = $this->getReservation();
+        [$reservation, $reservationId] = $this->getReservation();
         if ($reservation) {
             $data      = $this->getData();
             $guestId   = Arr::get($data, 'reservations.guest_id', $reservation->guest_id);
