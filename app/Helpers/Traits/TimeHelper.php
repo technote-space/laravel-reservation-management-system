@@ -20,7 +20,7 @@ trait TimeHelper
     /**
      * @return string
      */
-    protected function getCheckinTime(): string
+    protected static function getCheckinTime(): string
     {
         return Setting::getSetting('checkin');
     }
@@ -30,9 +30,9 @@ trait TimeHelper
      *
      * @return Carbon
      */
-    protected function getCheckinDatetime(string $date): Carbon
+    protected static function getCheckinDatetime(string $date): Carbon
     {
-        return Carbon::parse($date.' '.$this->getCheckinTime());
+        return Carbon::parse($date.' '.static::getCheckinTime());
     }
 
     /**
@@ -41,7 +41,7 @@ trait TimeHelper
      *
      * @return Carbon
      */
-    protected function getCheckoutDatetime(string $date, string $checkoutTime): Carbon
+    protected static function getCheckoutDatetime(string $date, string $checkoutTime): Carbon
     {
         return Carbon::parse($date.' '.$checkoutTime);
     }
@@ -49,9 +49,9 @@ trait TimeHelper
     /**
      * @return bool
      */
-    protected function isBeforeCheckin(): bool
+    protected static function isBeforeCheckin(): bool
     {
-        return $this->now() < $this->getCheckinDatetime($this->today()->format('Y-m-d'))->timestamp;
+        return static::now() < static::getCheckinDatetime(static::today()->format('Y-m-d'))->timestamp;
     }
 
     /**
@@ -59,23 +59,23 @@ trait TimeHelper
      *
      * @return bool
      */
-    protected function isBeforeCheckout(string $checkoutTime): bool
+    protected static function isBeforeCheckout(string $checkoutTime): bool
     {
-        return $this->now() < $this->getCheckoutDatetime($this->today()->format('Y-m-d'), $checkoutTime)->timestamp;
+        return static::now() < static::getCheckoutDatetime(static::today()->format('Y-m-d'), $checkoutTime)->timestamp;
     }
 
     /**
      * @return \Carbon\Carbon|Carbon
      */
-    protected function getCheckinThresholdDay()
+    protected static function getCheckinThresholdDay()
     {
-        return $this->isBeforeCheckin() ? $this->yesterday() : $this->today();
+        return static::isBeforeCheckin() ? static::yesterday() : static::today();
     }
 
     /**
      * @return int
      */
-    protected function now(): int
+    protected static function now(): int
     {
         if (! isset(static::$now)) {
             static::$now = time();
@@ -87,25 +87,25 @@ trait TimeHelper
     /**
      * @return Carbon
      */
-    protected function today()
+    protected static function today()
     {
-        return Carbon::createFromTimestamp($this->now())->setTime(0, 0);
+        return Carbon::createFromTimestamp(self::now())->setTime(0, 0);
     }
 
     /**
      * @return \Carbon\Carbon|Carbon
      */
-    protected function yesterday()
+    protected static function yesterday()
     {
-        return $this->today()->subDay();
+        return static::today()->subDay();
     }
 
     /**
      * @return \Carbon\Carbon|Carbon
      */
-    protected function tomorrow()
+    protected static function tomorrow()
     {
-        return $this->today()->addDay();
+        return static::today()->addDay();
     }
 
     /**

@@ -25,7 +25,7 @@ class ReservationService
      */
     public function getCheckinList(Carbon $fromDate, Carbon $toDate): Collection
     {
-        $checkin = $this->getCheckinTime();
+        $checkin = static::getCheckinTime();
         $concat  = "CONCAT(start_date, ' ', '$checkin')";
         if ('sqlite' === config('database.default')) {
             $concat = "start_date || ' ' || '$checkin'";

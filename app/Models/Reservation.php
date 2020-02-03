@@ -361,7 +361,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getStartDatetimeAttribute(): Carbon
     {
-        return $this->getCheckinDatetime($this->start_date_str);
+        return static::getCheckinDatetime($this->start_date_str);
     }
 
     /**
@@ -369,7 +369,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getEndDatetimeAttribute(): Carbon
     {
-        return $this->getCheckoutDatetime($this->end_date_str, $this->checkout)->addDay();
+        return static::getCheckoutDatetime($this->end_date_str, $this->checkout)->addDay();
     }
 
     /**
@@ -378,7 +378,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getIsPastAttribute(): bool
     {
-        return $this->end_datetime->timestamp < $this->now();
+        return $this->end_datetime->timestamp < static::now();
     }
 
     /**
@@ -387,7 +387,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getIsPresentAttribute(): bool
     {
-        return $this->start_datetime->timestamp <= $this->now() && $this->end_datetime->timestamp >= $this->now();
+        return $this->start_datetime->timestamp <= static::now() && $this->end_datetime->timestamp >= static::now();
     }
 
     /**
@@ -396,7 +396,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getIsFutureAttribute(): bool
     {
-        return $this->start_datetime->timestamp > $this->now();
+        return $this->start_datetime->timestamp > static::now();
     }
 
     /**

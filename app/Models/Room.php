@@ -162,7 +162,7 @@ class Room extends Model implements CrudableContract, SearchableContract
      */
     public function latestUsage(): HasOne
     {
-        return $this->hasOne(Reservation::class)->whereDate('start_date', '<=', $this->getCheckinThresholdDay())->latest('start_date')->limit(1);
+        return $this->hasOne(Reservation::class)->whereDate('start_date', '<=', static::getCheckinThresholdDay())->latest('start_date')->limit(1);
     }
 
     /**
@@ -170,7 +170,7 @@ class Room extends Model implements CrudableContract, SearchableContract
      */
     public function recentUsages(): HasMany
     {
-        return $this->reservations()->whereDate('start_date', '<=', $this->getCheckinThresholdDay())->latest('start_date')->limit(5);
+        return $this->reservations()->whereDate('start_date', '<=', static::getCheckinThresholdDay())->latest('start_date')->limit(5);
     }
 
     /**
