@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\DateRequest;
 use App\Http\Requests\ReservationRequest;
 use App\Http\Services\ReservationService;
 use Illuminate\Support\Collection;
@@ -23,11 +24,23 @@ class ReservationController extends Controller
     }
 
     /**
+     * @param  DateRequest  $request
+     *
      * @return Collection
      */
-    public function checkoutList()
+    public function checkinList(DateRequest $request)
     {
-        return $this->service->getTodayCheckoutList();
+        return $this->service->getDateCheckinList($request->getDate());
+    }
+
+    /**
+     * @param  DateRequest  $request
+     *
+     * @return Collection
+     */
+    public function checkoutList(DateRequest $request)
+    {
+        return $this->service->getDateCheckoutList($request->getDate());
     }
 
     /**
