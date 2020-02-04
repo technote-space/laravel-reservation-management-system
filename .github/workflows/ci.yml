@@ -286,7 +286,7 @@ jobs:
           fi
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          COVERAGE_FILE: ./coverage/clover.xml
+          COVERAGE_FILE: ./coverage/php/clover.xml
         if: matrix.SEND_CODECOV == 1 && (env.GIT_DIFF || github.event_name == 'push')
       - uses: 8398a7/action-slack@v1
         with:
