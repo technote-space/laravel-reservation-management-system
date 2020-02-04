@@ -12,5 +12,6 @@ export default base('reservation', () => {
         'start_date': format(start),
         'end_date': format(end),
         status: 'reserved',
+        checkout: '10:00:00',
     };
 });

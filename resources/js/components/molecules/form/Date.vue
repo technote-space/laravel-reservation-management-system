@@ -84,15 +84,9 @@
                 };
             },
             min () {
-                if ('reservations.end_date' === this.form.name) {
-                    return this.formInputs[ 'reservations.start_date' ];
-                }
                 return moment().subtract(12, 'months').startOf('month').format(this.format);
             },
             max () {
-                if ('reservations.start_date' === this.form.name) {
-                    return moment(this.formInputs[ 'reservations.end_date' ]).add(1, 'days').format(this.format);
-                }
                 return moment().add(24, 'months').endOf('month').format(this.format);
             },
             roomId () {
@@ -108,13 +102,13 @@
                 return this.value;
             },
             isValidActiveEvent () {
-                return this.formInputs[ 'reservations.start_date' ] && this.formInputs[ 'reservations.end_date' ];
+                return this.formInputs[ 'reservations.start_date' ] && this.formInputs[ 'reservations.nights' ];
             },
             activeEventStart () {
                 return moment(this.formInputs[ 'reservations.start_date' ]).format(this.format);
             },
             activeEventEnd () {
-                return moment(this.formInputs[ 'reservations.end_date' ]).add(1, 'days').format(this.format);
+                return moment(this.formInputs[ 'reservations.start_date' ]).add(Number(this.formInputs[ 'reservations.nights' ]) + 1, 'days').format(this.format);
             },
             prependIcon () {
                 return this.icon || 'event';

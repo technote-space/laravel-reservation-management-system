@@ -110,8 +110,9 @@
             },
             sendInputs () {
                 const inputs = {};
+                const filtered = (name, value, form) => name in form && 'function' === typeof form[ name ] ? form[ name ](value, this.formInputs, form) : value;
                 this.forms.map(form => {
-                    set(inputs, form.name, this.formInputs[ form.name ]);
+                    set(inputs, filtered('nameFilter', form.name, form), filtered('valueFilter', this.formInputs[ form.name ], form));
                 });
                 return inputs;
             },
@@ -144,7 +145,7 @@
             clearForm () {
                 this.formInputs = {};
                 this.forms.map(form => {
-                    this.formInputs[ form.name ] = '';
+                    this.formInputs[ form.name ] = get(form, 'default', '');
                 });
             },
             async getDetail () {
@@ -161,7 +162,7 @@
             fillForm () {
                 const inputs = {};
                 this.forms.map(form => {
-                    inputs[ form.name ] = get(this.detail, form.value, '');
+                    inputs[ form.name ] = get(this.detail, form.value, get(form, 'default', ''));
                 });
                 this.formInputs = inputs;
             },

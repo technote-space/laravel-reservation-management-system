@@ -15,5 +15,8 @@ return [
         'type'       => 'Get type',
         'room_id'    => 'Room ID',
     ],
+    'misc'         => [
+        'date' => 'Date',
+    ],
 
 ];

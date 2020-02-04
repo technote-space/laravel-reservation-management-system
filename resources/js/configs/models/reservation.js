@@ -1,4 +1,6 @@
+import moment from 'moment';
 import { number, price, date } from '../../utils/processor';
+import { getEnv } from '../../utils/env';
 
 export default {
     slug: 'reservations',
@@ -11,12 +13,12 @@ export default {
             value: 'id',
         },
         {
-            text: 'start_datetime',
+            text: 'checkin_datetime',
             value: 'start_datetime',
             processor: date,
         },
         {
-            text: 'end_datetime',
+            text: 'checkout_datetime',
             value: 'end_datetime',
             processor: date,
         },
@@ -85,11 +87,12 @@ export default {
                 max: 999,
                 min: 1,
             },
+            default: 2,
             icon: 'mdi-account-multiple',
         },
         {
             name: 'reservations.start_date',
-            text: 'start_date',
+            text: 'checkin_date',
             value: 'start_date_str',
             validate: {
                 required: true,
@@ -98,23 +101,33 @@ export default {
             type: 'date',
         },
         {
-            name: 'reservations.end_date',
-            text: 'end_date',
-            value: 'end_date_str',
+            name: 'reservations.nights',
+            text: 'nights',
+            value: 'nights',
             validate: {
                 required: true,
-                'date_format': 'yyyy-MM-dd',
+                numeric: true,
+                max: 0 < getEnv('number.reservation') ? getEnv('number.reservation') : 999,
+                min: 1,
             },
-            type: 'date',
+            default: 2,
+            icon: 'mdi-home',
+            nameFilter: function () {
+                return 'reservations.end_date';
+            },
+            valueFilter: function (value, inputs) {
+                return moment(inputs[ 'reservations.start_date' ]).add(Number(value) - 1, 'days').format('YYYY-MM-DD');
+            },
         },
         {
             name: 'reservations.checkout',
-            text: 'checkout',
+            text: 'checkout_time',
             value: 'checkout',
             validate: {
                 required: true,
                 'date_format': 'HH:mm',
             },
+            default: '10:00',
             type: 'time',
         },
         {

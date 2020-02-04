@@ -1,6 +1,6 @@
 import store from '../store';
 import router from '../router';
-import adapter from './adapter';
+import { adapter, getMethod } from './adapter';
 import { addErrorToasted } from './toasted';
 
 /**
@@ -27,6 +27,11 @@ export const apiAccess = async (method, url, options = { data: undefined, succee
         }
     };
 
+    const key = Math.random();
+    await store.dispatch('get' === getMethod(method) ? 'loading/onLoadingSilently' : 'loading/onLoading', {
+        key,
+    }, { root: true });
+
     const { response, error } = await adapter(method, url, options.data);
     if (error) {
         await failed(error);
@@ -44,6 +49,10 @@ export const apiAccess = async (method, url, options = { data: undefined, succee
         await options.always();
     }
 
+    await store.dispatch('loading/offLoading', {
+        key,
+    }, { root: true });
+
     return { response, error };
 };
 
@@ -56,7 +65,7 @@ export const apiAccess = async (method, url, options = { data: undefined, succee
  * @param {function?} options.always always
  * @returns {Promise<{response, error}>}
  */
-export const apiGet = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('get', url, options);
+export const apiGet = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => apiAccess('get', url, options);
 
 /**
  * @param {string} url url
@@ -67,7 +76,7 @@ export const apiGet = async (url, options = { data: undefined, succeeded: undefi
  * @param {function?} options.always always
  * @returns {Promise<{response, error}>}
  */
-export const apiPost = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('post', url, options);
+export const apiPost = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => apiAccess('post', url, options);
 
 /**
  * @param {string} url url
@@ -78,7 +87,7 @@ export const apiPost = async (url, options = { data: undefined, succeeded: undef
  * @param {function?} options.always always
  * @returns {Promise<{response, error}>}
  */
-export const apiPatch = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('patch', url, options);
+export const apiPatch = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => apiAccess('patch', url, options);
 
 /**
  * @param {string} url url
@@ -89,7 +98,7 @@ export const apiPatch = async (url, options = { data: undefined, succeeded: unde
  * @param {function?} options.always always
  * @returns {Promise<{response, error}>}
  */
-export const apiDelete = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => await apiAccess('delete', url, options);
+export const apiDelete = async (url, options = { data: undefined, succeeded: undefined, failed: undefined, always: undefined }) => apiAccess('delete', url, options);
 
 /**
  * @returns {Promise<any>}

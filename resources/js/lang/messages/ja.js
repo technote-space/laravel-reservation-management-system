@@ -1,3 +1,5 @@
+import ja from 'vee-validate/dist/locale/ja';
+
 export default {
     title: '予約システム',
     pages: {
@@ -29,7 +31,12 @@ export default {
         'start_datetime': '開始日時',
         'end_date': '終了日',
         'end_datetime': '終了日時',
-        checkout: 'チェックアウト時間',
+        nights: '宿泊数',
+        'checkin_date': 'チェックイン日',
+        'checkout_time': 'チェックアウト時間',
+        'checkin_datetime': 'チェックイン日時',
+        'checkout_datetime': 'チェックアウト日時',
+        days: '宿泊日数',
         actions: 'アクション',
         guest: '利用者',
         room: '部屋',
@@ -49,6 +56,11 @@ export default {
             edit: '編集に成功しました。',
             delete: '削除に成功しました。',
         },
+        'cancel_reservation': 'この予約をキャンセルしてもよろしいですか？',
+        'checked_in': 'チェックイン済み',
+        'checked_out': 'チェックアウト済み',
+        'canceled': 'キャンセル済み',
+        'not_checked_in': '未チェックイン',
     },
     unit: {
         number: '{value}人',
@@ -72,5 +84,9 @@ export default {
         'monthly_sales': '月別売上',
         'daily_sales': '日別売上',
         'all_rooms': '全部屋',
+        checkin: 'チェックイン',
+        checkout: 'チェックアウト',
+        date: '日付',
     },
+    validation: ja.messages,
 };
