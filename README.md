@@ -18,7 +18,6 @@
   - [Dashboard](#dashboard)
   - [CRUD](#crud)
 - [要件](#%E8%A6%81%E4%BB%B6)
-- [仕様](#%E4%BB%95%E6%A7%98)
 - [データ設計](#%E3%83%87%E3%83%BC%E3%82%BF%E8%A8%AD%E8%A8%88)
   - [部屋 (rooms)](#%E9%83%A8%E5%B1%8B-rooms)
   - [利用者 (guests)](#%E5%88%A9%E7%94%A8%E8%80%85-guests)
