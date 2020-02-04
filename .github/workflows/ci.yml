@@ -231,11 +231,6 @@ jobs:
     name: PHPUnit
     needs: [phpcs, phpmd]
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql
-        ports:
-          - 3306
     strategy:
       matrix:
         php: ['7.2', '7.3']
@@ -304,11 +299,6 @@ jobs:
     name: Laravel Dusk
     needs: [phpcs, phpmd]
     runs-on: ubuntu-latest
-    services:
-      mysql:
-        image: mysql
-        ports:
-          - 3306
     strategy:
       matrix:
         php: ['7.2', '7.3']
