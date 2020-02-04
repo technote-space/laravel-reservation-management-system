@@ -36,13 +36,13 @@ exports[`LoginForm should render login form 1`] = `
                   >
                     <label
                       class="v-label theme--light"
-                      for="input-12"
+                      for="input-13"
                       style="left: 0px; position: absolute;"
                     >
                       E-Mail
                     </label>
                     <input
-                      id="input-12"
+                      id="input-13"
                       required="required"
                       type="text"
                     />
@@ -78,13 +78,13 @@ exports[`LoginForm should render login form 1`] = `
                   >
                     <label
                       class="v-label theme--light"
-                      for="input-16"
+                      for="input-17"
                       style="left: 0px; position: absolute;"
                     >
                       Password
                     </label>
                     <input
-                      id="input-16"
+                      id="input-17"
                       required="required"
                       type="password"
                     />
@@ -185,13 +185,13 @@ exports[`LoginForm should render login form 2`] = `
                   >
                     <label
                       class="v-label v-label--active theme--light error--text"
-                      for="input-12"
+                      for="input-13"
                       style="left: 0px; position: absolute;"
                     >
                       E-Mail
                     </label>
                     <input
-                      id="input-12"
+                      id="input-13"
                       required="required"
                       type="text"
                     />
@@ -210,7 +210,7 @@ exports[`LoginForm should render login form 2`] = `
                       <div
                         class="v-messages__message"
                       >
-                        E-Mail is not valid.
+                        The E-Mail field must be a valid email
                       </div>
                     </div>
                   </div>
@@ -234,13 +234,13 @@ exports[`LoginForm should render login form 2`] = `
                   >
                     <label
                       class="v-label v-label--active theme--light error--text"
-                      for="input-16"
+                      for="input-17"
                       style="left: 0px; position: absolute;"
                     >
                       Password
                     </label>
                     <input
-                      id="input-16"
+                      id="input-17"
                       required="required"
                       type="password"
                     />
@@ -273,7 +273,7 @@ exports[`LoginForm should render login form 2`] = `
                       <div
                         class="v-messages__message"
                       >
-                        Password is not valid.
+                        The Password field must be at least 8 characters
                       </div>
                     </div>
                   </div>
@@ -349,13 +349,13 @@ exports[`LoginForm should render login form 3`] = `
                   >
                     <label
                       class="v-label v-label--active theme--light"
-                      for="input-12"
+                      for="input-13"
                       style="left: 0px; position: absolute;"
                     >
                       E-Mail
                     </label>
                     <input
-                      id="input-12"
+                      id="input-13"
                       required="required"
                       type="text"
                     />
@@ -391,13 +391,13 @@ exports[`LoginForm should render login form 3`] = `
                   >
                     <label
                       class="v-label v-label--active theme--light"
-                      for="input-16"
+                      for="input-17"
                       style="left: 0px; position: absolute;"
                     >
                       Password
                     </label>
                     <input
-                      id="input-16"
+                      id="input-17"
                       required="required"
                       type="password"
                     />
