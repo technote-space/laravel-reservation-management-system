@@ -47,7 +47,8 @@
 <img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/login.png" width="500px"/>
 
 ### Dashboard
-<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/dashboard.png" width="500px"/>
+<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/dashboard1.png" width="500px"/>
+<img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/dashboard2.png" width="500px"/>
 
 ### CRUD
 <img src="https://raw.githubusercontent.com/technote-space/laravel-reservation-management-system/images/list.png" width="500px"/>
@@ -57,14 +58,11 @@
 - 部屋の管理
 - 各部屋の現在の予約状況の確認
 - 予約登録
+  - チェックアウト時間の個別設定
 - 利用者の管理
   - 名前/住所/電話番号
 - 月毎の売り上げ金額の確認
-
-## 仕様
-- 貸出単位は部屋毎
-- 1予約者につき1部屋
-- 支払いは利用当日に前払い
+- 当日の清掃対象(チェックアウト)の部屋の一覧を出力
 
 ## データ設計
 ### 部屋 (rooms)
@@ -86,6 +84,7 @@
 - 利用開始日 (start_date)
 - 利用終了日(1泊の場合 = 利用開始日) (end_date)
 - チェックアウト時間 (checkout)
+- ステータス (status)
 ### 予約詳細 (reservation_details)
 - 利用人数 (number)
 - 支払金額 (payment)
@@ -105,6 +104,7 @@
 - PHP（Laravel）
   - API サーバとして利用
 - JavaScript（Vue.js）
+
 ### Lint
 - PHP
   - [PHPCS](https://github.com/squizlabs/PHP_CodeSniffer)
@@ -113,6 +113,7 @@
   - [ESLint](https://eslint.org/)
 - CSS
   - [stylelint](https://github.com/stylelint/stylelint)
+
 ### テスト
 - PHP
   - [PHPUnit](https://phpunit.de/)（単体テスト）
@@ -120,6 +121,7 @@
 - JavaScript
   - [Jest](https://jestjs.io/)（単体テスト）
   - [Laravel Dusk](https://github.com/laravel/dusk)（e2e）
+
 ### CI
 - [Travis CI](https://travis-ci.com/)
   - Lint
@@ -129,8 +131,15 @@
   - テスト
   - Deploy
     - GitHub Pages
+  - 目次自動生成
+  - 開発補助
+    - ラベル付与自動化
+    - アサイン自動化
+    - 依存モジュール更新自動化
+
 ### デザインフレームワーク
 - [Vuetify](https://vuetifyjs.com/)
+
 ### その他
 - 多言語化
 - Vuex, SPA
