@@ -26,6 +26,7 @@
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
     import Bar from '../molecules/Bar';
     import { apiGet } from '../../utils/api';
     import { arrayToObject } from '../../utils/misc';
@@ -59,8 +60,12 @@
         data () {
             return {
                 data: [],
-                isLoading: false,
             };
+        },
+        computed: {
+            ...mapGetters({
+                isLoading: 'loading/isLoading',
+            }),
         },
         watch: {
             roomId: {
@@ -70,7 +75,6 @@
         },
         methods: {
             async setup () {
-                this.isLoading = true;
                 const { response } = await apiGet('summary', {
                     data: {
                         'start_date': this.start,
@@ -79,7 +83,6 @@
                         'room_id': this.roomId,
                     },
                 });
-                this.isLoading = false;
                 if (response) {
                     this.data = Object.values(arrayToObject(Object.keys(response.data), {
                         getItem: key => ({ label: key, value: response.data[ key ] }),

@@ -1,0 +1,459 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FormItem should not render date form: date form 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 0px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <div>
+          <div
+            class="v-dialog__container"
+            hint=""
+            role="dialog"
+          >
+            <div
+              class="v-input v-input--is-label-active v-input--is-dirty v-input--is-disabled v-input--is-readonly theme--light v-text-field"
+            >
+              <div
+                class="v-input__prepend-outer"
+              >
+                <div
+                  class="v-input__icon v-input__icon--prepend"
+                >
+                  <i
+                    aria-hidden="true"
+                    class="v-icon notranslate v-icon--disabled material-icons theme--light"
+                  >
+                    event
+                  </i>
+                </div>
+              </div>
+              <div
+                class="v-input__control"
+              >
+                <div
+                  class="v-input__slot"
+                >
+                  <div
+                    class="v-text-field__slot"
+                  >
+                    <label
+                      class="v-label v-label--active v-label--is-disabled theme--light"
+                      for="input-13"
+                      style="left: 0px; position: absolute;"
+                    >
+                      ID
+                    </label>
+                    <input
+                      disabled="disabled"
+                      id="input-13"
+                      readonly="readonly"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="v-text-field__details"
+                >
+                  <div
+                    class="v-messages theme--light"
+                  >
+                    <div
+                      class="v-messages__wrapper"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="v-dialog__content"
+              role="document"
+              style="z-index: 0;"
+            >
+              <div
+                class="v-dialog"
+                style="max-width: 850px; display: none;"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;
+
+exports[`FormItem should not render search form: search form 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 0px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <div>
+          <div
+            hint=""
+          >
+            <div
+              class="v-input v-input--is-readonly theme--light v-text-field"
+            >
+              <div
+                class="v-input__prepend-outer"
+              >
+                <div
+                  class="v-input__icon v-input__icon--prepend"
+                >
+                  <i
+                    aria-hidden="true"
+                    class="v-icon notranslate material-icons theme--light"
+                  >
+                    icon
+                  </i>
+                </div>
+              </div>
+              <div
+                class="v-input__control"
+              >
+                <div
+                  class="v-input__slot"
+                >
+                  <div
+                    class="v-text-field__slot"
+                  >
+                    <label
+                      class="v-label theme--light"
+                      for="input-29"
+                      style="left: 0px; position: absolute;"
+                    >
+                      ID
+                    </label>
+                    <input
+                      id="input-29"
+                      readonly="readonly"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="v-text-field__details"
+                >
+                  <div
+                    class="v-messages theme--light"
+                  >
+                    <div
+                      class="v-messages__wrapper"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+             
+            <div
+              class="v-dialog__container"
+              role="dialog"
+            >
+              <div
+                class="v-dialog__content"
+                role="document"
+                style="z-index: 0;"
+              >
+                <div
+                  class="v-dialog"
+                  style="width: 400px; display: none;"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;
+
+exports[`FormItem should not render text form 1: text form 1 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 0px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <div>
+          <div
+            class="v-input v-input--is-label-active v-input--is-dirty theme--light v-text-field"
+            detail="[object Object]"
+            form="[object Object]"
+            form-inputs="[object Object]"
+          >
+            <div
+              class="v-input__control"
+            >
+              <div
+                class="v-input__slot"
+              >
+                <div
+                  class="v-text-field__slot"
+                >
+                  <label
+                    class="v-label v-label--active theme--light"
+                    for="input-46"
+                    style="left: 0px; position: absolute;"
+                  >
+                    ID
+                  </label>
+                  <input
+                    id="input-46"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div
+                class="v-text-field__details"
+              >
+                <div
+                  class="v-messages theme--light"
+                >
+                  <div
+                    class="v-messages__wrapper"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;
+
+exports[`FormItem should not render text form 2: text form 2 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 0px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <div>
+          <div
+            class="v-input v-input--is-label-active v-input--is-dirty theme--light v-text-field"
+            detail="[object Object]"
+            form="[object Object]"
+            form-inputs="[object Object]"
+          >
+            <div
+              class="v-input__control"
+            >
+              <div
+                class="v-input__slot"
+              >
+                <div
+                  class="v-text-field__slot"
+                >
+                  <label
+                    class="v-label v-label--active theme--light"
+                    for="input-59"
+                    style="left: 0px; position: absolute;"
+                  >
+                    ID
+                  </label>
+                  <input
+                    id="input-59"
+                    type="text"
+                  />
+                </div>
+              </div>
+              <div
+                class="v-text-field__details"
+              >
+                <div
+                  class="v-messages theme--light"
+                >
+                  <div
+                    class="v-messages__wrapper"
+                  >
+                    <div
+                      class="v-messages__message"
+                    >
+                      ID
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;
+
+exports[`FormItem should not render time form: time form 1`] = `
+<div
+  class="v-application v-application--is-ltr theme--light"
+  data-app="true"
+  id="app"
+>
+  <div
+    class="v-application--wrap"
+  >
+    <main
+      app="true"
+      class="v-content"
+      classname="mb-5"
+      style="padding: 0px 0px 0px 0px;"
+    >
+      <div
+        class="v-content__wrap"
+      >
+        <div>
+          <div
+            class="v-dialog__container"
+            detail="[object Object]"
+            form="[object Object]"
+            hint=""
+            role="dialog"
+          >
+            <div
+              class="v-input v-input--is-label-active v-input--is-dirty v-input--is-disabled v-input--is-readonly theme--light v-text-field"
+            >
+              <div
+                class="v-input__prepend-outer"
+              >
+                <div
+                  class="v-input__icon v-input__icon--prepend"
+                >
+                  <i
+                    aria-hidden="true"
+                    class="v-icon notranslate v-icon--disabled material-icons theme--light"
+                  >
+                    timer
+                  </i>
+                </div>
+              </div>
+              <div
+                class="v-input__control"
+              >
+                <div
+                  class="v-input__slot"
+                >
+                  <div
+                    class="v-text-field__slot"
+                  >
+                    <label
+                      class="v-label v-label--active v-label--is-disabled theme--light"
+                      for="input-73"
+                      style="left: 0px; position: absolute;"
+                    >
+                      ID
+                    </label>
+                    <input
+                      disabled="disabled"
+                      id="input-73"
+                      readonly="readonly"
+                      type="text"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="v-text-field__details"
+                >
+                  <div
+                    class="v-messages theme--light"
+                  >
+                    <div
+                      class="v-messages__wrapper"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="v-dialog__content"
+              role="document"
+              style="z-index: 0;"
+            >
+              <div
+                class="v-dialog time-picker-dialog"
+                style="max-width: 850px; display: none;"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          id="test-contents"
+        >
+          contents
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+`;

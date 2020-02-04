@@ -1,6 +1,6 @@
 import { take, drop } from 'lodash';
-import store from '../../../store';
-import models from './models';
+import store from '../../../../store';
+import models from '../models';
 
 export default (model, page, count) => {
     const all = store.getters[ 'adapter/getAllArray' ](model);

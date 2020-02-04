@@ -30,7 +30,7 @@ exports[`Footer should render footer 1`] = `
       style="left: 0px; right: 0px; bottom: 0px;"
     >
       <div
-        class="layout justify-center wrap"
+        class="row justify-center"
       >
         <a
           class="mx-4 white--text v-btn v-btn--flat v-btn--icon v-btn--round theme--dark v-size--default"

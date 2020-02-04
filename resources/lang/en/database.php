@@ -26,6 +26,7 @@ return [
         'end_date'   => 'End date',
         'checkout'   => 'Checkout Time',
         'number'     => 'Number',
+        'status'     => 'Status',
     ],
     'reservation_details' => [
         'reservation_id'  => 'Reservation ID',

@@ -8,7 +8,9 @@ export default (item, relation = true) => {
     const endDate = moment(item.end_date).add(1, 'days').format('YYYY-MM-DD');
     const checkinTime = store.getters[ 'adapter/getSetting' ]('checkin');
     const checkoutTime = store.getters[ 'adapter/getSetting' ]('checkout');
-    const days = moment(item.end_date).diff(moment(item.start_date), 'days') + 1;
+    const nights = moment(item.end_date).diff(moment(item.start_date), 'days') + 1;
+    const days = nights + 1;
+    const stays = `${nights} nights and ${days} days`;
     const roomRaw = store.getters[ 'adapter/search' ]('rooms', room => room.id === item.room_id);
     const roomData = relation ? room(roomRaw) : roomRaw;
     return Object.assign({}, item, {
@@ -23,7 +25,9 @@ export default (item, relation = true) => {
         'is_past': moment(endDate + `T${checkoutTime}:00.000+0900`).isBefore(),
         'is_present': !moment(item.start_date + `T${checkinTime}:00.000+0900`).isAfter() && !moment(endDate + `T${checkoutTime}:00.000+0900`).isBefore(),
         'is_future': moment(item.start_date + `T${checkinTime}:00.000+0900`).isAfter(),
-        days: days,
-        charge: roomData.price * days,
+        nights,
+        days,
+        stays,
+        charge: roomData.price * nights,
     });
 };

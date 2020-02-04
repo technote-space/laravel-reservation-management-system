@@ -51,8 +51,8 @@ class SummaryApiTest extends BaseTestCase
         $this->createReservation('2020-01-31', '2020-01-31', 1000);   // 2020/01 * 1
         $this->createReservation('2020-01-31', '2020-02-01', 10000);  // 2020/01 * 2
         $this->createReservation('2020-02-01', '2020-02-01', 100000); // 2020/02 + 1
-        $admin = factory(Admin::class)->create();
 
+        $admin    = factory(Admin::class)->create();
         $response = $this->actingAs($admin)->json('GET', route('summary', [
             'start_date' => '2019-11-01',
             'end_date'   => '2020-04-01',
@@ -72,8 +72,8 @@ class SummaryApiTest extends BaseTestCase
         $this->createReservation('2020-01-02', '2020-01-02', 1);   // 2020/01/02 * 1
         $this->createReservation('2020-01-02', '2020-01-03', 10);  // 2020/01/02 * 2
         $this->createReservation('2020-01-03', '2020-01-04', 100); // 2020/01/03 * 2
-        $admin = factory(Admin::class)->create();
 
+        $admin    = factory(Admin::class)->create();
         $response = $this->actingAs($admin)->json('GET', route('summary', [
             'start_date' => '2020-01-01',
             'end_date'   => '2020-01-05',
@@ -97,8 +97,8 @@ class SummaryApiTest extends BaseTestCase
         $this->createReservation('2020-01-31', '2020-01-31', 1000);   // 2020/01 * 1
         $this->createReservation('2020-01-31', '2020-02-01', 10000);  // 2020/01 * 2
         $this->createReservation('2020-02-01', '2020-02-01', 100000); // 2020/02 + 1
-        $admin = factory(Admin::class)->create();
 
+        $admin    = factory(Admin::class)->create();
         $response = $this->actingAs($admin)->json('GET', route('summary', [
             'start_date' => '2019-11-01',
             'end_date'   => '2020-04-01',
@@ -133,8 +133,8 @@ class SummaryApiTest extends BaseTestCase
         $this->createReservation('2020-01-02', '2020-01-02', 1);   // 2020/01/02 * 1
         $this->createReservation('2020-01-02', '2020-01-03', 10);  // 2020/01/02 * 2
         $this->createReservation('2020-01-03', '2020-01-04', 100); // 2020/01/03 * 2
-        $admin = factory(Admin::class)->create();
 
+        $admin    = factory(Admin::class)->create();
         $response = $this->actingAs($admin)->json('GET', route('summary', [
             'start_date' => '2020-01-01',
             'end_date'   => '2020-01-05',

@@ -12,9 +12,9 @@
             v-model="dialog"
             width="400"
         >
-            <v-layout
+            <v-row
                 wrap
-                justify-center
+                justify="center"
             >
                 <v-card
                     class="pa-6"
@@ -56,7 +56,7 @@
                         </div>
                     </v-card-text>
                 </v-card>
-            </v-layout>
+            </v-row>
         </v-dialog>
     </div>
 </template>

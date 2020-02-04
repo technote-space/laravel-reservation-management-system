@@ -3,85 +3,87 @@
         fluid
         fill-height
     >
-        <v-layout
-            wrap
-            child-flex
+        <v-row
+            align="center"
+            justify="center"
         >
-            <v-data-table
-                :headers="tableHeaders"
-                :items="items"
-                :page.sync="page"
-                :items-per-page="perPage"
-                hide-default-footer
-                disable-sort
-                class="elevation-1 pa-5 mb-3"
-            >
-                <template v-slot:top>
-                    <v-toolbar
-                        flat
-                        color="white"
-                    >
-                        <v-toolbar-title>
-                            <v-list-item-icon>
-                                <v-icon>{{ icon }}</v-icon>
-                            </v-list-item-icon>
-                            {{ $t(title) }}
-                        </v-toolbar-title>
-                        <v-divider
-                            class="mx-4"
-                            inset
-                            vertical
-                        />
-                        <v-spacer />
-                        <v-btn
-                            color="primary"
-                            dark
-                            class="mb-2"
-                            @click.stop="createItem"
+            <v-flex>
+                <v-data-table
+                    :headers="tableHeaders"
+                    :items="items"
+                    :page.sync="page"
+                    :items-per-page="perPage"
+                    hide-default-footer
+                    disable-sort
+                    class="elevation-1 pa-5 mb-3"
+                >
+                    <template v-slot:top>
+                        <v-toolbar
+                            flat
+                            color="white"
                         >
-                            {{ $t('misc.new_item') }}
-                        </v-btn>
-                        <v-dialog
-                            v-model="dialog"
-                            max-width="750px"
-                            persistent
-                        >
-                            <Edit
-                                :target-model="targetModel"
-                                :target-id="targetId"
-                                :increment="increment"
-                                @close-edit="close"
+                            <v-toolbar-title>
+                                <v-list-item-icon>
+                                    <v-icon>{{ icon }}</v-icon>
+                                </v-list-item-icon>
+                                {{ $t(title) }}
+                            </v-toolbar-title>
+                            <v-divider
+                                class="mx-4"
+                                inset
+                                vertical
                             />
-                        </v-dialog>
-                        <YesCancel
-                            :dialog="deleteDialog"
-                            message="messages.delete_item"
-                            @yes="deleteItem"
-                            @cancel="deleteTargetId = null"
+                            <v-spacer />
+                            <v-btn
+                                color="primary"
+                                dark
+                                class="mb-2"
+                                @click.stop="createItem"
+                            >
+                                {{ $t('misc.new_item') }}
+                            </v-btn>
+                            <v-dialog
+                                v-model="dialog"
+                                max-width="750px"
+                                persistent
+                            >
+                                <Edit
+                                    :target-model="targetModel"
+                                    :target-id="targetId"
+                                    :increment="increment"
+                                    @close-edit="close"
+                                />
+                            </v-dialog>
+                            <YesCancel
+                                :dialog="deleteDialog"
+                                message="messages.delete_item"
+                                @yes="deleteItem"
+                                @cancel="deleteTargetId = null"
+                            />
+                        </v-toolbar>
+                    </template>
+                    <template v-slot:item="{ item, headers }">
+                        <ListRow
+                            :item="item"
+                            :headers="headers"
+                            @edit-item="editItem(item)"
+                            @delete-item="deleteItemConfirm(item)"
                         />
-                    </v-toolbar>
-                </template>
-                <template v-slot:item="{ item, headers }">
-                    <ListRow
-                        :item="item"
-                        :headers="headers"
-                        @edit-item="editItem(item)"
-                        @delete-item="deleteItemConfirm(item)"
-                    />
-                </template>
-                <template v-slot:footer>
-                    <div class="text-center">
-                        <v-pagination
-                            v-if="isValidPagination"
-                            :length="totalPage"
-                            :total-visible="7"
-                            :value="page"
-                            @input="setPage"
-                        />
-                    </div>
-                </template>
-            </v-data-table>
-        </v-layout>
+                    </template>
+                    <template v-slot:footer>
+                        <div class="text-center mt-4">
+                            <v-pagination
+                                v-if="isValidPagination"
+                                :length="totalPage"
+                                :total-visible="7"
+                                :value="page"
+                                @input="setPage"
+                            />
+                        </div>
+                    </template>
+                </v-data-table>
+            </v-flex>
+        </v-row>
     </v-container>
 </template>
 

@@ -18,9 +18,9 @@ const generate = (model, generator, overwrite) => {
     const keys = Object.keys(defaultValue).concat(['created_at']);
     return Object.assign({
         id: modelId,
-        'created_at': moment().format('YYYY-MM-DD hh:mm:ss'),
+        'created_at': moment().format('YYYY-MM-DD HH:mm:ss'),
     }, defaultValue, pick(overwrite, keys), {
-        'updated_at': moment().format('YYYY-MM-DD hh:mm:ss'),
+        'updated_at': moment().format('YYYY-MM-DD HH:mm:ss'),
     });
 };
 

@@ -8,6 +8,7 @@ module.exports = {
     moduleFileExtensions: [
         'js',
         'vue',
+        'json',
     ],
     setupFiles: ['<rootDir>/resources/js/__tests__/jest.setup.js'],
     coverageDirectory: '<rootDir>/coverage/js',

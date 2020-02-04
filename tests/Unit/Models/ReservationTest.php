@@ -110,7 +110,7 @@ class ReservationTest extends BaseTestCase
             'room_id'    => self::$room->id,
             'start_date' => date('Y-m-d'),
             'end_date'   => date('Y-m-d'),
-            'checkout'  => '12:00:00',
+            'checkout'   => '12:00:00',
         ]);
         static::runSeed([
             '--class' => 'SettingTableSeeder',
@@ -174,13 +174,13 @@ class ReservationTest extends BaseTestCase
             'end_date'   => $day4,
         ]);
 
-        $this->assertTrue(Reservation::isTermValid($day1, $day1));
-        $this->assertTrue(Reservation::isTermValid($day1, $day4));
-        $this->assertFalse(Reservation::isTermValid($day1, $day5));
-        $this->assertFalse(Reservation::isTermValid($day2, $day1));
+        $this->assertTrue(Reservation::isTermValid($day1, $day1, null));
+        $this->assertTrue(Reservation::isTermValid($day1, $day4, null));
+        $this->assertFalse(Reservation::isTermValid($day1, $day5, null));
+        $this->assertFalse(Reservation::isTermValid($day2, $day1, null));
 
-        $this->assertTrue(Reservation::isTermValid(null, $day1));
-        $this->assertTrue(Reservation::isTermValid($day1, null));
+        $this->assertTrue(Reservation::isTermValid(null, $day1, null));
+        $this->assertTrue(Reservation::isTermValid($day1, null, null));
     }
 
     public function testIsTermValid2()
@@ -208,10 +208,43 @@ class ReservationTest extends BaseTestCase
             'end_date'   => $day4,
         ]);
 
-        $this->assertTrue(Reservation::isTermValid($day1, $day1));
-        $this->assertTrue(Reservation::isTermValid($day1, $day4));
-        $this->assertTrue(Reservation::isTermValid($day1, $day5));
-        $this->assertFalse(Reservation::isTermValid($day2, $day1));
+        $this->assertTrue(Reservation::isTermValid($day1, $day1, null));
+        $this->assertTrue(Reservation::isTermValid($day1, $day4, null));
+        $this->assertTrue(Reservation::isTermValid($day1, $day5, null));
+        $this->assertFalse(Reservation::isTermValid($day2, $day1, null));
+    }
+
+    public function testIsTermValid3()
+    {
+        Reservation::all()->each(function ($row) {
+            /** @var Model $row */
+            $row->delete();
+        });
+        Setting::create([
+            'key'   => 'max_day',
+            'value' => '0',
+            'type'  => 'int',
+        ]);
+        Setting::create([
+            'key'   => 'checkin',
+            'value' => '15:00',
+            'type'  => 'time',
+        ]);
+        Setting::clearCache();
+
+        $day1 = now()->format('Y-m-d');
+        $day2 = now()->addDays(2)->format('Y-m-d');
+        $day3 = now()->addDays(3)->format('Y-m-d');
+        factory(Reservation::class)->create([
+            'guest_id'   => self::$guest->id,
+            'room_id'    => self::$room->id,
+            'start_date' => $day2,
+            'end_date'   => $day3,
+        ]);
+
+        $this->assertTrue(Reservation::isTermValid($day1, $day1, null));
+        $this->assertTrue(Reservation::isTermValid($day1, $day1, '15:00'));
+        $this->assertFalse(Reservation::isTermValid($day1, $day1, '15:01'));
     }
 
     public function testIsReservationAvailable()

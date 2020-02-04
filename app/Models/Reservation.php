@@ -27,6 +27,7 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @property Carbon $start_date 利用開始日
  * @property Carbon $end_date 利用終了日
  * @property string $checkout チェックアウト時間
+ * @property string $status ステータス
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @method static Builder|Reservation newModelQuery()
@@ -41,6 +42,7 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @method static Builder|Reservation whereStartDate($value)
  * @method static Builder|Reservation whereUpdatedAt($value)
  * @method static Builder|Reservation whereCheckout($value)
+ * @method static Builder|Reservation whereStatus($value)
  * @property-read bool $is_future
  * @property-read bool $is_past
  * @property-read bool $is_present
@@ -51,6 +53,8 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @property-read ReservationDetail $detail
  * @property-read int $charge
  * @property-read int $days
+ * @property-read int $nights
+ * @property-read string $stays
  * @property-read Guest $guest
  * @property-read Room $room
  * @property-read int $payment
@@ -90,6 +94,8 @@ class Reservation extends Model implements CrudableContract, SearchableContract
         'is_present',
         'is_future',
         'days',
+        'nights',
+        'stays',
         'charge',
     ];
 
@@ -359,7 +365,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getStartDatetimeAttribute(): Carbon
     {
-        return $this->getCheckinDatetime($this->start_date_str);
+        return static::getCheckinDatetime($this->start_date_str);
     }
 
     /**
@@ -367,7 +373,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getEndDatetimeAttribute(): Carbon
     {
-        return $this->getCheckoutDatetime($this->end_date_str, $this->checkout)->addDay();
+        return static::getCheckoutDatetime($this->end_date_str, $this->checkout)->addDay();
     }
 
     /**
@@ -376,7 +382,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getIsPastAttribute(): bool
     {
-        return $this->end_datetime->timestamp < $this->now();
+        return $this->end_datetime->timestamp < static::now();
     }
 
     /**
@@ -385,7 +391,7 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getIsPresentAttribute(): bool
     {
-        return $this->start_datetime->timestamp <= $this->now() && $this->end_datetime->timestamp >= $this->now();
+        return $this->start_datetime->timestamp <= static::now() && $this->end_datetime->timestamp >= static::now();
     }
 
     /**
@@ -394,13 +400,13 @@ class Reservation extends Model implements CrudableContract, SearchableContract
      */
     public function getIsFutureAttribute(): bool
     {
-        return $this->start_datetime->timestamp > $this->now();
+        return $this->start_datetime->timestamp > static::now();
     }
 
     /**
      * @return int
      */
-    public function getDaysAttribute(): int
+    public function getNightsAttribute(): int
     {
         return $this->end_date->diffInDays($this->start_date) + 1;
     }
@@ -408,9 +414,25 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     /**
      * @return int
      */
+    public function getDaysAttribute(): int
+    {
+        return $this->nights + 1;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStaysAttribute(): string
+    {
+        return sprintf(__('misc.reservations.stays'), $this->nights, $this->days);
+    }
+
+    /**
+     * @return int
+     */
     public function getChargeAttribute(): int
     {
-        return $this->days * $this->room->price;
+        return $this->nights * $this->room->price;
     }
 
     /**
@@ -424,10 +446,11 @@ class Reservation extends Model implements CrudableContract, SearchableContract
     /**
      * @param  string|null  $startDate
      * @param  string|null  $endDate
+     * @param  string|null  $checkoutTime
      *
      * @return bool
      */
-    public static function isTermValid(?string $startDate, ?string $endDate): bool
+    public static function isTermValid(?string $startDate, ?string $endDate, ?string $checkoutTime): bool
     {
         if (empty($startDate) || empty($endDate)) {
             return true;
@@ -439,6 +462,10 @@ class Reservation extends Model implements CrudableContract, SearchableContract
 
         $maxDay = Setting::getSetting('max_day');
         if ($maxDay > 0 && $maxDay <= Carbon::parse($endDate)->diffInDays(Carbon::parse($startDate))) {
+            return false;
+        }
+
+        if ($checkoutTime && static::today()->setTimeFromTimeString($checkoutTime)->isAfter(static::today()->setTimeFromTimeString(self::getCheckinTime()))) {
             return false;
         }
 
@@ -497,6 +524,39 @@ class Reservation extends Model implements CrudableContract, SearchableContract
         }
 
         return ! $builder->exists();
+    }
+
+    /**
+     * @return bool
+     */
+    public function checkin()
+    {
+        $this->status = 'checkin';
+
+        return $this->save();
+    }
+
+    /**
+     * @param  int|null  $payment
+     *
+     * @return bool
+     */
+    public function checkout(?int $payment = null)
+    {
+        $this->detail->paid($payment);
+        $this->status = 'checkout';
+
+        return $this->save();
+    }
+
+    /**
+     * @return bool
+     */
+    public function cancel()
+    {
+        $this->status = 'canceled';
+
+        return $this->save();
     }
 
     /**
