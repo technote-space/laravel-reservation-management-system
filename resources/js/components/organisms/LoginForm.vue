@@ -7,27 +7,27 @@
     >
         <ValidationProvider
             v-slot="{ errors }"
-            :name="$t('validations.attributes.email')"
+            name="email"
             rules="required|email"
         >
             <v-text-field
                 v-model="loginForm.email"
                 :error-messages="errors"
-                :label="$t('validations.attributes.email')"
+                :label="$t('column.email')"
                 required
             />
         </ValidationProvider>
         <ValidationProvider
             v-slot="{ errors }"
             rules="required|min:8"
-            :name="$t('validations.attributes.password')"
+            name="password"
         >
             <v-text-field
                 v-model="loginForm.password"
                 :append-icon="passwordIcon"
                 :error-messages="errors"
                 :hint="$t('messages.password_hint', {min: 8})"
-                :label="$t('validations.attributes.password')"
+                :label="$t('column.password')"
                 :type="passwordType"
                 counter
                 required

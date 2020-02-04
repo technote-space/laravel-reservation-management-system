@@ -1,3 +1,5 @@
+import en from 'vee-validate/dist/locale/en';
+
 export default {
     title: 'Reservation System',
     pages: {
@@ -29,10 +31,16 @@ export default {
         'start_datetime': 'Start Datetime',
         'end_date': 'End Date',
         'end_datetime': 'End Datetime',
+        nights: 'Number of stays',
+        'checkin_date': 'Checkin date',
+        'checkout_time': 'Checkout time',
+        'checkin_datetime': 'Checkin Datetime',
+        'checkout_datetime': 'Checkout Datetime',
+        days: 'Stay days',
         actions: 'Actions',
         guest: 'Guest',
         room: 'Room',
-        status: 'Reservation status',
+        status: 'Status',
     },
     loading: {},
     messages: {
@@ -48,6 +56,11 @@ export default {
             edit: 'Succeeded to edit.',
             delete: 'Succeeded to delete.',
         },
+        'cancel_reservation': 'Are you sure you want to cancel this reservation?',
+        'checked_in': 'Checked in',
+        'checked_out': 'Checked out',
+        'canceled': 'Canceled',
+        'not_checked_in': 'Not checked in',
     },
     unit: {
         number: '1 person | {value} people',
@@ -71,5 +84,9 @@ export default {
         'monthly_sales': 'Monthly sales',
         'daily_sales': 'Daily sales',
         'all_rooms': 'All rooms',
+        checkin: 'Checkin',
+        checkout: 'Checkout',
+        date: 'Date',
     },
+    validation: en.messages,
 };

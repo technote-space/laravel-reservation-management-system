@@ -3,24 +3,85 @@
         fluid
         fill-height
     >
-        <v-layout
-            wrap
-            align-center
-            justify-center
+        <v-row
+            align="center"
         >
-            <v-flex sm12>
+            <v-col
+                justify="center"
+                sm="12"
+                class="pb-0"
+            >
+                <v-dialog
+                    v-model="selectDate"
+                    max-width="850px"
+                >
+                    <template v-slot:activator="{ on: { click } }">
+                        <v-text-field
+                            :disabled="isLoading"
+                            :label="$t('misc.date')"
+                            :value="date"
+                            class="d-inline-block float-right"
+                            @click="click"
+                        />
+                    </template>
+                    <Calendar
+                        v-if="selectDate"
+                        :event-callback="eventCallback"
+                        :date-clicked="dateClicked"
+                        :reset-calendar-callback="resetCalendarCallback"
+                        :dialog="selectDate"
+                    />
+                </v-dialog>
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col
+                sm="12"
+                class="pt-0"
+            >
+                <Checkin
+                    :date="date"
+                />
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col
+                sm="12"
+                class="pt-0"
+            >
+                <Checkout
+                    :date="date"
+                />
+            </v-col>
+        </v-row>
+        <v-row
+            class="ma-3"
+        >
+            <v-divider />
+        </v-row>
+        <v-row
+            align="center"
+        >
+            <v-col
+                justify="center"
+                sm="12"
+                class="pb-0"
+            >
                 <v-select
                     v-model="roomId"
                     :disabled="isLoading"
                     :items="rooms"
                     class="d-inline-block float-right"
                 />
-            </v-flex>
-            <v-flex
+            </v-col>
+        </v-row>
+        <v-row>
+            <v-col
                 v-for="setting in settings"
                 :key="setting.label"
-                sm12
-                md6
+                sm="12"
+                md="6"
+                class="pt-0"
             >
                 <Sales
                     :label="setting.label"
@@ -29,19 +90,25 @@
                     :type="setting.type"
                     :room-id="roomId"
                 />
-            </v-flex>
-        </v-layout>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import { mapActions, mapGetters } from 'vuex';
     import moment from 'moment';
     import Sales from '../organisms/Sales';
+    import Checkin from '../organisms/Checkin';
+    import Checkout from '../organisms/Checkout';
+    import Calendar from '../molecules/Calendar';
 
     export default {
         components: {
             Sales,
+            Checkin,
+            Checkout,
+            Calendar,
         },
         metaInfo () {
             return {
@@ -50,9 +117,10 @@
         },
         data () {
             return {
-                isLoading: false,
                 rooms: [],
                 roomId: '',
+                date: '',
+                selectDate: false,
                 settings: [
                     {
                         label: this.$t('misc.monthly_sales'),
@@ -69,8 +137,12 @@
                 ],
             };
         },
+        computed: {
+            ...mapGetters({
+                isLoading: 'loading/isLoading',
+            }),
+        },
         async mounted () {
-            this.isLoading = true;
             this.rooms = [
                 {
                     text: this.$t('misc.all_rooms'),
@@ -83,12 +155,19 @@
                 value: item.id,
             })));
             this.roomId = '';
-            this.isLoading = false;
         },
         methods: {
             ...mapActions({
                 search: 'crud/search',
             }),
+            eventCallback () {
+            },
+            resetCalendarCallback () {
+            },
+            dateClicked (info) {
+                this.date = info.dateStr;
+                this.selectDate = false;
+            },
         },
     };
 </script>

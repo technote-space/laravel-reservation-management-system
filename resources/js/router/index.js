@@ -13,7 +13,7 @@ const router = new Router({
     routes,
 });
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach(async (to, from, next) => {
     await store.dispatch('common/closeDrawer');
     await store.dispatch('auth/checkAuth', { to, next });
 });

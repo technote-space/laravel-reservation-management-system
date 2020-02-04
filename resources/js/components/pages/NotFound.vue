@@ -3,12 +3,11 @@
         fluid
         fill-height
     >
-        <v-layout
-            wrap
-            justify-center
+        <v-row
+            justify="center"
         >
             {{ $t('pages.not_found') }}
-        </v-layout>
+        </v-row>
     </v-container>
 </template>
 

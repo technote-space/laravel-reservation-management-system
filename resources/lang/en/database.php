@@ -24,7 +24,9 @@ return [
         'room_id'    => 'Room ID',
         'start_date' => 'Start date',
         'end_date'   => 'End date',
+        'checkout'   => 'Checkout Time',
         'number'     => 'Number',
+        'status'     => 'Status',
     ],
     'reservation_details' => [
         'reservation_id'  => 'Reservation ID',

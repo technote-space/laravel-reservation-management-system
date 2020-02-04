@@ -3,9 +3,10 @@
         :label="label"
         :value="value"
         :hint="hint"
+        :prepend-icon="prependIcon"
         persistent-hint
-        @input="val => $emit('input', val)"
         :error-messages="validateErrors"
+        @input="val => $emit('input', val)"
     />
 </template>
 
@@ -24,9 +25,18 @@
                 type: String,
                 required: true,
             },
+            icon: {
+                type: String,
+                default: '',
+            },
             validateErrors: {
                 type: Array,
                 required: true,
+            },
+        },
+        computed: {
+            prependIcon () {
+                return this.icon || undefined;
             },
         },
     };

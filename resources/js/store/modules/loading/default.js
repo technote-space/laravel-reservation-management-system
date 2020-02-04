@@ -1,6 +1,6 @@
 const state = {
-    processes: [],
-    overlayProcesses: [],
+    processes: {},
+    overlayProcesses: {},
     message: null,
     progressColor: undefined,
 };

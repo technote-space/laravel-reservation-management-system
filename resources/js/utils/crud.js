@@ -1,9 +1,9 @@
 import List from '../components/templates/List';
 
-const getListRouterName = model => `${ model }List`;
+const getListRouterName = model => `${model}List`;
 
 export const getListRouterSetting = model => ({
-    path: `/${ model }`,
+    path: `/${model}`,
     name: getListRouterName(model),
     component: List,
     props: {

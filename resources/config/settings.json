@@ -5,12 +5,12 @@
         "int"
     ],
     [
-        "check_in",
+        "checkin",
         "15:00",
         "time"
     ],
     [
-        "check_out",
+        "checkout",
         "10:00",
         "time"
     ]

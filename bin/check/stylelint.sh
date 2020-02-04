@@ -16,4 +16,13 @@ composer prepare:js
 
 echo ""
 echo ">> Run composer stylelint"
-composer stylelint
+if [[ -n "${GIT_DIFF}" ]]; then
+  # shellcheck disable=SC2046
+  "${WORKSPACE}"/node_modules/.bin/stylelint --cache $(eval echo "${GIT_DIFF}")
+else
+  if [[ ! -f "${WORKSPACE}/package.json" ]] || [[ $(< "${WORKSPACE}/package.json" jq -r '.scripts.stylelint' | wc -l) != 1 ]]; then
+    echo "yarn stylelint command is invalid."
+  else
+    yarn --cwd "${WORKSPACE}" stylelint
+  fi
+fi

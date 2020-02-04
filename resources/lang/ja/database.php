@@ -24,7 +24,9 @@ return [
         'room_id'    => '部屋ID',
         'start_date' => '利用開始日',
         'end_date'   => '利用終了日',
+        'checkout'   => 'チェックアウト時間',
         'number'     => '利用人数',
+        'status'     => 'ステータス',
     ],
     'reservation_details' => [
         'reservation_id'  => '予約ID',

@@ -24,3 +24,4 @@ yarn-error.log
 /.phpstorm.meta.php
 /public/gh-pages
 /public/mix-manifest.json
+.eslintcache

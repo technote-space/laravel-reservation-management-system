@@ -62,7 +62,7 @@ describe('Drawer', () => {
         expect(wrapper.findAll('.v-navigation-drawer.v-navigation-drawer--close')).toHaveLength(1);
     });
 
-    it('should render drawer', async() => {
+    it('should render drawer', async () => {
         const setDrawerOpen = jest.fn();
         const logout = jest.fn();
         const wrapper = mount(app(Drawer, 'inner'), setupLocalVue({

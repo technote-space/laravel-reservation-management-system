@@ -9,6 +9,7 @@
             :value="value"
             :label="label"
             :hint="hint"
+            :icon="icon"
             :validate-errors="validateErrors"
             @input="val => $emit('input', val)"
         />
@@ -18,6 +19,7 @@
 <script>
     import TextForm from './form/Text';
     import DateForm from './form/Date';
+    import TimeForm from './form/Time';
     import SearchForm from './form/Search';
 
     export default {
@@ -60,12 +62,15 @@
             hint () {
                 return this.form.hint ? this.$t(this.form.hint) : '';
             },
-            search () {
-                return this.form.search || '';
+            icon () {
+                return this.form.icon || '';
             },
             componentIs () {
                 if ('date' === this.type) {
                     return DateForm;
+                }
+                if ('time' === this.type) {
+                    return TimeForm;
                 }
                 if ('search' === this.type) {
                     return SearchForm;

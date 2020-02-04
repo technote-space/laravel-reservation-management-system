@@ -1,8 +1,8 @@
 <template>
     <v-dialog
         :value="dialog"
-        @click:outside="cancel"
         max-width="400px"
+        @click:outside="cancel"
     >
         <v-card>
             <v-card-title>

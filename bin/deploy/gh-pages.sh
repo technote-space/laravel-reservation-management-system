@@ -18,10 +18,10 @@ mkdir -p ${GH_PAGES_DIR}
 yarn install
 yarn local
 
-cp -a ${TRAVIS_BUILD_DIR}/public/css ${GH_PAGES_DIR}/css
-cp -a ${TRAVIS_BUILD_DIR}/public/js ${GH_PAGES_DIR}/js
-cp -a ${TRAVIS_BUILD_DIR}/public/fonts ${GH_PAGES_DIR}/fonts
-cp ${TRAVIS_BUILD_DIR}/public/favicon.ico ${GH_PAGES_DIR}/
+cp -a ${WORKSPACE}/public/css ${GH_PAGES_DIR}/css
+cp -a ${WORKSPACE}/public/js ${GH_PAGES_DIR}/js
+cp -a ${WORKSPACE}/public/fonts ${GH_PAGES_DIR}/fonts
+cp ${WORKSPACE}/public/favicon.ico ${GH_PAGES_DIR}/
 
 HTML=$(
   cat <<EOS

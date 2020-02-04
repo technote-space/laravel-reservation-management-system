@@ -59,6 +59,7 @@ export default {
                 regex: /^[0-9]{3}-[0-9]{4}$|^[0-9]{3}-[0-9]{2}$|^[0-9]{3}$|^[0-9]{5}$|^[0-9]{7}$/,
             },
             hint: 'hint.zip_code',
+            icon: 'mdi-map-marker',
         },
         {
             name: 'guest_details.address',
@@ -68,6 +69,7 @@ export default {
                 required: true,
                 max: 100,
             },
+            icon: 'mdi-map-marker',
         },
         {
             name: 'guest_details.phone',
@@ -78,6 +80,7 @@ export default {
                 regex: /^[0-9]{2,4}-?[0-9]{2,4}-?[0-9]{3,4}$/,
             },
             hint: 'hint.phone',
+            icon: 'mdi-phone',
         },
     ],
 };

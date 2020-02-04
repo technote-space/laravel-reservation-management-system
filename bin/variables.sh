@@ -2,16 +2,19 @@
 
 set -e
 
-if [[ -z "${TRAVIS_BUILD_DIR}" ]]; then
-  echo "<TRAVIS_BUILD_DIR> is required"
-  exit 1
+if [[ -z "${WORKSPACE}" ]]; then
+  if [[ -z "${TRAVIS_BUILD_DIR}" ]]; then
+    echo "<WORKSPACE> is required"
+    exit 1
+  fi
+  WORKSPACE=${TRAVIS_BUILD_DIR}
 fi
 
-WORK_DIR=${TRAVIS_BUILD_DIR}/.work
+WORK_DIR=${WORKSPACE}/.work
 # shellcheck disable=SC2034
 PACKAGE_DIR=${WORK_DIR}/packages
 # shellcheck disable=SC2034
-GH_PAGES_DIR=${TRAVIS_BUILD_DIR}/public/gh-pages
+GH_PAGES_DIR=${WORKSPACE}/public/gh-pages
 
 if [[ -n "${TRAVIS_BUILD_NUMBER}" ]]; then
   # shellcheck disable=SC2034
