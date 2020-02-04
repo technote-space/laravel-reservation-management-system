@@ -3,9 +3,9 @@
         fluid
         fill-height
     >
-        <v-layout
-            align-center
-            justify-center
+        <v-row
+            align="center"
+            justify="center"
         >
             <v-card
                 raised
@@ -15,7 +15,7 @@
                     <LoginForm />
                 </v-card-text>
             </v-card>
-        </v-layout>
+        </v-row>
     </v-container>
 </template>
 

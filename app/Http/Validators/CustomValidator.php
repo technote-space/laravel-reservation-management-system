@@ -10,6 +10,7 @@ use Illuminate\Validation\Validator;
 /**
  * Class ExtensionValidator
  * @package App\Http\Validators
+ * @SuppressWarnings(PHPMD.UndefinedVariable)
  */
 class CustomValidator extends Validator
 {

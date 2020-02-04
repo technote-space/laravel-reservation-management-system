@@ -6,9 +6,8 @@
         padless
         absolute
     >
-        <v-layout
-            justify-center
-            wrap
+        <v-row
+            justify="center"
         >
             <v-btn
                 v-for="item in sns"
@@ -32,7 +31,7 @@
             >
                 {{ year }} — <strong>{{ $t('title') }}</strong>
             </v-flex>
-        </v-layout>
+        </v-row>
     </v-footer>
 </template>
 

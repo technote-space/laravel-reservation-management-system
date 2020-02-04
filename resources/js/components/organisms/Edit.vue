@@ -11,9 +11,8 @@
 
             <v-card-text>
                 <v-container grid-list-md>
-                    <v-layout
+                    <v-row
                         v-if="isValid"
-                        wrap
                     >
                         <v-flex
                             v-for="form in forms"
@@ -37,7 +36,7 @@
                                 />
                             </ValidationProvider>
                         </v-flex>
-                    </v-layout>
+                    </v-row>
                 </v-container>
             </v-card-text>
 

@@ -18,9 +18,11 @@
         </template>
         <v-time-picker
             v-if="dialog"
-            :landscape="true"
-            :value="time"
+            format="24hr"
             :dialog="dialog"
+            :landscape="true"
+            :scrollable="true"
+            :value="time"
             @input="val => $emit('input', val)"
             @click:hour="hour => $emit('input', hour + ':' + minute)"
         />
@@ -57,7 +59,7 @@
         data () {
             return {
                 dialog: false,
-                format: 'hh:mm',
+                format: 'HH:mm',
             };
         },
         computed: {
