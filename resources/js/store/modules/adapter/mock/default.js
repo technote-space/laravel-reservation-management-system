@@ -24,10 +24,12 @@ state.factories = {
 };
 state.user = null;
 
-const store = localStorage.getItem('items');
+const items = localStorage.getItem('items');
+const user = localStorage.getItem('user');
 const version = localStorage.getItem('version');
-if (store && version && version === getSetting('version')) {
-    state.items = JSON.parse(store);
+if (items && user && version && version === getSetting('version')) {
+    state.items = JSON.parse(items);
+    state.user = JSON.parse(user);
 } else {
     state.items = {};
     state.items.admins = adminSeeder(state.factories, getEnv('number.admin'));
