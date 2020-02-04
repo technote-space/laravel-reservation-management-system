@@ -5,6 +5,7 @@ import { CREATE, UPDATE, DELETE, LOGIN, LOGOUT } from './constant';
 const saveLocalStorage = state => {
     localStorage.setItem('items', JSON.stringify(state.items));
     localStorage.setItem('version', getSetting('version'));
+    localStorage.setItem('user', JSON.stringify(state.user));
 };
 
 const mutations = {
@@ -42,9 +43,11 @@ const mutations = {
     },
     [ LOGIN ] (state, { user }) {
         state.user = user;
+        saveLocalStorage(state);
     },
     [ LOGOUT ] (state) {
         state.user = null;
+        saveLocalStorage(state);
     },
 };
 
