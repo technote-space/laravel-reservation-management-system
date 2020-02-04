@@ -136,9 +136,7 @@
                         'date': this.date,
                     },
                 });
-                if (response) {
-                    this.items = response.data;
-                }
+                this.items = response.data;
             },
             async checkin (item) {
                 await apiPatch('checkin', {
