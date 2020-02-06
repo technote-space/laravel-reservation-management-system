@@ -17,10 +17,8 @@ jobs:
     name: ESLint
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - name: actions/checkout@v2
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           PREFIX_FILTER: |
@@ -30,6 +28,7 @@ jobs:
             .ts
             .vue
           FILES: .eslintrc
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -56,10 +55,8 @@ jobs:
     name: stylelint
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - name: actions/checkout@v2
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           PREFIX_FILTER: |
@@ -68,6 +65,7 @@ jobs:
             .scss
             .css
           FILES: .stylelintrc.json
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Get Yarn Cache Directory
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -98,14 +96,13 @@ jobs:
       # to suppress error [It is unsafe to run Dusk in production.]
       APP_ENV: testing
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - name: actions/checkout@v2
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           SUFFIX_FILTER: .php
           FILES: phpcs.xml
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
@@ -136,15 +133,14 @@ jobs:
       # to suppress error [It is unsafe to run Dusk in production.]
       APP_ENV: testing
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - name: actions/checkout@v2
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           SUFFIX_FILTER: .php
           SEPARATOR: ','
           FILES: phpmd.xml
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
@@ -176,10 +172,8 @@ jobs:
       matrix:
         node: ['10', '11', '12']
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - name: actions/checkout@v2
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           PREFIX_FILTER: |
@@ -191,6 +185,7 @@ jobs:
           FILES: |
             yarn.lock
             jest.config.js
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -238,14 +233,13 @@ jobs:
           - php: '7.3'
             SEND_CODECOV: 1
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - name: actions/checkout@v2
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           SUFFIX_FILTER: .php
           FILES: composer.lock
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Switch PHP version
         env:
           PHP_VERSION: ${{ matrix.php }}
@@ -303,14 +297,13 @@ jobs:
       matrix:
         php: ['7.2', '7.3']
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 3
+      - name: actions/checkout@v2
+      - uses: technote-space/get-git-comment-action@v1
       - uses: technote-space/get-diff-action@v1
         with:
           SUFFIX_FILTER: .php
           FILES: composer.lock
+        if: "! contains(env.COMMIT_MESSAGE, '[skip ci]') && ! contains(env.COMMIT_MESSAGE, '[ci skip]')"
       - name: Switch PHP version
         env:
           PHP_VERSION: ${{ matrix.php }}
