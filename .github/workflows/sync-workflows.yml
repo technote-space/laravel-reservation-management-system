@@ -20,8 +20,8 @@ jobs:
             mkdir -p .github/workflows/.tmp
             git clone --depth=1 https://github.com/technote-space/github-actions-workflows.git .github/workflows/.tmp/workflows
 
-            bash .github/workflows/.tmp/workflows/composer/copy.sh test.laravel test-pages
-            sed -i "s/#GLOBAL_INSTALL_PACKAGES/GLOBAL_INSTALL_PACKAGES/" .github/workflows/update-dependencies.yml
+            bash .github/workflows/.tmp/workflows/composer/copy.sh test.laravel
+            sed -i "s/GH_PAGES_BASE:.*$/GH_PAGES_BASE: \/laravel-reservation-management-system/" .github/workflows/ci.yml
 
             rm -rdf .github/workflows/.tmp
           COMMIT_MESSAGE: 'chore: sync workflows'
