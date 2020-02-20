@@ -45,13 +45,6 @@ jobs:
       - name: Check code style
         run: composer bin:eslint
         if: env.RUNNING
-      - uses: 8398a7/action-slack@v2
-        with:
-          status: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
 
   stylelint:
     name: stylelint
@@ -90,13 +83,6 @@ jobs:
       - name: Check code style
         run: composer bin:stylelint
         if: env.RUNNING
-      - uses: 8398a7/action-slack@v2
-        with:
-          status: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
 
   phpcs:
     name: PHP Code Sniffer
@@ -135,13 +121,6 @@ jobs:
       - name: Check code style
         run: composer bin:phpcs
         if: env.RUNNING
-      - uses: 8398a7/action-slack@v2
-        with:
-          status: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
 
   phpmd:
     name: PHPMD
@@ -181,13 +160,6 @@ jobs:
       - name: Check code style
         run: composer bin:phpmd
         if: env.RUNNING
-      - uses: 8398a7/action-slack@v2
-        with:
-          status: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
 
   cover:
     name: Coverage
@@ -210,6 +182,7 @@ jobs:
             .js
             .ts
             .vue
+            .snap
           FILES: |
             yarn.lock
             jest.config.js
@@ -218,7 +191,7 @@ jobs:
         run: echo "::set-env name=RUNNING::"
         if: "! env.GIT_DIFF"
       - name: Set running flag
-        if: matrix.node == '12' && startsWith(github.ref, 'refs/tags/')
+        if: matrix.node == '12' && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: echo "::set-env name=RUNNING::1"
       - name: Set running flag
         run: |
@@ -255,13 +228,6 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           COVERAGE_FILE: ./coverage/js/clover.xml
         if: env.RUNNING && matrix.node == '12'
-      - uses: 8398a7/action-slack@v2
-        with:
-          status: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
 
   phpunit:
     name: PHPUnit
@@ -288,7 +254,7 @@ jobs:
         run: echo "::set-env name=RUNNING::"
         if: "! env.GIT_DIFF"
       - name: Set running flag
-        if: matrix.SEND_CODECOV == 1 && startsWith(github.ref, 'refs/tags/')
+        if: matrix.SEND_CODECOV == 1 && github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
         run: echo "::set-env name=RUNNING::1"
       - name: Set running flag
         run: |
@@ -338,13 +304,6 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
           COVERAGE_FILE: ./coverage/php/clover.xml
         if: env.RUNNING && matrix.SEND_CODECOV == 1
-      - uses: 8398a7/action-slack@v2
-        with:
-          status: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
 
   dusk:
     name: Laravel Dusk
@@ -411,13 +370,6 @@ jobs:
           name: screenshots
           path: tests/Browser/screenshots
         if: env.RUNNING
-      - uses: 8398a7/action-slack@v2
-        with:
-          status: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
 
   pages:
     name: Publish GitHub Pages
@@ -463,13 +415,6 @@ jobs:
           BRANCH: gh-pages
           FOLDER: public/gh-pages
         if: env.RUNNING
-      - uses: 8398a7/action-slack@v2
-        with:
-          status: failure
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: failure()
 
   publishRelease:
     name: Create Release
@@ -495,11 +440,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always() && steps.drafter.outputs.html_url
+        if: success()
+
+  slack:
+    name: Slack
+    needs: publishRelease
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: 8398a7/action-slack@v2
         with:
-          status: ${{ job.status }}
+          status: failure
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always() && ! steps.drafter.outputs.html_url
+        if: env.WORKFLOW_CONCLUSION == 'failure'
