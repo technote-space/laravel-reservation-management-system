@@ -17,6 +17,7 @@ jobs:
   update:
     name: Update dependencies
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - uses: technote-space/auto-cancel-redundant-job@v1
         with:
