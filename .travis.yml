@@ -68,11 +68,6 @@ jobs:
       env: UPGRADE_NODE=true
       script: composer bin:phpunit
     - stage: test
-      language: php
-      php: '7.3'
-      env: UPGRADE_NODE=true
-      script: composer bin:dusk
-    - stage: test
       language: node_js
       node_js: '12'
       dist: trusty
