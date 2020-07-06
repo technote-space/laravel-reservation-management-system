@@ -1,2 +1,3 @@
-const en = require('@fullcalendar/core/locales/en-gb').default;
+import en from '@fullcalendar/core/locales/en-gb';
+
 export default en;
