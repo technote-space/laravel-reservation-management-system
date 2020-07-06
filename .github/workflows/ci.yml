@@ -241,7 +241,7 @@ jobs:
     timeout-minutes: 10
     strategy:
       matrix:
-        php: ['7.2', '7.3']
+        php: ['7.4', '7.3']
         include:
           - php: '7.3'
             SEND_CODECOV: 1
