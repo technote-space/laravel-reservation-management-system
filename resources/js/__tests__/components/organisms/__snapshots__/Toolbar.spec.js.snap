@@ -12,12 +12,12 @@ exports[`Toolbar should not render toolbar if not active: not active 1`] = `
     <!---->
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div
           id="test-contents"
@@ -40,7 +40,7 @@ exports[`Toolbar should not render toolbar toggle if not active drawer: drawer n
     class="v-application--wrap"
   >
     <header
-      class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--fixed primary"
+      class="v-sheet theme--dark v-toolbar v-app-bar v-app-bar--fixed primary"
       style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;"
     >
       <div
@@ -66,12 +66,12 @@ exports[`Toolbar should not render toolbar toggle if not active drawer: drawer n
     </header>
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 64px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div
           id="test-contents"
@@ -94,7 +94,7 @@ exports[`Toolbar should not render toolbar toggle if not authenticated: not auth
     class="v-application--wrap"
   >
     <header
-      class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--fixed primary"
+      class="v-sheet theme--dark v-toolbar v-app-bar v-app-bar--fixed primary"
       style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;"
     >
       <div
@@ -120,12 +120,12 @@ exports[`Toolbar should not render toolbar toggle if not authenticated: not auth
     </header>
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 64px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div
           id="test-contents"
@@ -148,7 +148,7 @@ exports[`Toolbar should render toolbar: active 1`] = `
     class="v-application--wrap"
   >
     <header
-      class="v-sheet v-sheet--tile theme--dark v-toolbar v-app-bar v-app-bar--fixed primary"
+      class="v-sheet theme--dark v-toolbar v-app-bar v-app-bar--fixed primary"
       style="height: 64px; margin-top: 0px; transform: translateY(0px); left: 0px; right: 0px;"
     >
       <div
@@ -164,10 +164,8 @@ exports[`Toolbar should render toolbar: active 1`] = `
           >
             <i
               aria-hidden="true"
-              class="v-icon notranslate material-icons theme--dark"
-            >
-              $menu
-            </i>
+              class="v-icon notranslate mdi mdi-menu theme--dark"
+            />
           </span>
         </button>
          
@@ -188,12 +186,12 @@ exports[`Toolbar should render toolbar: active 1`] = `
     </header>
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 64px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div
           id="test-contents"

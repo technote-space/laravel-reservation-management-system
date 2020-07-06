@@ -11,12 +11,12 @@ exports[`Sales should render sales 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div
           class="pa-6 ma-4 v-card v-card--raised v-sheet theme--light"

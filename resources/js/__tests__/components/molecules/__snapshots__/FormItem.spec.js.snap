@@ -11,12 +11,12 @@ exports[`FormItem should not render date form: date form 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div>
           <div
@@ -71,23 +71,16 @@ exports[`FormItem should not render date form: date form 1`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <div
+                    <transition-group-stub
                       class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
                     />
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              class="v-dialog__content"
-              role="document"
-              style="z-index: 0;"
-            >
-              <div
-                class="v-dialog"
-                style="max-width: 850px; display: none;"
-              />
-            </div>
+            <!---->
           </div>
         </div>
         <div
@@ -112,12 +105,12 @@ exports[`FormItem should not render search form: search form 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div>
           <div
@@ -151,13 +144,13 @@ exports[`FormItem should not render search form: search form 1`] = `
                   >
                     <label
                       class="v-label theme--light"
-                      for="input-29"
+                      for="input-27"
                       style="left: 0px; position: absolute;"
                     >
                       ID
                     </label>
                     <input
-                      id="input-29"
+                      id="input-27"
                       readonly="readonly"
                       type="text"
                     />
@@ -169,8 +162,10 @@ exports[`FormItem should not render search form: search form 1`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <div
+                    <transition-group-stub
                       class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
                     />
                   </div>
                 </div>
@@ -181,16 +176,7 @@ exports[`FormItem should not render search form: search form 1`] = `
               class="v-dialog__container"
               role="dialog"
             >
-              <div
-                class="v-dialog__content"
-                role="document"
-                style="z-index: 0;"
-              >
-                <div
-                  class="v-dialog"
-                  style="width: 400px; display: none;"
-                />
-              </div>
+              <!---->
             </div>
           </div>
         </div>
@@ -216,12 +202,12 @@ exports[`FormItem should not render text form 1: text form 1 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div>
           <div
@@ -241,13 +227,13 @@ exports[`FormItem should not render text form 1: text form 1 1`] = `
                 >
                   <label
                     class="v-label v-label--active theme--light"
-                    for="input-46"
+                    for="input-42"
                     style="left: 0px; position: absolute;"
                   >
                     ID
                   </label>
                   <input
-                    id="input-46"
+                    id="input-42"
                     type="text"
                   />
                 </div>
@@ -258,8 +244,10 @@ exports[`FormItem should not render text form 1: text form 1 1`] = `
                 <div
                   class="v-messages theme--light"
                 >
-                  <div
+                  <transition-group-stub
                     class="v-messages__wrapper"
+                    name="message-transition"
+                    tag="div"
                   />
                 </div>
               </div>
@@ -288,12 +276,12 @@ exports[`FormItem should not render text form 2: text form 2 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div>
           <div
@@ -313,13 +301,13 @@ exports[`FormItem should not render text form 2: text form 2 1`] = `
                 >
                   <label
                     class="v-label v-label--active theme--light"
-                    for="input-59"
+                    for="input-55"
                     style="left: 0px; position: absolute;"
                   >
                     ID
                   </label>
                   <input
-                    id="input-59"
+                    id="input-55"
                     type="text"
                   />
                 </div>
@@ -330,15 +318,17 @@ exports[`FormItem should not render text form 2: text form 2 1`] = `
                 <div
                   class="v-messages theme--light"
                 >
-                  <div
+                  <transition-group-stub
                     class="v-messages__wrapper"
+                    name="message-transition"
+                    tag="div"
                   >
                     <div
                       class="v-messages__message"
                     >
                       ID
                     </div>
-                  </div>
+                  </transition-group-stub>
                 </div>
               </div>
             </div>
@@ -366,12 +356,12 @@ exports[`FormItem should not render time form: time form 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div>
           <div
@@ -409,14 +399,14 @@ exports[`FormItem should not render time form: time form 1`] = `
                   >
                     <label
                       class="v-label v-label--active v-label--is-disabled theme--light"
-                      for="input-73"
+                      for="input-69"
                       style="left: 0px; position: absolute;"
                     >
                       ID
                     </label>
                     <input
                       disabled="disabled"
-                      id="input-73"
+                      id="input-69"
                       readonly="readonly"
                       type="text"
                     />
@@ -428,23 +418,16 @@ exports[`FormItem should not render time form: time form 1`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <div
+                    <transition-group-stub
                       class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
                     />
                   </div>
                 </div>
               </div>
             </div>
-            <div
-              class="v-dialog__content"
-              role="document"
-              style="z-index: 0;"
-            >
-              <div
-                class="v-dialog time-picker-dialog"
-                style="max-width: 850px; display: none;"
-              />
-            </div>
+            <!---->
           </div>
         </div>
         <div

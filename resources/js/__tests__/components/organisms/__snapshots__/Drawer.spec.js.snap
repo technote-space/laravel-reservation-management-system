@@ -11,12 +11,12 @@ exports[`Drawer should not render drawer if not authenticated: not authenticated
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <!---->
         <div
@@ -41,12 +41,12 @@ exports[`Drawer should not render drawer if not opened: not opened 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <aside
           class="v-navigation-drawer v-navigation-drawer--close v-navigation-drawer--fixed v-navigation-drawer--is-mobile v-navigation-drawer--temporary theme--dark secondary"
@@ -56,7 +56,7 @@ exports[`Drawer should not render drawer if not opened: not opened 1`] = `
             class="v-navigation-drawer__content"
           >
             <div
-              class="v-list py-0 my-4 v-sheet v-sheet--tile theme--dark v-list--dense v-list--nav"
+              class="v-list py-0 my-4 v-sheet theme--dark v-list--dense v-list--nav"
               role="list"
             >
               <div
@@ -193,12 +193,12 @@ exports[`Drawer should render drawer: opened 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <aside
           class="v-navigation-drawer v-navigation-drawer--fixed v-navigation-drawer--is-mobile v-navigation-drawer--open v-navigation-drawer--temporary theme--dark secondary"
@@ -208,7 +208,7 @@ exports[`Drawer should render drawer: opened 1`] = `
             class="v-navigation-drawer__content"
           >
             <div
-              class="v-list py-0 my-4 v-sheet v-sheet--tile theme--dark v-list--dense v-list--nav"
+              class="v-list py-0 my-4 v-sheet theme--dark v-list--dense v-list--nav"
               role="list"
             >
               <div
