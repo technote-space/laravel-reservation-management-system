@@ -22,7 +22,6 @@ describe('Reservation', () => {
         }));
         expect(wrapper.element).toMatchSnapshot();
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('button')).toHaveLength(1);
     });
 });

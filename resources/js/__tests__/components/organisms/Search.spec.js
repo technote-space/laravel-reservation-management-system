@@ -19,7 +19,6 @@ describe('Search', () => {
         }));
         expect(wrapper.element).toMatchSnapshot();
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('circle')).toHaveLength(0);
     });
 });

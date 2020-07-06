@@ -22,7 +22,6 @@ describe('FormItem', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('date form');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('input[type="text"]')).toHaveLength(1);
     });
 
@@ -41,7 +40,6 @@ describe('FormItem', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('search form');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('input[type="text"]')).toHaveLength(1);
     });
 
@@ -60,7 +58,6 @@ describe('FormItem', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('text form 1');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('input[type="text"]')).toHaveLength(1);
     });
 
@@ -79,7 +76,6 @@ describe('FormItem', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('text form 2');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('input[type="text"]')).toHaveLength(1);
     });
 
@@ -100,7 +96,6 @@ describe('FormItem', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('time form');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('input[type="text"]')).toHaveLength(1);
     });
 });

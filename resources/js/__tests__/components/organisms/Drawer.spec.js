@@ -30,7 +30,6 @@ describe('Drawer', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('not authenticated');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-navigation-drawer')).toHaveLength(0);
     });
 
@@ -56,7 +55,6 @@ describe('Drawer', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('not opened');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-navigation-drawer')).toHaveLength(1);
         expect(wrapper.findAll('.v-navigation-drawer.v-navigation-drawer--fixed')).toHaveLength(1);
         expect(wrapper.findAll('.v-navigation-drawer.v-navigation-drawer--close')).toHaveLength(1);
@@ -84,7 +82,6 @@ describe('Drawer', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('opened');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-navigation-drawer')).toHaveLength(1);
         expect(wrapper.findAll('.v-navigation-drawer.v-navigation-drawer--fixed')).toHaveLength(1);
         expect(wrapper.findAll('.v-navigation-drawer.v-navigation-drawer--close')).toHaveLength(0);

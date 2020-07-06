@@ -32,7 +32,6 @@ describe('Edit', () => {
         }));
         expect(wrapper.element).toMatchSnapshot();
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('form')).toHaveLength(1);
         expect(wrapper.findAll('button')).toHaveLength(2);
     });
