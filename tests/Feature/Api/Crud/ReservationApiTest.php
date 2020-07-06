@@ -221,7 +221,7 @@ class ReservationApiTest extends BaseTestCase
         $room = factory(Room::class)->create([
             'number' => 2,
         ]);
-        $this->assertFalse(Reservation::where('number', 3)->exists());
+        $this->assertFalse(ReservationDetail::where('number', 3)->exists());
 
         /** @var Generator $faker */
         $faker    = Factory::create(config('app.faker_locale'));
@@ -248,7 +248,7 @@ class ReservationApiTest extends BaseTestCase
                      'errors',
                      'message',
                  ]);
-        $this->assertFalse(Reservation::where('number', 3)->exists());
+        $this->assertFalse(ReservationDetail::where('number', 3)->exists());
     }
 
     public function testFailStore2()
