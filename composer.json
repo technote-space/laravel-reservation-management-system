@@ -70,8 +70,8 @@
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"
         ],
-        "post-root-package-install": [
-            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        "pre-autoload-dump": [
+            "@php -r \"file_exists('.env') || copy('.env.sample', '.env');\""
         ],
         "post-create-project-cmd": [
             "@php artisan key:generate --ansi"
