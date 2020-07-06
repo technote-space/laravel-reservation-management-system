@@ -11,12 +11,12 @@ exports[`Reservation should render reservation 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div
           class="v-dialog__container"
@@ -35,16 +35,7 @@ exports[`Reservation should render reservation 1`] = `
               />
             </span>
           </button>
-          <div
-            class="v-dialog__content"
-            role="document"
-            style="z-index: 0;"
-          >
-            <div
-              class="v-dialog"
-              style="max-width: 850px; display: none;"
-            />
-          </div>
+          <!---->
         </div>
         <div
           id="test-contents"

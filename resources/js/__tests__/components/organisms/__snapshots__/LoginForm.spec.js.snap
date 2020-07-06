@@ -11,12 +11,12 @@ exports[`LoginForm should render login form 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <form
           class="text-center"
@@ -54,8 +54,10 @@ exports[`LoginForm should render login form 1`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <div
+                    <transition-group-stub
                       class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
                     />
                   </div>
                 </div>
@@ -95,12 +97,13 @@ exports[`LoginForm should render login form 1`] = `
                     <div
                       class="v-input__icon v-input__icon--append"
                     >
-                      <i
+                      <button
+                        aria-label="append icon"
                         class="v-icon notranslate v-icon--link material-icons theme--light"
-                        role="button"
+                        type="button"
                       >
                         visibility_off
-                      </i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -110,8 +113,10 @@ exports[`LoginForm should render login form 1`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <div
+                    <transition-group-stub
                       class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
                     />
                   </div>
                   <div
@@ -159,13 +164,13 @@ exports[`LoginForm should render login form 2`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       data-booted="true"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <form
           class="text-center"
@@ -204,15 +209,17 @@ exports[`LoginForm should render login form 2`] = `
                     class="v-messages theme--light error--text"
                     role="alert"
                   >
-                    <div
+                    <transition-group-stub
                       class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
                     >
                       <div
                         class="v-messages__message"
                       >
                         The E-Mail field must be a valid email
                       </div>
-                    </div>
+                    </transition-group-stub>
                   </div>
                 </div>
               </div>
@@ -251,12 +258,13 @@ exports[`LoginForm should render login form 2`] = `
                     <div
                       class="v-input__icon v-input__icon--append"
                     >
-                      <i
+                      <button
+                        aria-label="append icon"
                         class="v-icon notranslate v-icon--link material-icons theme--light error--text"
-                        role="button"
+                        type="button"
                       >
                         visibility_off
-                      </i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -267,15 +275,17 @@ exports[`LoginForm should render login form 2`] = `
                     class="v-messages theme--light error--text"
                     role="alert"
                   >
-                    <div
+                    <transition-group-stub
                       class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
                     >
                       <div
                         class="v-messages__message"
                       >
                         The Password field must be at least 8 characters
                       </div>
-                    </div>
+                    </transition-group-stub>
                   </div>
                   <div
                     class="v-counter theme--light"
@@ -323,13 +333,13 @@ exports[`LoginForm should render login form 3`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       data-booted="true"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <form
           class="text-center"
@@ -367,8 +377,10 @@ exports[`LoginForm should render login form 3`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <div
+                    <transition-group-stub
                       class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
                     />
                   </div>
                 </div>
@@ -408,12 +420,13 @@ exports[`LoginForm should render login form 3`] = `
                     <div
                       class="v-input__icon v-input__icon--append"
                     >
-                      <i
+                      <button
+                        aria-label="append icon"
                         class="v-icon notranslate v-icon--link material-icons theme--light"
-                        role="button"
+                        type="button"
                       >
                         visibility_off
-                      </i>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -423,8 +436,10 @@ exports[`LoginForm should render login form 3`] = `
                   <div
                     class="v-messages theme--light"
                   >
-                    <div
+                    <transition-group-stub
                       class="v-messages__wrapper"
+                      name="message-transition"
+                      tag="div"
                     />
                   </div>
                   <div

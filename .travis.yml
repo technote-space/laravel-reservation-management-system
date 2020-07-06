@@ -42,12 +42,12 @@ jobs:
   include:
     - stage: check
       language: php
-      php: '7.2'
+      php: '7.3'
       env: APP_ENV=testing
       script: composer bin:phpcs
     - stage: check
       language: php
-      php: '7.2'
+      php: '7.3'
       env: APP_ENV=testing
       script: composer bin:phpmd
     - stage: check
@@ -67,11 +67,6 @@ jobs:
       php: '7.3'
       env: UPGRADE_NODE=true
       script: composer bin:phpunit
-    - stage: test
-      language: php
-      php: '7.3'
-      env: UPGRADE_NODE=true
-      script: composer bin:dusk
     - stage: test
       language: node_js
       node_js: '12'

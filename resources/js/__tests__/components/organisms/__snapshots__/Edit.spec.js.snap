@@ -11,12 +11,12 @@ exports[`Edit should render edit 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div
           class="v-card v-sheet theme--light"

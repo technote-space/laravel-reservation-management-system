@@ -1,15 +1,7 @@
 <template>
     <FullCalendar
         ref="calendar"
-        :plugins="calendarPlugins"
-        :locale="locale"
-        :event-sources="eventSources"
-        :valid-range="validRange"
-        :default-date="defaultDate"
-        :time-zone="timezone"
-        default-view="dayGridMonth"
-        height="parent"
-        @dateClick="dateClick"
+        :options="calendarOptions"
     />
 </template>
 
@@ -57,13 +49,21 @@
         },
         data () {
             return {
-                calendarPlugins: [dayGridPlugin, interactionPlugin, momentTimezonePlugin],
-                locale: fullCalendarLocale[ locale ],
-                eventSources: [
-                    {
-                        events: this.getEventCallback,
-                    },
-                ],
+                calendarOptions: {
+                    plugins: [dayGridPlugin, interactionPlugin, momentTimezonePlugin],
+                    locale: fullCalendarLocale[ locale ],
+                    eventSources: [
+                        {
+                            events: this.getEventCallback,
+                        },
+                    ],
+                    validRange: this.validRange,
+                    defaultDate: this.defaultDate,
+                    timeZone: this.timezone,
+                    initialView: 'dayGridMonth',
+                    height: 'auto',
+                    dateClick: this.dateClick,
+                },
             };
         },
         computed: {
@@ -91,6 +91,11 @@
                         this.resetCalendar(calendar);
                         calendar.gotoDate(moment(this.defaultDate).toDate());
                     }
+                    [100, 200, 300, 500].forEach(ms => {
+                        setTimeout(() => {
+                            this.$refs.calendar.getApi().updateSize();
+                        }, ms);
+                    });
                 }
             },
             getEventCallback ({ start, end }, callback) {
@@ -108,16 +113,12 @@
 
 <style lang='scss'>
 
-    @import '~@fullcalendar/core/main.css';
+    @import '~@fullcalendar/common/main.css';
     @import '~@fullcalendar/daygrid/main.css';
 
     .fc {
         background-color: white;
         padding: 1em;
-
-        .fc-content {
-            text-align: center;
-        }
     }
 
 </style>

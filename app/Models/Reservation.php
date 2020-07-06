@@ -37,7 +37,6 @@ use Technote\SearchHelper\Models\Traits\Searchable;
  * @method static Builder|Reservation whereEndDate($value)
  * @method static Builder|Reservation whereGuestId($value)
  * @method static Builder|Reservation whereId($value)
- * @method static Builder|Reservation whereNumber($value)
  * @method static Builder|Reservation whereRoomId($value)
  * @method static Builder|Reservation whereStartDate($value)
  * @method static Builder|Reservation whereUpdatedAt($value)

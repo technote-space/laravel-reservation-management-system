@@ -21,7 +21,6 @@ describe('Toolbar', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('not active');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-toolbar__content')).toHaveLength(0);
     });
 
@@ -41,7 +40,6 @@ describe('Toolbar', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('drawer not active');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-toolbar__content')).toHaveLength(1);
         expect(wrapper.find('.title').text()).toBe('Reservation System');
         expect(wrapper.findAll('.v-app-bar__nav-icon')).toHaveLength(0);
@@ -63,7 +61,6 @@ describe('Toolbar', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('not authenticated');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-toolbar__content')).toHaveLength(1);
         expect(wrapper.find('.title').text()).toBe('Reservation System');
         expect(wrapper.findAll('.v-app-bar__nav-icon')).toHaveLength(0);
@@ -85,7 +82,6 @@ describe('Toolbar', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('active');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-toolbar__content')).toHaveLength(1);
         expect(wrapper.find('.title').text()).toBe('Reservation System');
         expect(wrapper.findAll('.v-app-bar__nav-icon')).toHaveLength(1);

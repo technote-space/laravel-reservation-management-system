@@ -28,18 +28,17 @@ describe('LoginForm', () => {
         }));
         expect(wrapper.element).toMatchSnapshot();
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('input')).toHaveLength(2);
         expect(wrapper.findAll('input[type="text"]')).toHaveLength(1);
         expect(wrapper.findAll('input[type="password"]')).toHaveLength(1);
-        expect(wrapper.findAll('button')).toHaveLength(1);
-        expect(wrapper.find('button').text()).toBe('Login');
-        expect(wrapper.findAll('.v-input__icon--append i')).toHaveLength(1);
+        expect(wrapper.findAll('button')).toHaveLength(2);
+        expect(wrapper.find('button[type="submit"]').text()).toBe('Login');
+        expect(wrapper.findAll('.v-input__icon--append button')).toHaveLength(1);
 
-        wrapper.find('.v-input__icon--append i').trigger('click');
+        wrapper.find('.v-input__icon--append button').trigger('click');
         await flush();
         expect(wrapper.findAll('input[type="text"]')).toHaveLength(2);
-        wrapper.find('.v-input__icon--append i').trigger('click');
+        wrapper.find('.v-input__icon--append button').trigger('click');
 
         await flush();
         const email = wrapper.find('input[type="text"]');
@@ -50,8 +49,8 @@ describe('LoginForm', () => {
         expect(email.element.value).toBe('123');
         expect(password.element.value).toBe('12345');
         await flush();
-        expect(wrapper.find('button').is('[disabled]')).toBe(true);
-        wrapper.find('button').trigger('click');
+        expect(wrapper.find('button[type="submit"]').attributes('disabled')).toBe('disabled');
+        wrapper.find('button[type="submit"]').trigger('click');
         await flush();
         expect(wrapper.element).toMatchSnapshot();
         expect(wrapper.find('.v-counter').text()).toBe('5');
@@ -62,9 +61,9 @@ describe('LoginForm', () => {
         expect(email.element.value).toBe('test@example.com');
         expect(password.element.value).toBe('password');
         await flush();
-        expect(wrapper.find('button').is('[disabled]')).toBe(false);
-        wrapper.find('button').trigger('click');
-        wrapper.find('button').trigger('click');
+        expect(wrapper.find('button[type="submit"]').attributes('disabled')).toBe(undefined);
+        wrapper.find('button[type="submit"]').trigger('click');
+        wrapper.find('button[type="submit"]').trigger('click');
         await flush();
         expect(wrapper.element).toMatchSnapshot();
         expect(wrapper.find('.v-counter').text()).toBe('8');

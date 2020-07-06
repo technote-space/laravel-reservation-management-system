@@ -1,13 +1,13 @@
 <template>
     <v-app>
         <Toolbar />
-        <v-content
+        <v-main
             app
             class="mb-5"
         >
             <Drawer />
             <RouterView />
-        </v-content>
+        </v-main>
         <Footer />
         <Loading />
     </v-app>

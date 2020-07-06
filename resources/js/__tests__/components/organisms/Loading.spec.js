@@ -17,7 +17,6 @@ describe('Loading', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('not active');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-overlay__content')).toHaveLength(0);
     });
 
@@ -33,7 +32,6 @@ describe('Loading', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('active');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-overlay__content')).toHaveLength(1);
         expect(wrapper.find('.v-overlay__content').text()).toBe('');
     });
@@ -43,6 +41,7 @@ describe('Loading', () => {
             store: new Vuex.Store({
                 getters: {
                     'loading/isActiveOverlay': () => true,
+                    'loading/isLoading': () => false,
                     'loading/getMessage': () => 'test_message',
                     'loading/getProgressColor': () => undefined,
                 },
@@ -50,7 +49,6 @@ describe('Loading', () => {
         }));
         expect(wrapper.element).toMatchSnapshot('message');
 
-        expect(wrapper.isVueInstance()).toBeTruthy();
         expect(wrapper.findAll('.v-overlay__content')).toHaveLength(1);
         expect(wrapper.find('.v-overlay__content').text()).toBe('Test Message');
     });

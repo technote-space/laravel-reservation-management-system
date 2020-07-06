@@ -1,4 +1,5 @@
 import { createLocalVue } from '@vue/test-utils';
+import Vue from 'vue';
 import Vuex from 'vuex';
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router';
@@ -8,9 +9,10 @@ import options from '../../lang';
 
 require('../../plugins/validate/extend');
 
+Vue.use(Vuetify);
+
 const localVue = createLocalVue();
 localVue.use(Vuex);
-localVue.use(Vuetify);
 localVue.use(VueRouter);
 localVue.use(VueI18n);
 localVue.component('ValidationProvider', ValidationProvider);

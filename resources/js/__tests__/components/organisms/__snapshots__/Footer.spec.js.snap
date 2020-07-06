@@ -11,12 +11,12 @@ exports[`Footer should render footer 1`] = `
   >
     <main
       app="true"
-      class="v-content"
+      class="v-main"
       classname="mb-5"
       style="padding: 0px 0px 0px 0px;"
     >
       <div
-        class="v-content__wrap"
+        class="v-main__wrap"
       >
         <div
           id="test-contents"
@@ -26,7 +26,7 @@ exports[`Footer should render footer 1`] = `
       </div>
     </main>
     <footer
-      class="v-footer v-sheet v-sheet--tile theme--dark v-footer--absolute v-footer--padless primary"
+      class="v-footer v-sheet theme--dark v-footer--absolute v-footer--padless primary"
       style="left: 0px; right: 0px; bottom: 0px;"
     >
       <div
