@@ -17,7 +17,7 @@
         "stylelint:fix": "stylelint --fix 'resources/sass/**/*.scss'",
         "cover": "jest --coverage",
         "cover:update": "jest --updateSnapshot --coverage",
-        "update": "ncu -u && yarn install && yarn upgrade && yarn audit"
+        "update": "npx npm-check-updates -u && yarn install && yarn upgrade && yarn audit"
     },
     "devDependencies": {
         "@babel/core": "^7.10.3",
