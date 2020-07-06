@@ -321,7 +321,7 @@ jobs:
     timeout-minutes: 5
     strategy:
       matrix:
-        php: ['7.2', '7.3']
+        php: ['7.4', '7.3']
     steps:
       - name: Set running flag
         run: echo "::set-env name=RUNNING::1"
