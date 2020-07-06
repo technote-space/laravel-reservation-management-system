@@ -17,7 +17,6 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ReservationDetail newModelQuery()
  * @method static Builder|ReservationDetail newQuery()
  * @method static Builder|ReservationDetail query()
- * @mixin Eloquent
  * @property int $id
  * @property int $reservation_id 予約ID
  * @property int|null $number 利用人数
@@ -42,6 +41,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|ReservationDetail whereReservationId($value)
  * @method static Builder|ReservationDetail whereRoomName($value)
  * @method static Builder|ReservationDetail whereUpdatedAt($value)
+ * @mixin Eloquent
+ * @mixin Builder
  */
 class ReservationDetail extends Model
 {
