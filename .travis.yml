@@ -42,12 +42,12 @@ jobs:
   include:
     - stage: check
       language: php
-      php: '7.2'
+      php: '7.3'
       env: APP_ENV=testing
       script: composer bin:phpcs
     - stage: check
       language: php
-      php: '7.2'
+      php: '7.3'
       env: APP_ENV=testing
       script: composer bin:phpmd
     - stage: check
