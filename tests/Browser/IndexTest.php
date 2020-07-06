@@ -68,7 +68,7 @@ class IndexTest extends DuskTestCase
                         ->click('.v-input__icon--append button')
                         ->press('LOGIN')
                         ->waitUntilMissing('.v-overlay--active', 10)
-                        ->assertSee('ログインに失敗しました。')
+                        ->assertSee('These credentials do not match our records')
                         ->screenshot('index/fail-login');
             }
         );
