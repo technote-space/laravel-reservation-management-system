@@ -107,9 +107,9 @@ class CheckoutApiTest extends BaseTestCase
 
         $json = json_decode($response->content(), true);
         $this->assertCount(3, $json);
-        $this->assertEquals($today->format('Y-m-d 00:00:00'), $json[0]['start_date']);
-        $this->assertEquals($today->format('Y-m-d 00:00:00'), $json[1]['start_date']);
-        $this->assertEquals($today->format('Y-m-d 00:00:00'), $json[2]['start_date']);
+        $this->assertEquals($today->toJSON(), $json[0]['start_date']);
+        $this->assertEquals($today->toJSON(), $json[1]['start_date']);
+        $this->assertEquals($today->toJSON(), $json[2]['start_date']);
     }
 
     public function testCheckinList2()
@@ -127,7 +127,7 @@ class CheckoutApiTest extends BaseTestCase
 
         $json = json_decode($response->content(), true);
         $this->assertCount(1, $json);
-        $this->assertEquals($today->addDays(1)->format('Y-m-d 00:00:00'), $json[0]['start_date']);
+        $this->assertEquals($today->addDays(1)->toJSON(), $json[0]['start_date']);
     }
 
     public function testCheckoutList1()
@@ -145,11 +145,11 @@ class CheckoutApiTest extends BaseTestCase
 
         $json = json_decode($response->content(), true);
         $this->assertCount(3, $json);
-        $this->assertEquals($today->copy()->subDay()->format('Y-m-d 00:00:00'), $json[0]['end_date']);
+        $this->assertEquals($today->copy()->subDay()->toJSON(), $json[0]['end_date']);
         $this->assertEquals('09:00:00', $json[0]['checkout']);
-        $this->assertEquals($today->copy()->subDay()->format('Y-m-d 00:00:00'), $json[1]['end_date']);
+        $this->assertEquals($today->copy()->subDay()->toJSON(), $json[1]['end_date']);
         $this->assertEquals('10:00:00', $json[1]['checkout']);
-        $this->assertEquals($today->copy()->subDay()->format('Y-m-d 00:00:00'), $json[2]['end_date']);
+        $this->assertEquals($today->copy()->subDay()->toJSON(), $json[2]['end_date']);
         $this->assertEquals('11:00:00', $json[2]['checkout']);
     }
 
@@ -168,7 +168,7 @@ class CheckoutApiTest extends BaseTestCase
 
         $json = json_decode($response->content(), true);
         $this->assertCount(1, $json);
-        $this->assertEquals($today->addDays(3)->format('Y-m-d 00:00:00'), $json[0]['end_date']);
+        $this->assertEquals($today->addDays(3)->toJSON(), $json[0]['end_date']);
         $this->assertEquals('10:00:00', $json[0]['checkout']);
     }
 

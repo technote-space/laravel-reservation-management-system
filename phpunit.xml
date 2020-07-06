@@ -38,7 +38,4 @@
         <log type="coverage-html" target="./coverage/php/report" lowUpperBound="50" highLowerBound="85"/>
         <log type="coverage-text" target="php://stdout" lowUpperBound="50" highLowerBound="85" showUncoveredFiles="true"/>
     </logging>
-    <listeners>
-        <listener class="NunoMaduro\Collision\Adapters\Phpunit\Listener"/>
-    </listeners>
 </phpunit>
