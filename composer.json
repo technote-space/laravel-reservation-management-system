@@ -149,10 +149,7 @@
         "phpunit:unit": "@phpunit:no --group=Unit",
         "phpunit:models": "@phpunit:no --group=Unit.Models",
         "phpunit:helpers": "@phpunit:no --group=Unit.Helpers",
-        "dusk": [
-            "php artisan config:clear",
-            "php artisan dusk --env=dusk"
-        ],
+        "dusk": "php artisan dusk --env=dusk",
         "eslint": "yarn eslint",
         "eslint:fix": "yarn eslint:fix",
         "jest": "yarn cover",
