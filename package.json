@@ -41,7 +41,7 @@
         "chart.js": "^2.9.3",
         "cross-env": "^7.0",
         "duplicate-package-checker-webpack-plugin": "^3.0.0",
-        "eslint": "^7.4.0",
+        "eslint": "^7.5.0",
         "eslint-config-vue": "^2.0.2",
         "eslint-plugin-vue": "^6.2.2",
         "faker": "^4.1.0",
@@ -78,7 +78,7 @@
         "vue-server-renderer": "^2.6.11",
         "vue-template-compiler": "^2.6.11",
         "vue-toasted": "^1.1.28",
-        "vuetify": "^2.3.4",
+        "vuetify": "^2.3.6",
         "vuex": "^3.5.1",
         "webpack-cli": "^3.3.12"
     }
