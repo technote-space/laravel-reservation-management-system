@@ -18,7 +18,7 @@ jobs:
         run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
       - uses: technote-space/get-git-comment-action@v1
-      - uses: technote-space/get-diff-action@v1
+      - uses: technote-space/get-diff-action@v2
         with:
           PREFIX_FILTER: |
             resources/
@@ -57,7 +57,7 @@ jobs:
         run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
       - uses: technote-space/get-git-comment-action@v1
-      - uses: technote-space/get-diff-action@v1
+      - uses: technote-space/get-diff-action@v2
         with:
           PREFIX_FILTER: |
             resources/
@@ -99,7 +99,7 @@ jobs:
         run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
       - uses: technote-space/get-git-comment-action@v1
-      - uses: technote-space/get-diff-action@v1
+      - uses: technote-space/get-diff-action@v2
         with:
           SUFFIX_FILTER: .php
           FILES: phpcs.xml
@@ -137,7 +137,7 @@ jobs:
         run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
       - uses: technote-space/get-git-comment-action@v1
-      - uses: technote-space/get-diff-action@v1
+      - uses: technote-space/get-diff-action@v2
         with:
           SUFFIX_FILTER: .php
           SEPARATOR: ','
@@ -176,7 +176,7 @@ jobs:
         run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
       - uses: technote-space/get-git-comment-action@v1
-      - uses: technote-space/get-diff-action@v1
+      - uses: technote-space/get-diff-action@v2
         with:
           PREFIX_FILTER: |
             resources/
@@ -250,7 +250,7 @@ jobs:
         run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
       - uses: technote-space/get-git-comment-action@v1
-      - uses: technote-space/get-diff-action@v1
+      - uses: technote-space/get-diff-action@v2
         with:
           SUFFIX_FILTER: .php
           FILES: composer.lock
@@ -327,7 +327,7 @@ jobs:
         run: echo "::set-env name=RUNNING::1"
       - uses: actions/checkout@v2
       - uses: technote-space/get-git-comment-action@v1
-      - uses: technote-space/get-diff-action@v1
+      - uses: technote-space/get-diff-action@v2
         with:
           SUFFIX_FILTER: .php
           FILES: composer.lock
