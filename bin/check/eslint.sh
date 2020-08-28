@@ -16,9 +16,9 @@ composer prepare:js
 
 echo ""
 echo ">> Run composer eslint"
-if [[ -n "${GIT_DIFF}" ]]; then
+if [[ -n "${GIT_DIFF_FILTERED}" ]] && [[ -z "${MATCHED_FILES}" ]]; then
   # shellcheck disable=SC2046
-  "${WORKSPACE}"/node_modules/.bin/eslint --cache $(eval echo "${GIT_DIFF}")
+  "${WORKSPACE}"/node_modules/.bin/eslint --cache $(eval echo "${GIT_DIFF_FILTERED}")
 else
   if [[ ! -f "${WORKSPACE}/package.json" ]] || [[ $(< "${WORKSPACE}/package.json" jq -r '.scripts.eslint' | wc -l) != 1 ]]; then
     echo "yarn eslint command is invalid."
