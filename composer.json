@@ -35,7 +35,7 @@
         "beyondcode/laravel-query-detector": "^1.4",
         "codedungeon/phpunit-result-printer": "^0.29.3",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-        "facade/ignition": "^2.3",
+        "facade/ignition": "^2.4",
         "fzaninotto/faker": "^1.9",
         "laravel/dusk": "^6.8",
         "mockery/mockery": "^1.4",
