@@ -31,7 +31,7 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
         "barryvdh/laravel-ide-helper": "^2.8",
-        "beyondcode/laravel-dump-server": "^1.5",
+        "beyondcode/laravel-dump-server": "^1.6",
         "beyondcode/laravel-query-detector": "^1.4",
         "codedungeon/phpunit-result-printer": "^0.29.3",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
