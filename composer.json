@@ -37,7 +37,7 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
         "facade/ignition": "^2.5",
         "fzaninotto/faker": "^1.9",
-        "laravel/dusk": "^6.8",
+        "laravel/dusk": "^6.9",
         "mockery/mockery": "^1.4",
         "nunomaduro/collision": "^5.1",
         "phpmd/phpmd": "^2.9",
