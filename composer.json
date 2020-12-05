@@ -33,7 +33,7 @@
         "barryvdh/laravel-ide-helper": "^2.8",
         "beyondcode/laravel-dump-server": "^1.6",
         "beyondcode/laravel-query-detector": "^1.4",
-        "codedungeon/phpunit-result-printer": "^0.29.3",
+        "codedungeon/phpunit-result-printer": "^0.30.0",
         "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
         "facade/ignition": "^2.5",
         "fzaninotto/faker": "^1.9",
@@ -41,7 +41,7 @@
         "mockery/mockery": "^1.4",
         "nunomaduro/collision": "^5.1",
         "phpmd/phpmd": "^2.9",
-        "phpunit/phpunit": "^9.4",
+        "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "^3.5"
     },
     "config": {
