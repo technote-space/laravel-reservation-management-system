@@ -101,6 +101,11 @@ jobs:
         run: echo "RUNNING=" >> $GITHUB_ENV
         if: "! env.GIT_DIFF"
 
+      - name: Switch PHP version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          tools: composer:v1
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
@@ -140,6 +145,11 @@ jobs:
         run: echo "RUNNING=" >> $GITHUB_ENV
         if: "! env.GIT_DIFF"
 
+      - name: Switch PHP version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 7.4
+          tools: composer:v1
       - name: Get Composer Cache Directory
         id: composer-cache
         run: |
